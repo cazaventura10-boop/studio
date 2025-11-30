@@ -46,6 +46,16 @@ export function Header() {
       : "bg-background/95 text-foreground backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b"
   );
   
+  const navItemClasses = cn(
+    "font-bold tracking-wider transition-colors",
+    isHomePage && !isScrolled ? "hover:text-white/80" : "hover:text-primary"
+  );
+
+  const iconButtonClasses = cn(
+    "hover:bg-white/10",
+    isHomePage && !isScrolled ? "hover:bg-white/10" : "hover:bg-accent hover:text-accent-foreground"
+  );
+  
   const logoClasses = cn(
     "transition-colors",
     isHomePage && !isScrolled ? "text-white" : "text-primary"
@@ -53,9 +63,7 @@ export function Header() {
 
   const mobileHeaderClasses = cn(
     "flex items-center justify-between p-4 border-b",
-    isHomePage && !isScrolled && isMobileMenuOpen
-      ? "bg-transparent"
-      : "bg-background"
+    "bg-background"
   );
 
   return (
@@ -73,16 +81,16 @@ export function Header() {
               <Link
                 key={href}
                 href={href}
-                className="font-bold tracking-wider transition-colors hover:text-white/80"
+                className={navItemClasses}
               >
                 {label}
               </Link>
             ))}
-             <Button variant="ghost" size="icon" className="hover:bg-white/10">
+             <Button variant="ghost" size="icon" className={iconButtonClasses}>
                 <ShoppingCart className="h-6 w-6" />
                 <span className="sr-only">Carrito</span>
              </Button>
-             <Button variant="ghost" size="icon" className="hover:bg-white/10">
+             <Button variant="ghost" size="icon" className={iconButtonClasses}>
                 <Search className="h-6 w-6" />
                 <span className="sr-only">Buscar</span>
              </Button>
@@ -90,7 +98,7 @@ export function Header() {
           
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden hover:bg-white/10">
+              <Button variant="ghost" size="icon" className={cn("md:hidden", iconButtonClasses)}>
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Alternar Menú</span>
               </Button>
@@ -99,10 +107,7 @@ export function Header() {
               <div className="flex flex-col h-full">
                 <div className={mobileHeaderClasses}>
                   <Link href="/" className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
-                     <div className={cn(
-                        "transition-colors",
-                        isMobileMenuOpen ? "text-primary" : (isHomePage && !isScrolled ? "text-white" : "text-primary")
-                      )}>
+                     <div className="text-primary">
                        <Logo />
                      </div>
                   </Link>
