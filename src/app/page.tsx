@@ -100,7 +100,7 @@ export default function Home() {
 
             <Link href="/products?category=Caza" className="group relative block h-80 w-full overflow-hidden rounded-lg cursor-pointer">
               <img
-                src="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=2070"
+                src="https://images.unsplash.com/photo-1484406566174-9da000c64787?q=80&w=2070"
                 alt="Caza en el bosque"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />

@@ -1,15 +1,19 @@
 import Link from 'next/link';
 import { Instagram, Facebook } from 'lucide-react';
+import Image from 'next/image';
 
 export function Footer() {
 
   function Logo() {
     return (
-      <svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="20" cy="20" r="20" fill="currentColor"/>
-        <path d="M25.8333 26.6667L20 18.3333L14.1667 26.6667H25.8333Z" stroke="#E2E8F0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-         <path d="M17.5 22.5L20 18.3333L22.5 22.5L17.5 22.5Z" fill="#E2E8F0"/>
-      </svg>
+      <Image
+        src="https://www.deporteyaventura.es/wp-content/uploads/2025/11/Gemini_Generated_Image_orrzteorrzteorrz__2___1_-removebg-preview.png"
+        alt="Deporte Y Aventura Logo"
+        width={150}
+        height={50}
+        style={{ height: 'auto' }}
+        priority
+      />
     );
   }
 
@@ -21,7 +25,6 @@ export function Footer() {
           <div className="flex flex-col items-center md:items-start gap-4">
             <Link href="/" className="flex items-center gap-3 text-primary-foreground hover:text-white transition-colors">
               <Logo />
-              <span className="font-headline font-bold text-lg">DeporteY Aventura</span>
             </Link>
             <p className="text-sm">
               &copy; {new Date().getFullYear()} Todos los derechos reservados.
