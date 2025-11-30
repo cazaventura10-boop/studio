@@ -147,27 +147,21 @@ function Logo() {
   );
 }
 
-const NestedList = ({ items, onLinkClick }: { items: NavLink[], onLinkClick?: () => void }) => (
+const NestedList = ({ items }: { items: NavLink[]}) => (
   <ul className="space-y-2">
     {items.map((item) => (
       <li key={item.title}>
-        <SheetClose asChild>
-            <ListItem href={item.href} title={item.title} className="p-2 font-semibold hover:bg-accent/50" onClick={onLinkClick}/>
-        </SheetClose>
+        <ListItem href={item.href} title={item.title} className="p-2 font-semibold hover:bg-accent/50" />
         {item.children && (
           <ul className="pl-4 mt-1 space-y-1 border-l border-border ml-2">
             {item.children.map((child) => (
               <li key={child.title}>
-                <SheetClose asChild>
-                    <ListItem href={child.href} title={child.title} className="p-2 text-sm" onClick={onLinkClick} />
-                </SheetClose>
+                <ListItem href={child.href} title={child.title} className="p-2 text-sm" />
                  {child.children && (
                     <ul className="pl-4 mt-1 space-y-1 border-l border-border ml-2">
                         {child.children.map((subChild) => (
                             <li key={subChild.title}>
-                                <SheetClose asChild>
-                                <ListItem href={subChild.href} title={subChild.title} className="p-2 text-xs text-muted-foreground" onClick={onLinkClick} />
-                                </SheetClose>
+                                <ListItem href={subChild.href} title={subChild.title} className="p-2 text-xs text-muted-foreground" />
                             </li>
                         ))}
                     </ul>
@@ -182,12 +176,35 @@ const NestedList = ({ items, onLinkClick }: { items: NavLink[], onLinkClick?: ()
 );
 
 const MobileNavLink = ({ href, children, onLinkClick }: { href: string, children: React.ReactNode, onLinkClick?: () => void }) => (
-    <SheetClose asChild>
-        <Link href={href} className="block p-2 text-muted-foreground" onClick={onLinkClick}>
-            {children}
-        </Link>
-    </SheetClose>
+  <SheetClose asChild>
+      <Link href={href} className="block p-2 text-muted-foreground" onClick={onLinkClick}>
+          {children}
+      </Link>
+  </SheetClose>
 );
+
+const MobileNavAccordion = ({ items, onLinkClick }: { items: NavLink[], onLinkClick?: () => void }) => {
+    return (
+        <Accordion type="single" collapsible className="w-full">
+            {items.map(item => {
+                if (item.children && item.children.length > 0) {
+                    return (
+                        <AccordionItem value={item.title} key={item.title}>
+                            <AccordionTrigger className="font-semibold text-sm py-3 pr-2">{item.title}</AccordionTrigger>
+                            <AccordionContent className="pl-4">
+                                <MobileNavAccordion items={item.children} onLinkClick={onLinkClick} />
+                            </AccordionContent>
+                        </AccordionItem>
+                    );
+                }
+                return (
+                   <MobileNavLink key={item.title} href={item.href} onLinkClick={onLinkClick}>{item.title}</MobileNavLink>
+                )
+            })}
+        </Accordion>
+    );
+};
+
 
 export function Header() {
   const pathname = usePathname();
@@ -349,13 +366,13 @@ export function Header() {
                                      <AccordionItem value="trekking-hombre">
                                         <AccordionTrigger className="font-semibold text-sm">HOMBRE</AccordionTrigger>
                                         <AccordionContent className="pl-4">
-                                            <NestedList items={trekkingHombre} onLinkClick={() => setIsMobileMenuOpen(false)} />
+                                            <MobileNavAccordion items={trekkingHombre} onLinkClick={() => setIsMobileMenuOpen(false)} />
                                         </AccordionContent>
                                      </AccordionItem>
                                      <AccordionItem value="trekking-mujer">
                                         <AccordionTrigger className="font-semibold text-sm">MUJER</AccordionTrigger>
                                         <AccordionContent className="pl-4">
-                                            <NestedList items={trekkingMujer} onLinkClick={() => setIsMobileMenuOpen(false)} />
+                                            <MobileNavAccordion items={trekkingMujer} onLinkClick={() => setIsMobileMenuOpen(false)} />
                                         </AccordionContent>
                                      </AccordionItem>
                                      <AccordionItem value="trekking-complementos">
@@ -408,5 +425,3 @@ export function Header() {
     </header>
   );
 }
-
-    
