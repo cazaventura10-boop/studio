@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Instagram, Facebook } from 'lucide-react';
 
 export function Footer() {
 
@@ -13,21 +14,37 @@ export function Footer() {
   }
 
   return (
-    <footer className="bg-muted text-muted-foreground">
-      <div className="container flex flex-col items-center justify-between gap-4 py-10 md:h-24 md:flex-row md:py-0">
-        <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
-          <Logo />
-          <p className="text-center text-sm leading-loose md:text-left">
-            Construido por DeporteY Aventura Next.
-          </p>
+    <footer className="bg-foreground text-muted-foreground">
+      <div className="container py-8">
+        <div className="grid md:grid-cols-3 gap-8 items-center text-center md:text-left">
+          {/* Logo y Copyright */}
+          <div className="flex flex-col items-center md:items-start gap-4">
+            <Link href="/" className="flex items-center gap-3 text-primary-foreground hover:text-white transition-colors">
+              <Logo />
+              <span className="font-headline font-bold text-lg">DeporteY Aventura</span>
+            </Link>
+            <p className="text-sm">
+              &copy; {new Date().getFullYear()} Todos los derechos reservados.
+            </p>
+          </div>
+
+          {/* Links Legales */}
+          <nav className="flex justify-center gap-4 md:gap-6 text-sm">
+            <Link href="#" className="hover:text-primary-foreground transition-colors">Aviso Legal</Link>
+            <Link href="#" className="hover:text-primary-foreground transition-colors">Política de Privacidad</Link>
+            <Link href="#" className="hover:text-primary-foreground transition-colors">Envíos</Link>
+          </nav>
+
+          {/* Redes Sociales */}
+          <div className="flex justify-center md:justify-end gap-4">
+            <Link href="#" className="hover:text-primary-foreground transition-colors" aria-label="Instagram">
+              <Instagram className="h-5 w-5" />
+            </Link>
+            <Link href="#" className="hover:text-primary-foreground transition-colors" aria-label="Facebook">
+              <Facebook className="h-5 w-5" />
+            </Link>
+          </div>
         </div>
-        <div className="flex items-center gap-4 text-sm">
-            <Link href="#" className="hover:text-primary">Términos de Servicio</Link>
-            <Link href="#" className="hover:text-primary">Política de Privacidad</Link>
-        </div>
-        <p className="text-sm">
-          &copy; {new Date().getFullYear()} DeporteY Aventura. Todos los derechos reservados.
-        </p>
       </div>
     </footer>
   );

@@ -55,7 +55,7 @@ export default function Home() {
     <div className="flex flex-col">
       {/* Hero Section */}
       <section 
-        className="relative w-full h-screen flex items-center justify-center text-center text-white bg-cover bg-center"
+        className="relative w-full h-[600px] flex items-center justify-center text-center text-white bg-cover bg-center"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920')" }}
         >
         <div className="absolute inset-0 bg-black/50" />
@@ -100,7 +100,7 @@ export default function Home() {
 
             <Link href="/products?category=Caza" className="group relative block h-80 w-full overflow-hidden rounded-lg cursor-pointer">
               <img
-                src="https://images.unsplash.com/photo-1476110900293-199427eb3263?q=80&w=2070"
+                src="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=2070"
                 alt="Caza en el bosque"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
