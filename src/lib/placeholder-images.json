@@ -1,3 +1,52 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-background",
+      "description": "A stunning mountain landscape with a trail.",
+      "imageUrl": "https://images.unsplash.com/photo-1610892415063-d89a504ce049?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtb3VudGFpbiUyMGxhbmRzY2FwZXxlbnwwfHx8fDE3NjQ1MDkxNDh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mountain landscape"
+    },
+    {
+      "id": "product-kayak",
+      "description": "A person kayaking on a calm lake.",
+      "imageUrl": "https://images.unsplash.com/photo-1699190866577-100e090dfe1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxrYXlhayUyMGxha2V8ZW58MHx8fHwxNzY0NDU4MjU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "kayak lake"
+    },
+    {
+      "id": "product-tent",
+      "description": "A tent set up in a forest at dusk.",
+      "imageUrl": "https://images.unsplash.com/photo-1574977622598-6c5c0fa4c0ac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx0ZW50JTIwZm9yZXN0fGVufDB8fHx8MTc2NDUyNTQ1NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "tent forest"
+    },
+    {
+      "id": "product-hiking-boots",
+      "description": "A pair of sturdy hiking boots on a rock.",
+      "imageUrl": "https://images.unsplash.com/photo-1617179395455-101d786b4b7d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxoaWtpbmclMjBib290c3xlbnwwfHx8fDE3NjQ0Mzg2ODh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hiking boots"
+    },
+    {
+      "id": "product-backpack",
+      "description": "A large hiking backpack ready for an adventure.",
+      "imageUrl": "https://images.unsplash.com/photo-1622260614153-03223fb72052?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxoaWtpbmclMjBiYWNrcGFja3xlbnwwfHx8fDE3NjQ0ODQzNzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hiking backpack"
+    },
+    {
+      "id": "blog-climbing",
+      "description": "A person rock climbing a challenging cliff face.",
+      "imageUrl": "https://images.unsplash.com/photo-1597698063932-9450882bb1be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxyb2NrJTIwY2xpbWJpbmd8ZW58MHx8fHwxNzY0NTI1NDUzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "rock climbing"
+    },
+    {
+      "id": "blog-cycling",
+      "description": "A cyclist on a mountain bike on a dirt path.",
+      "imageUrl": "https://images.unsplash.com/photo-1673121414328-52eff37bc6d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxtb3VudGFpbiUyMGJpa2V8ZW58MHx8fHwxNzY0NTAzMTk5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mountain bike"
+    },
+    {
+      "id": "blog-trail",
+      "description": "A scenic hiking trail through a sunlit forest.",
+      "imageUrl": "https://images.unsplash.com/photo-1595202761821-57d3a4e5dc9f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxoaWtpbmclMjB0cmFpbHxlbnwwfHx8fDE3NjQ0NjY1MzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hiking trail"
+    }
+  ]
 }
