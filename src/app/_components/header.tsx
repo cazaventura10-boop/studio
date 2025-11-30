@@ -8,11 +8,33 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { useState, useEffect } from 'react';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  ListItem,
+} from "@/components/ui/navigation-menu"
 
-const navLinks = [
-  { href: '/trekking', label: 'TREKKING' },
-  { href: '/caza', label: 'CAZA' },
-];
+const trekkingHombre = {
+  ropa: ["Pantalones", "Chaquetas", "Softshell", "Plumas", "Chalecos", "Sudaderas"],
+  calzado: ["Calzado"],
+};
+
+const trekkingMujer = {
+  ropa: ["Pantalones", "Chaquetas", "Sudaderas", "Camisetas"],
+  calzado: ["Calzado"],
+};
+
+const trekkingComplementos = {
+  complementos: ["Mochilas", "Gorros", "Bastones"],
+};
+
+const cazaLinks = ["Botas de Caza", "Pantalones", "Chaquetas", "Chalecos", "Camisas", "Varios"];
+const kayakLinks = ["Kayaks Rígidos", "Kayaks Hinchables", "Palas y Remos", "Chalecos Salvavidas", "Accesorios y Estancos"];
+
 
 function Logo() {
   return (
@@ -49,13 +71,18 @@ export function Header() {
       : "bg-background/95 text-foreground backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b"
   );
   
-  const navItemClasses = cn(
-    "font-bold tracking-wider transition-colors",
-    isHomePage && !isScrolled ? "hover:text-white/80" : "hover:text-primary"
+  const navTriggerClasses = cn(
+    "font-bold tracking-wider text-sm",
+    isHomePage && !isScrolled 
+      ? "text-white hover:bg-white/10 hover:text-white" 
+      : "text-foreground hover:bg-accent hover:text-accent-foreground"
   );
 
   const iconButtonClasses = cn(
-    isHomePage && !isScrolled ? "hover:bg-white/10" : "hover:bg-accent hover:text-accent-foreground"
+    "hover:bg-accent hover:text-accent-foreground",
+    isHomePage && !isScrolled 
+      ? "text-white hover:bg-white/10" 
+      : "text-foreground"
   );
   
   const logoClasses = cn(
@@ -70,24 +97,89 @@ export function Header() {
 
   return (
     <header className={headerClasses}>
-      <div className="container flex h-20 items-center">
+      <div className="container flex h-20 items-center justify-between">
         <Link href="/" className="mr-6 flex items-center gap-2">
           <div className={logoClasses}>
             <Logo />
           </div>
         </Link>
         
-        <div className="ml-auto flex items-center gap-2">
-           <nav className="hidden items-center gap-6 text-sm md:flex">
-            {navLinks.map(({ href, label }) => (
-              <Link
-                key={href}
-                href={href}
-                className={navItemClasses}
-              >
-                {label}
-              </Link>
-            ))}
+        <div className="hidden md:flex items-center gap-4">
+          <NavigationMenu>
+            <NavigationMenuList>
+              {/* TREKKING */}
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className={navTriggerClasses}>TREKKING</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <div className="grid w-[600px] grid-cols-3 gap-x-8 p-4">
+                    {/* Columna HOMBRE */}
+                    <div className="flex flex-col">
+                      <h3 className="mb-2 text-sm font-bold text-accent">HOMBRE</h3>
+                      <p className="text-xs text-muted-foreground mb-3">Equipamiento masculino para montaña</p>
+                      <h4 className="font-semibold text-sm mb-1">Ropa</h4>
+                      {trekkingHombre.ropa.map((item) => (
+                        <ListItem key={item} href={`/products?category=Trekking&tag=${item}`} title={item} className="text-sm p-2" />
+                      ))}
+                       <h4 className="font-semibold text-sm mt-3 mb-1">Calzado</h4>
+                       {trekkingHombre.calzado.map((item) => (
+                        <ListItem key={item} href={`/products?category=Trekking&tag=${item}`} title={item} className="text-sm p-2" />
+                      ))}
+                    </div>
+                    {/* Columna MUJER */}
+                     <div className="flex flex-col">
+                      <h3 className="mb-2 text-sm font-bold text-accent">MUJER</h3>
+                      <p className="text-xs text-muted-foreground mb-3">Equipamiento femenino para montaña</p>
+                       <h4 className="font-semibold text-sm mb-1">Ropa</h4>
+                      {trekkingMujer.ropa.map((item) => (
+                        <ListItem key={item} href={`/products?category=Trekking&tag=${item}`} title={item} className="text-sm p-2" />
+                      ))}
+                      <h4 className="font-semibold text-sm mt-3 mb-1">Calzado</h4>
+                       {trekkingMujer.calzado.map((item) => (
+                        <ListItem key={item} href={`/products?category=Trekking&tag=${item}`} title={item} className="text-sm p-2" />
+                      ))}
+                    </div>
+                    {/* Columna COMPLEMENTOS */}
+                    <div className="flex flex-col">
+                      <h3 className="mb-2 text-sm font-bold text-accent">COMPLEMENTOS</h3>
+                       <p className="text-xs text-muted-foreground mb-3">Accesorios para tus aventuras</p>
+                      {trekkingComplementos.complementos.map((item) => (
+                        <ListItem key={item} href={`/products?category=Trekking&tag=${item}`} title={item} className="text-sm p-2" />
+                      ))}
+                    </div>
+                  </div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              {/* CAZA */}
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className={navTriggerClasses}>CAZA</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[200px] gap-3 p-4">
+                    {cazaLinks.map((link) => (
+                       <ListItem key={link} href={`/products?category=Caza&tag=${link}`} title={link} />
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              {/* KAYAK */}
+               <NavigationMenuItem>
+                <NavigationMenuTrigger className={navTriggerClasses}>KAYAK</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[220px] gap-3 p-4">
+                    {kayakLinks.map((link) => (
+                       <ListItem key={link} href={`/products?category=Kayaking&tag=${link}`} title={link} />
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
+        
+        <div className="flex items-center gap-2">
+           <div className="hidden md:flex items-center gap-2">
              <Button variant="ghost" size="icon" className={iconButtonClasses}>
                 <ShoppingCart className="h-6 w-6" />
                 <span className="sr-only">Carrito</span>
@@ -96,7 +188,7 @@ export function Header() {
                 <Search className="h-6 w-6" />
                 <span className="sr-only">Buscar</span>
              </Button>
-          </nav>
+          </div>
           
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
@@ -120,20 +212,16 @@ export function Header() {
                   </SheetClose>
                 </div>
                 <nav className="flex flex-col gap-4 p-4 text-lg">
-                  {navLinks.map(({ href, label }) => (
-                    <SheetClose key={href} asChild>
-                      <Link
-                        href={href}
-                        className={cn(
-                          'transition-colors hover:text-primary font-bold tracking-wider',
-                           pathname === href ? 'text-primary' : 'text-muted-foreground'
-                        )}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        {label}
-                      </Link>
-                    </SheetClose>
-                  ))}
+                  {/* Aquí puedes agregar un Accordion para los menús en móvil */}
+                  <SheetClose asChild>
+                    <Link href="/trekking" className="font-bold tracking-wider">TREKKING</Link>
+                  </SheetClose>
+                  <SheetClose asChild>
+                    <Link href="/caza" className="font-bold tracking-wider">CAZA</Link>
+                  </SheetClose>
+                   <SheetClose asChild>
+                    <Link href="/products?category=Kayaking" className="font-bold tracking-wider">KAYAK</Link>
+                  </SheetClose>
                 </nav>
                  <div className="p-4 mt-auto flex items-center gap-4">
                     <Button variant="ghost" size="icon">
