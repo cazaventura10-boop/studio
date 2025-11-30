@@ -7,16 +7,15 @@ import { placeholderImagesById } from '@/lib/placeholder-images';
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const CategoryCard = ({ name, imageId, href }: { name: string; imageId: string; href: string }) => {
-  const image = placeholderImagesById[imageId];
+const CategoryCard = ({ name, imageSrc, imageHint, href }: { name: string; imageSrc: string; imageHint: string; href: string }) => {
   return (
     <Link href={href} className="group relative block h-80 w-full overflow-hidden rounded-lg">
       <Image
-        src={image.imageUrl}
-        alt={image.description}
+        src={imageSrc}
+        alt={name}
         fill
         className="object-cover transition-transform duration-300 group-hover:scale-110"
-        data-ai-hint={image.imageHint}
+        data-ai-hint={imageHint}
       />
       <div className="absolute inset-0 bg-black/40 transition-colors group-hover:bg-black/60" />
       <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-white">
@@ -68,9 +67,9 @@ export default function Home() {
         <div className="container">
           <h2 className="text-3xl md:text-4xl font-bold font-headline text-center mb-12">Categorías Principales</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <CategoryCard name="TREKKING" imageId="category-trekking" href="/products?category=Trekking" />
-            <CategoryCard name="CAZA" imageId="category-caza" href="/products?category=Caza" />
-            <CategoryCard name="KAYAK" imageId="category-kayak" href="/products?category=Kayaking" />
+            <CategoryCard name="TREKKING" imageSrc="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=2070" imageHint="trekking mountain" href="/products?category=Trekking" />
+            <CategoryCard name="CAZA" imageSrc="https://images.unsplash.com/photo-1476110900293-199427eb3263?q=80&w=2070" imageHint="hunting gear" href="/products?category=Caza" />
+            <CategoryCard name="KAYAK" imageSrc="https://images.unsplash.com/photo-1543039625-14cbd3802e7d?q=80&w=2074" imageHint="kayak river" href="/products?category=Kayaking" />
           </div>
         </div>
       </section>
