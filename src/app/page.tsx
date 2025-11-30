@@ -6,7 +6,6 @@ import { placeholderImagesById } from '@/lib/placeholder-images';
 import { ProductCard } from './_components/product-card';
 import { BlogPostCard } from './_components/blog-post-card';
 import { ArrowRight } from 'lucide-react';
-import { Header } from '@/app/_components/header';
 
 export default function Home() {
   const heroImage = placeholderImagesById['hero-background-mountaineer'];
@@ -17,7 +16,6 @@ export default function Home() {
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="relative h-screen w-full flex items-center justify-center text-center text-white">
-        <Header />
         <Image
           src={heroImage.imageUrl}
           alt={heroImage.description}
