@@ -34,7 +34,14 @@ const trekkingHombre: NavLink[] = [
         href: '/products?category=Trekking&tag=Pantalones-Hombre',
         children: [
           { title: 'Pantalones Invierno', href: '/products?category=Trekking&tag=Pantalones-Invierno-Hombre' },
-          { title: 'Pantalones Primavera/Verano', href: '/products?category=Trekking&tag=Pantalones-Verano-Hombre' },
+          { 
+            title: 'Pantalones Primavera/Verano', 
+            href: '/products?category=Trekking&tag=Pantalones-Verano-Hombre',
+            children: [
+                { title: 'Largos y Desmontables', href: '/trekking/hombre/ropa/pantalones/primavera-verano/largos-desmontables' },
+                { title: 'Cortos y Piratas', href: '/trekking/hombre/ropa/pantalones/primavera-verano/cortos-piratas' },
+            ]
+          },
         ],
       },
       {
