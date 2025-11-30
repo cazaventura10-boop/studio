@@ -40,7 +40,7 @@ export function Header() {
   const isHomePage = pathname === '/';
   
   const headerClasses = cn(
-    "sticky top-0 z-50 w-full transition-all duration-300",
+    "fixed top-0 z-50 w-full transition-all duration-300",
     isHomePage && !isScrolled
       ? "bg-transparent text-white"
       : "bg-background/95 text-foreground backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b"
