@@ -32,7 +32,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 <h3 className="font-headline font-semibold text-lg">{product.name}</h3>
             </div>
           <p className="mt-4 text-xl font-bold text-primary">
-            ${product.price.toFixed(2)}
+            €{product.price.toFixed(2)}
           </p>
         </CardContent>
       </Card>

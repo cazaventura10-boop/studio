@@ -3,33 +3,33 @@ import type { BlogPost, Product } from '@/lib/types';
 export const products: Product[] = [
   {
     id: '1',
-    name: 'Explorer Kayak',
-    description: 'A stable and versatile kayak for all your water adventures. Perfect for lakes, rivers, and coastal waters. Made from durable polyethylene, it features a comfortable seating system, ample storage space, and adjustable foot braces. Its sleek design ensures excellent tracking and speed.',
-    price: 699.99,
+    name: 'Kayak Explorador',
+    description: 'Un kayak estable y versátil para todas tus aventuras acuáticas. Perfecto para lagos, ríos y aguas costeras. Fabricado con polietileno duradero, cuenta con un cómodo sistema de asiento, amplio espacio de almacenamiento y reposapiés ajustables. Su diseño elegante garantiza un excelente seguimiento y velocidad.',
+    price: 630.00,
     category: 'Kayaking',
     image: 'product-kayak',
   },
   {
     id: '2',
-    name: 'Wilderness Tent',
-    description: 'A lightweight and durable 2-person tent, ideal for backpacking and camping. Features a full-coverage rainfly, two large doors for easy entry and exit, and interior pockets for organization. Easy to set up and take down, providing reliable shelter in various weather conditions.',
-    price: 249.99,
+    name: 'Tienda de Campaña Salvaje',
+    description: 'Una tienda de campaña para 2 personas, ligera y duradera, ideal para mochileros y acampada. Cuenta con un cubretecho de cobertura total, dos puertas grandes para facilitar la entrada y salida, y bolsillos interiores para organización. Fácil de montar y desmontar, proporciona un refugio fiable en diversas condiciones climáticas.',
+    price: 225.00,
     category: 'Camping',
     image: 'product-tent',
   },
   {
     id: '3',
-    name: 'Summit Hiking Boots',
-    description: 'Conquer any trail with these waterproof and breathable hiking boots. The rugged outsole provides excellent traction, while the cushioned midsole offers all-day comfort. Gore-Tex lining keeps your feet dry, and the supportive design protects your ankles on uneven terrain.',
-    price: 179.99,
+    name: 'Botas de Senderismo Summit',
+    description: 'Conquista cualquier sendero con estas botas de senderismo impermeables y transpirables. La suela robusta proporciona una excelente tracción, mientras que la entresuela acolchada ofrece comodidad durante todo el día. El forro de Gore-Tex mantiene los pies secos y el diseño de apoyo protege los tobillos en terrenos irregulares.',
+    price: 160.00,
     category: 'Hiking',
     image: 'product-hiking-boots',
   },
   {
     id: '4',
-    name: 'Trekker 65L Backpack',
-    description: 'A spacious and comfortable backpack for multi-day treks. Features an adjustable harness system, multiple compartments for organization, and an integrated rain cover. The durable fabric and robust construction can withstand the rigors of the trail. Hydration compatible.',
-    price: 219.99,
+    name: 'Mochila de Trekking 65L',
+    description: 'Una mochila espaciosa y cómoda para caminatas de varios días. Cuenta con un sistema de arnés ajustable, múltiples compartimentos para organización y una funda para la lluvia integrada. El tejido duradero y la construcción robusta pueden soportar los rigores del sendero. Compatible con sistemas de hidratación.',
+    price: 200.00,
     category: 'Hiking',
     image: 'product-backpack',
   },
@@ -38,59 +38,59 @@ export const products: Product[] = [
 export const blogPosts: BlogPost[] = [
   {
     slug: 'mastering-the-climb',
-    title: 'Mastering the Climb: A Beginner\'s Guide to Rock Climbing',
+    title: 'Dominando la Escalada: Guía para Principiantes',
     author: 'Alex Johnson',
     date: '2024-07-15T10:00:00Z',
-    excerpt: 'Rock climbing is an exhilarating sport that combines physical strength with mental problem-solving. This guide covers the basics to get you started on your vertical journey.',
+    excerpt: 'La escalada en roca es un deporte emocionante que combina la fuerza física con la resolución de problemas mentales. Esta guía cubre los conceptos básicos para que comiences tu viaje vertical.',
     content: `
-      <h2>Rock climbing is an exhilarating sport that combines physical strength with mental problem-solving.</h2>
-      <p>Whether you're scaling an indoor wall or a natural rock face, the principles of balance, technique, and safety are paramount. This guide covers the basics to get you started on your vertical journey.</p>
-      <h3>Essential Gear</h3>
-      <p>Before you start, you'll need some basic equipment. This includes climbing shoes for grip, a harness to secure you to the rope, a belay device for controlling the rope, and a chalk bag to keep your hands dry. Renting gear is a great option for your first few climbs.</p>
-      <h3>Basic Techniques</h3>
-      <p>Focus on using your legs to push yourself up, rather than pulling with your arms. Keep your arms straight whenever possible to conserve energy. Look for footholds and plan your route a few moves ahead. Trusting your feet is one of the biggest hurdles for beginners.</p>
-      <h3>Safety First</h3>
-      <p>Always climb with a partner and double-check each other's knots and harness. Learn the proper belay technique and communication calls. Never climb above your ability level without proper supervision or instruction.</p>
+      <h2>La escalada en roca es un deporte emocionante que combina la fuerza física con la resolución de problemas mentales.</h2>
+      <p>Ya sea que estés escalando una pared interior o una pared de roca natural, los principios de equilibrio, técnica y seguridad son primordiales. Esta guía cubre los conceptos básicos para que comiences tu viaje vertical.</p>
+      <h3>Equipo Esencial</h3>
+      <p>Antes de empezar, necesitarás algo de equipo básico. Esto incluye zapatillas de escalada para el agarre, un arnés para asegurarte a la cuerda, un dispositivo de aseguramiento para controlar la cuerda y una bolsa de magnesio para mantener tus manos secas. Alquilar el equipo es una gran opción para tus primeras escaladas.</p>
+      <h3>Técnicas Básicas</h3>
+      <p>Concéntrate en usar las piernas para impulsarte hacia arriba, en lugar de tirar con los brazos. Mantén los brazos rectos siempre que sea posible para conservar energía. Busca apoyos para los pies y planifica tu ruta con algunos movimientos de antelación. Confiar en tus pies es uno de los mayores obstáculos para los principiantes.</p>
+      <h3>La Seguridad es lo Primero</h3>
+      <p>Escala siempre con un compañero y revisen dos veces los nudos y el arnés del otro. Aprende la técnica de aseguramiento adecuada y las llamadas de comunicación. Nunca escales por encima de tu nivel de habilidad sin la supervisión o instrucción adecuadas.</p>
     `,
     category: 'Climbing',
     image: 'blog-climbing',
   },
   {
     slug: 'top-5-mountain-bike-trails',
-    title: 'The Top 5 Mountain Bike Trails for Thrill-Seekers',
+    title: 'Los 5 Mejores Senderos de Bici de Montaña para Amantes de la Adrenalina',
     author: 'Maria Garcia',
     date: '2024-07-10T14:30:00Z',
-    excerpt: 'Looking for your next adrenaline rush on two wheels? We\'ve compiled a list of the most breathtaking and challenging mountain bike trails around the world.',
+    excerpt: '¿Buscas tu próxima dosis de adrenalina sobre dos ruedas? Hemos compilado una lista de los senderos de bicicleta de montaña más impresionantes y desafiantes del mundo.',
     content: `
-      <p>Looking for your next adrenaline rush on two wheels? We've compiled a list of the most breathtaking and challenging mountain bike trails that should be on every enthusiast's bucket list.</p>
-      <h3>1. The Whole Enchilada, Utah, USA</h3>
-      <p>This trail offers a massive descent with incredibly varied terrain, from high alpine forests to slickrock desert. It's a true test of endurance and technical skill.</p>
-      <h3>2. A-Line, Whistler, Canada</h3>
-      <p>Famous in the mountain biking world, A-Line is the quintessential downhill flow trail, packed with massive tabletops and perfectly sculpted berms. It's pure, high-speed fun.</p>
-      <h3>3. Mefjellet, Norway</h3>
-      <p>For those who love epic scenery with their rides, this trail in Norway delivers. Expect stunning fjord views and a long, technical descent that will keep you on your toes.</p>
-      <h3>4. Fort William, Scotland</h3>
-      <p>Home to a UCI World Cup downhill track, Fort William is not for the faint of heart. It's rocky, rooty, and relentlessly steep.</p>
-      <h3>5. Yungas Road, Bolivia</h3>
-      <p>Known as "Death Road," this is more of an adventure than a technical ride. The narrow, cliff-hugging road offers unparalleled views and a serious dose of adrenaline.</p>
+      <p>¿Buscas tu próxima dosis de adrenalina sobre dos ruedas? Hemos compilado una lista de los senderos de bicicleta de montaña más impresionantes y desafiantes que deberían estar en la lista de deseos de todo entusiasta.</p>
+      <h3>1. The Whole Enchilada, Utah, EE. UU.</h3>
+      <p>Este sendero ofrece un descenso masivo con un terreno increíblemente variado, desde bosques alpinos hasta desiertos de roca lisa. Es una verdadera prueba de resistencia y habilidad técnica.</p>
+      <h3>2. A-Line, Whistler, Canadá</h3>
+      <p>Famoso en el mundo del ciclismo de montaña, A-Line es el sendero de descenso por excelencia, lleno de mesetas masivas y bermas perfectamente esculpidas. Es pura diversión a alta velocidad.</p>
+      <h3>3. Mefjellet, Noruega</h3>
+      <p>Para aquellos que aman los paisajes épicos con sus paseos, este sendero en Noruega cumple. Espera impresionantes vistas de fiordos y un descenso largo y técnico que te mantendrá alerta.</p>
+      <h3>4. Fort William, Escocia</h3>
+      <p>Sede de una pista de descenso de la Copa del Mundo de la UCI, Fort William no es para los débiles de corazón. Es rocoso, lleno de raíces e implacablemente empinado.</p>
+      <h3>5. Camino de los Yungas, Bolivia</h3>
+      <p>Conocido como el "Camino de la Muerte", esto es más una aventura que un paseo técnico. El camino estrecho y pegado al acantilado ofrece vistas inigualables y una seria dosis de adrenalina.</p>
     `,
     category: 'Cycling',
     image: 'blog-cycling',
   },
   {
     slug: 'the-art-of-ultralight-hiking',
-    title: 'The Art of Ultralight Hiking: Pack Less, Experience More',
+    title: 'El Arte del Senderismo Ultraligero: Empaca Menos, Vive Más',
     author: 'Sam Roberts',
     date: '2024-06-28T09:00:00Z',
-    excerpt: 'Ultralight hiking is a philosophy that can transform your outdoor experiences. By carefully selecting your gear, you can reduce your pack weight and enjoy the trail more freely.',
+    excerpt: 'El senderismo ultraligero es una filosofía que puede transformar tus experiencias al aire libre. Al seleccionar cuidadosamente tu equipo, puedes reducir el peso de tu mochila y disfrutar más del sendero.',
     content: `
-      <p>Ultralight hiking is a philosophy that can transform your outdoor experiences. The goal is to carry the lightest possible load without compromising safety or comfort. By carefully selecting your gear, you can reduce your pack weight and enjoy the trail more freely, moving faster and with less strain on your body.</p>
-      <h3>The Big Three</h3>
-      <p>The heaviest items in most packs are the shelter, sleeping system (bag and pad), and backpack itself. Focusing on lightweight options for these "Big Three" provides the most significant weight savings. Look for tents made with Dyneema Composite Fabric, quilt-style sleeping bags, and minimalist, frameless backpacks.</p>
-      <h3>Multi-Purpose Gear</h3>
-      <p>Every item should be scrutinized. Can one item serve multiple purposes? For example, your trekking poles can also be used as your tent poles. A bandana can be a pot holder, a towel, and a water filter pre-filter.</p>
-      <h3>Embrace Minimalism</h3>
-      <p>Do you really need that camp chair, extra set of clothes, or a large knife? Challenge every item you pack. The less you carry, the more you can connect with your surroundings. It's about shifting your mindset from "what if I need this?" to "can I manage without this?". This approach not only lightens your load but also simplifies your entire hiking experience.</p>
+      <p>El senderismo ultraligero es una filosofía que puede transformar tus experiencias al aire libre. El objetivo es llevar la carga más ligera posible sin comprometer la seguridad o la comodidad. Al seleccionar cuidadosamente tu equipo, puedes reducir el peso de tu mochila y disfrutar más del sendero, moviéndote más rápido y con menos tensión en tu cuerpo.</p>
+      <h3>Los Tres Grandes</h3>
+      <p>Los artículos más pesados en la mayoría de las mochilas son el refugio, el sistema para dormir (saco y colchoneta) y la propia mochila. Centrarse en opciones ligeras para estos "Tres Grandes" proporciona el ahorro de peso más significativo. Busca tiendas de campaña hechas con Dyneema Composite Fabric, sacos de dormir tipo edredón y mochilas minimalistas sin marco.</p>
+      <h3>Equipo Multiusos</h3>
+      <p>Cada artículo debe ser examinado. ¿Puede un artículo servir para múltiples propósitos? Por ejemplo, tus bastones de trekking también se могут usar como postes para tu tienda. Una bandana puede ser un agarrador de ollas, una toalla y un pre-filtro de agua.</p>
+      <h3>Abraza el Minimalismo</h3>
+      <p>¿Realmente necesitas esa silla de campamento, un juego extra de ropa o un cuchillo grande? Cuestiona cada artículo que empacas. Cuanto menos lleves, más podrás conectar con tu entorno. Se trata de cambiar tu mentalidad de "¿y si necesito esto?" a "¿puedo arreglármelas sin esto?". Este enfoque no solo aligera tu carga, sino que también simplifica toda tu experiencia de senderismo.</p>
     `,
     category: 'Hiking',
     image: 'blog-trail',
