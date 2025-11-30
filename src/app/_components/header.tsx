@@ -10,10 +10,10 @@ import { useState } from 'react';
 import { SearchBar } from './search-bar';
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/products', label: 'Products' },
+  { href: '/', label: 'Inicio' },
+  { href: '/products', label: 'Productos' },
   { href: '/blog', label: 'Blog' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/contact', label: 'Contacto' },
 ];
 
 export function Header() {
@@ -47,7 +47,7 @@ export function Header() {
             <SheetTrigger asChild>
               <Button variant="outline" size="icon" className="md:hidden">
                 <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle Menu</span>
+                <span className="sr-only">Alternar Menú</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="left">

@@ -44,7 +44,7 @@ export function BlogPostCard({ post, variant = 'vertical' }: BlogPostCardProps) 
             </h3>
             <p className="mt-2 text-muted-foreground line-clamp-3">{post.excerpt}</p>
         </div>
-        <p className="mt-4 text-sm font-semibold text-accent group-hover:underline">Read more &rarr;</p>
+        <p className="mt-4 text-sm font-semibold text-accent group-hover:underline">Leer más &rarr;</p>
       </CardContent>
     </>
   );
