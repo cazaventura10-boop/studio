@@ -112,48 +112,48 @@ export default function Home() {
           <h2 className="text-3xl md:text-4xl font-bold font-headline text-center mb-12">Equípate para la Aventura</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <Link href="/products?tag=Hombre" className="group">
-              <div className="relative aspect-[3/4] overflow-hidden">
+              <div className="relative aspect-[3/4] overflow-hidden rounded-md">
                 <Image
                   src={equipHombre.imageUrl}
                   alt={equipHombre.description}
                   fill
-                  className="object-contain object-bottom transition-transform duration-300 group-hover:scale-105"
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
                   data-ai-hint={equipHombre.imageHint}
                 />
               </div>
               <h3 className="mt-4 font-headline text-xl font-semibold">HOMBRE</h3>
             </Link>
             <Link href="/products?tag=Mujer" className="group">
-              <div className="relative aspect-[3/4] overflow-hidden">
+              <div className="relative aspect-[3/4] overflow-hidden rounded-md">
                 <Image
                   src={equipMujer.imageUrl}
                   alt={equipMujer.description}
                   fill
-                  className="object-contain object-bottom transition-transform duration-300 group-hover:scale-105"
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
                   data-ai-hint={equipMujer.imageHint}
                 />
               </div>
               <h3 className="mt-4 font-headline text-xl font-semibold">MUJER</h3>
             </Link>
             <Link href="/products?tag=Ninos" className="group">
-              <div className="relative aspect-[3/4] overflow-hidden">
+              <div className="relative aspect-[3/4] overflow-hidden rounded-md">
                 <Image
                   src={equipNinos.imageUrl}
                   alt={equipNinos.description}
                   fill
-                  className="object-contain object-bottom transition-transform duration-300 group-hover:scale-105"
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
                   data-ai-hint={equipNinos.imageHint}
                 />
               </div>
               <h3 className="mt-4 font-headline text-xl font-semibold">NIÑOS</h3>
             </Link>
             <Link href="/products?tag=Accesorios" className="group">
-              <div className="relative aspect-[3/4] overflow-hidden">
+              <div className="relative aspect-[3/4] overflow-hidden rounded-md">
                 <Image
                   src={equipAccesorios.imageUrl}
                   alt={equipAccesorios.description}
                   fill
-                  className="object-contain object-bottom transition-transform duration-300 group-hover:scale-105"
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
                   data-ai-hint={equipAccesorios.imageHint}
                 />
               </div>
