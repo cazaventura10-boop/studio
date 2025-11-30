@@ -17,6 +17,13 @@ import {
   NavigationMenuTrigger,
   ListItem,
 } from "@/components/ui/navigation-menu"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 type NavLink = {
   title: string;
@@ -104,12 +111,27 @@ const trekkingMujer: NavLink[] = [
   },
 ];
 
-const trekkingComplementos = {
-  complementos: ["Mochilas", "Gorros", "Bastones"],
-};
+const trekkingComplementos: NavLink[] = [
+  { title: "Mochilas", href: '/products?category=Trekking&tag=Mochilas'},
+  { title: "Gorros", href: '/products?category=Trekking&tag=Gorros'},
+  { title: "Bastones", href: '/products?category=Trekking&tag=Bastones'}
+];
 
-const cazaLinks = ["Botas de Caza", "Pantalones", "Chaquetas", "Chalecos", "Camisas", "Varios"];
-const kayakLinks = ["Kayaks Rígidos", "Kayaks Hinchables", "Palas y Remos", "Chalecos Salvavidas", "Accesorios y Estancos"];
+const cazaLinks: NavLink[] = [
+    { title: "Botas de Caza", href: '/products?category=Caza&tag=Botas-de-Caza' },
+    { title: "Pantalones", href: '/products?category=Caza&tag=Pantalones' },
+    { title: "Chaquetas", href: '/products?category=Caza&tag=Chaquetas' },
+    { title: "Chalecos", href: '/products?category=Caza&tag=Chalecos' },
+    { title: "Camisas", href: '/products?category=Caza&tag=Camisas' },
+    { title: "Varios", href: '/products?category=Caza&tag=Varios' }
+];
+const kayakLinks: NavLink[] = [
+    { title: "Kayaks Rígidos", href: '/products?category=Kayaking&tag=Kayaks-Rígidos' },
+    { title: "Kayaks Hinchables", href: '/products?category=Kayaking&tag=Kayaks-Hinchables' },
+    { title: "Palas y Remos", href: '/products?category=Kayaking&tag=Palas-y-Remos' },
+    { title: "Chalecos Salvavidas", href: '/products?category=Kayaking&tag=Chalecos-Salvavidas' },
+    { title: "Accesorios y Estancos", href: '/products?category=Kayaking&tag=Accesorios-y-Estancos' }
+];
 
 
 function Logo() {
@@ -125,21 +147,27 @@ function Logo() {
   );
 }
 
-const NestedList = ({ items }: { items: NavLink[] }) => (
+const NestedList = ({ items, onLinkClick }: { items: NavLink[], onLinkClick?: () => void }) => (
   <ul className="space-y-2">
     {items.map((item) => (
       <li key={item.title}>
-        <ListItem href={item.href} title={item.title} className="p-2 font-semibold hover:bg-accent/50" />
+        <SheetClose asChild>
+            <ListItem href={item.href} title={item.title} className="p-2 font-semibold hover:bg-accent/50" onClick={onLinkClick}/>
+        </SheetClose>
         {item.children && (
           <ul className="pl-4 mt-1 space-y-1 border-l border-border ml-2">
             {item.children.map((child) => (
               <li key={child.title}>
-                <ListItem href={child.href} title={child.title} className="p-2 text-sm" />
+                <SheetClose asChild>
+                    <ListItem href={child.href} title={child.title} className="p-2 text-sm" onClick={onLinkClick} />
+                </SheetClose>
                  {child.children && (
                     <ul className="pl-4 mt-1 space-y-1 border-l border-border ml-2">
                         {child.children.map((subChild) => (
                             <li key={subChild.title}>
-                                <ListItem href={subChild.href} title={subChild.title} className="p-2 text-xs text-muted-foreground" />
+                                <SheetClose asChild>
+                                <ListItem href={subChild.href} title={subChild.title} className="p-2 text-xs text-muted-foreground" onClick={onLinkClick} />
+                                </SheetClose>
                             </li>
                         ))}
                     </ul>
@@ -151,6 +179,14 @@ const NestedList = ({ items }: { items: NavLink[] }) => (
       </li>
     ))}
   </ul>
+);
+
+const MobileNavLink = ({ href, children, onLinkClick }: { href: string, children: React.ReactNode, onLinkClick?: () => void }) => (
+    <SheetClose asChild>
+        <Link href={href} className="block p-2 text-muted-foreground" onClick={onLinkClick}>
+            {children}
+        </Link>
+    </SheetClose>
 );
 
 export function Header() {
@@ -233,8 +269,8 @@ export function Header() {
                       <h3 className="mb-2 text-sm font-bold text-accent">COMPLEMENTOS</h3>
                        <p className="text-xs text-muted-foreground mb-3">Accesorios para tus aventuras</p>
                        <ul>
-                          {trekkingComplementos.complementos.map((item) => (
-                            <ListItem key={item} href={`/products?category=Trekking&tag=${item}`} title={item} className="text-sm p-2" />
+                          {trekkingComplementos.map((item) => (
+                            <ListItem key={item.title} href={item.href} title={item.title} className="text-sm p-2" />
                           ))}
                        </ul>
                     </div>
@@ -248,7 +284,7 @@ export function Header() {
                 <NavigationMenuContent>
                   <ul className="grid w-[200px] gap-3 p-4">
                     {cazaLinks.map((link) => (
-                       <ListItem key={link} href={`/products?category=Caza&tag=${link}`} title={link} />
+                       <ListItem key={link.title} href={link.href} title={link.title} />
                     ))}
                   </ul>
                 </NavigationMenuContent>
@@ -260,7 +296,7 @@ export function Header() {
                 <NavigationMenuContent>
                   <ul className="grid w-[220px] gap-3 p-4">
                     {kayakLinks.map((link) => (
-                       <ListItem key={link} href={`/products?category=Kayaking&tag=${link}`} title={link} />
+                       <ListItem key={link.title} href={link.href} title={link.title} />
                     ))}
                   </ul>
                 </NavigationMenuContent>
@@ -289,7 +325,7 @@ export function Header() {
                 <span className="sr-only">Alternar Menú</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="bg-background/80 backdrop-blur-lg border-none p-0">
+            <SheetContent side="left" className="bg-background border-none p-0 w-full max-w-sm">
               <div className="flex flex-col h-full">
                 <div className={mobileHeaderClasses}>
                   <Link href="/" className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
@@ -303,19 +339,58 @@ export function Header() {
                      </Button>
                   </SheetClose>
                 </div>
-                <nav className="flex flex-col gap-4 p-4 text-lg">
-                  {/* Aquí puedes agregar un Accordion para los menús en móvil */}
-                  <SheetClose asChild>
-                    <Link href="/trekking" className="font-bold tracking-wider">TREKKING</Link>
-                  </SheetClose>
-                  <SheetClose asChild>
-                    <Link href="/caza" className="font-bold tracking-wider">CAZA</Link>
-                  </SheetClose>
-                   <SheetClose asChild>
-                    <Link href="/products?category=Kayaking" className="font-bold tracking-wider">KAYAK</Link>
-                  </SheetClose>
-                </nav>
-                 <div className="p-4 mt-auto flex items-center gap-4">
+                <ScrollArea className="flex-1">
+                  <nav className="p-4 text-lg">
+                    <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="trekking">
+                            <AccordionTrigger className="font-bold tracking-wider text-base py-3">TREKKING</AccordionTrigger>
+                            <AccordionContent>
+                                <Accordion type="single" collapsible className="w-full pl-4">
+                                     <AccordionItem value="trekking-hombre">
+                                        <AccordionTrigger className="font-semibold text-sm">HOMBRE</AccordionTrigger>
+                                        <AccordionContent className="pl-4">
+                                            <NestedList items={trekkingHombre} onLinkClick={() => setIsMobileMenuOpen(false)} />
+                                        </AccordionContent>
+                                     </AccordionItem>
+                                     <AccordionItem value="trekking-mujer">
+                                        <AccordionTrigger className="font-semibold text-sm">MUJER</AccordionTrigger>
+                                        <AccordionContent className="pl-4">
+                                            <NestedList items={trekkingMujer} onLinkClick={() => setIsMobileMenuOpen(false)} />
+                                        </AccordionContent>
+                                     </AccordionItem>
+                                     <AccordionItem value="trekking-complementos">
+                                        <AccordionTrigger className="font-semibold text-sm">COMPLEMENTOS</AccordionTrigger>
+                                        <AccordionContent className="pl-4">
+                                            {trekkingComplementos.map(item => (
+                                                <MobileNavLink key={item.title} href={item.href} onLinkClick={() => setIsMobileMenuOpen(false)}>{item.title}</MobileNavLink>
+                                            ))}
+                                        </AccordionContent>
+                                     </AccordionItem>
+                                </Accordion>
+                            </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="caza">
+                            <AccordionTrigger className="font-bold tracking-wider text-base py-3">CAZA</AccordionTrigger>
+                            <AccordionContent>
+                                {cazaLinks.map(link => (
+                                    <MobileNavLink key={link.title} href={link.href} onLinkClick={() => setIsMobileMenuOpen(false)}>{link.title}</MobileNavLink>
+                                ))}
+                            </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="kayak">
+                            <AccordionTrigger className="font-bold tracking-wider text-base py-3">KAYAK</AccordionTrigger>
+                            <AccordionContent>
+                                {kayakLinks.map(link => (
+                                    <MobileNavLink key={link.title} href={link.href} onLinkClick={() => setIsMobileMenuOpen(false)}>{link.title}</MobileNavLink>
+                                ))}
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                  </nav>
+                </ScrollArea>
+                 <div className="p-4 mt-auto flex items-center gap-4 border-t">
                     <Button variant="ghost" size="icon">
                         <ShoppingCart className="h-6 w-6" />
                         <span className="sr-only">Carrito</span>
@@ -333,3 +408,5 @@ export function Header() {
     </header>
   );
 }
+
+    
