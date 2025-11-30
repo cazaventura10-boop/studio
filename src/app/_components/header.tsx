@@ -16,7 +16,7 @@ const navLinks = [
 function Logo() {
   return (
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="20" cy="20" r="20" fill="white"/>
+      <circle cx="20" cy="20" r="20" fill="currentColor"/>
       <path d="M25.8333 26.6667L20 18.3333L14.1667 26.6667H25.8333Z" stroke="#102A27" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
       <path d="M17.5 22.5L20 18.3333L22.5 22.5L17.5 22.5Z" fill="#102A27"/>
     </svg>
@@ -38,31 +38,33 @@ export function Header() {
   }, []);
 
   const isHomePage = pathname === '/';
+  
   const headerClasses = cn(
     "sticky top-0 z-50 w-full transition-all duration-300",
-    isHomePage && !isScrolled && !isMobileMenuOpen
+    isHomePage && !isScrolled
       ? "bg-transparent text-white"
       : "bg-background/95 text-foreground backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b"
   );
   
-  const mobileMenuHeaderClasses = cn(
-    "flex items-center justify-between p-4 border-b",
-    isHomePage && !isScrolled
-      ? "bg-transparent text-white"
-      : "bg-background text-foreground"
+  const logoClasses = cn(
+    "transition-colors",
+    isHomePage && !isScrolled ? "text-white" : "text-primary"
   );
-  
-  const sheetContentClasses = cn(
-    isHomePage && !isScrolled
-    ? "bg-transparent"
-    : "bg-background"
-  )
+
+  const mobileHeaderClasses = cn(
+    "flex items-center justify-between p-4 border-b",
+    isHomePage && !isScrolled && isMobileMenuOpen
+      ? "bg-transparent"
+      : "bg-background"
+  );
 
   return (
     <header className={headerClasses}>
       <div className="container flex h-20 items-center">
         <Link href="/" className="mr-6 flex items-center gap-2">
-          <Logo />
+          <div className={logoClasses}>
+            <Logo />
+          </div>
         </Link>
         
         <div className="ml-auto flex items-center gap-2">
@@ -93,11 +95,16 @@ export function Header() {
                 <span className="sr-only">Alternar Menú</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className={sheetContentClasses}>
+            <SheetContent side="left" className="bg-background/80 backdrop-blur-lg border-none p-0">
               <div className="flex flex-col h-full">
-                <div className={mobileMenuHeaderClasses}>
+                <div className={mobileHeaderClasses}>
                   <Link href="/" className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Logo />
+                     <div className={cn(
+                        "transition-colors",
+                        isMobileMenuOpen ? "text-primary" : (isHomePage && !isScrolled ? "text-white" : "text-primary")
+                      )}>
+                       <Logo />
+                     </div>
                   </Link>
                   <SheetClose asChild>
                      <Button variant="ghost" size="icon">
@@ -112,7 +119,7 @@ export function Header() {
                         href={href}
                         className={cn(
                           'transition-colors hover:text-primary font-bold tracking-wider',
-                           pathname === href ? 'text-primary' : (isHomePage && !isScrolled ? 'text-white' : 'text-muted-foreground')
+                           pathname === href ? 'text-primary' : 'text-muted-foreground'
                         )}
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
