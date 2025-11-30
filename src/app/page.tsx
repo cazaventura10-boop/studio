@@ -1,22 +1,14 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { products } from '@/lib/data';
 import { ProductCard } from './_components/product-card';
-import { placeholderImagesById } from '@/lib/placeholder-images';
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
-const CategoryCard = ({ name, imageSrc, imageHint, href }: { name: string; imageSrc: string; imageHint: string; href: string }) => {
-  return (
-    <Link href={href} className="group relative block h-80 w-full overflow-hidden rounded-lg">
-      <Image
-        src={imageSrc}
-        alt={name}
-        fill
-        className="object-cover transition-transform duration-300 group-hover:scale-110"
-        data-ai-hint={imageHint}
-      />
+const CategoryCard = ({ name, imageSrc, imageHint, href, useBgImage = false }: { name: string; imageSrc: string; imageHint: string; href: string, useBgImage?: boolean }) => {
+  const cardContent = (
+    <>
       <div className="absolute inset-0 bg-black/40 transition-colors group-hover:bg-black/60" />
       <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-white">
         <h3 className="font-headline text-3xl font-extrabold uppercase tracking-wider">{name}</h3>
@@ -26,6 +18,31 @@ const CategoryCard = ({ name, imageSrc, imageHint, href }: { name: string; image
            </Button>
         </div>
       </div>
+    </>
+  );
+
+  if (useBgImage) {
+    return (
+      <Link href={href} className="group relative block h-80 w-full overflow-hidden rounded-lg">
+        <div
+          style={{ backgroundImage: `url(${imageSrc})` }}
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
+        ></div>
+        {cardContent}
+      </Link>
+    );
+  }
+
+  return (
+    <Link href={href} className="group relative block h-80 w-full overflow-hidden rounded-lg">
+      <Image
+        src={imageSrc}
+        alt={name}
+        fill
+        className="object-cover transition-transform duration-300 group-hover:scale-110"
+        data-ai-hint={imageHint}
+      />
+      {cardContent}
     </Link>
   );
 };
@@ -37,15 +54,10 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative h-screen w-full flex items-center justify-center text-center text-white">
-        <Image
-          src="https://images.unsplash.com/photo-1533240332313-0dbdd3199049?q=80&w=2070"
-          alt="A mountaineer on the left looking at snowy peaks at sunset."
-          fill
-          priority
-          className="object-cover"
-          data-ai-hint="mountaineer sunset"
-        />
+      <section 
+        className="relative w-full h-screen flex items-center justify-center text-center text-white bg-cover bg-center"
+        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920')" }}
+        >
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 flex flex-col items-center">
           <h1 className="text-4xl md:text-5xl font-extrabold font-headline tracking-tighter uppercase">
@@ -68,7 +80,7 @@ export default function Home() {
           <h2 className="text-3xl md:text-4xl font-bold font-headline text-center mb-12">Categorías Principales</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <CategoryCard name="TREKKING" imageSrc="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=2070" imageHint="trekking mountain" href="/products?category=Trekking" />
-            <CategoryCard name="CAZA" imageSrc="https://images.unsplash.com/photo-1476110900293-199427eb3263?q=80&w=2070" imageHint="hunting gear" href="/products?category=Caza" />
+            <CategoryCard name="CAZA" imageSrc="https://images.unsplash.com/photo-1559160586-7a8e23548958?auto=format&fit=crop&w=800" imageHint="hunting gear" href="/products?category=Caza" useBgImage={true}/>
             <CategoryCard name="KAYAK" imageSrc="https://images.unsplash.com/photo-1543039625-14cbd3802e7d?q=80&w=2074" imageHint="kayak river" href="/products?category=Kayaking" />
           </div>
         </div>
