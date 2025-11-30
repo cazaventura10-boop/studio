@@ -23,7 +23,6 @@ function Logo() {
   );
 }
 
-
 export function Header() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -52,7 +51,6 @@ export function Header() {
   );
 
   const iconButtonClasses = cn(
-    "hover:bg-white/10",
     isHomePage && !isScrolled ? "hover:bg-white/10" : "hover:bg-accent hover:text-accent-foreground"
   );
   
