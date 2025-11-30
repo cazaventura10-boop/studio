@@ -3,6 +3,7 @@ import './globals.css';
 import { Header } from '@/app/_components/header';
 import { Footer } from '@/app/_components/footer';
 import { Toaster } from '@/components/ui/toaster';
+import { WhatsAppButton } from './_components/whatsapp-button';
 
 export const metadata: Metadata = {
   title: 'DeporteY Aventura Next',
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body className="font-body antialiased flex flex-col min-h-screen">
         <Header />
         <main className="flex-1">{children}</main>
+        <WhatsAppButton />
         <Footer />
         <Toaster />
       </body>

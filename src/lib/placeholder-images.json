@@ -7,6 +7,54 @@
       "imageHint": "mountaineer sunset"
     },
     {
+      "id": "category-trekking",
+      "description": "A hiker on a mountain trail.",
+      "imageUrl": "https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=2070&auto=format&fit=crop",
+      "imageHint": "trekking mountain"
+    },
+    {
+      "id": "category-caza",
+      "description": "Hunting gear laid out.",
+      "imageUrl": "https://images.unsplash.com/photo-1506795990174-bfe3f84e8b39?q=80&w=2070&auto=format&fit=crop",
+      "imageHint": "hunting gear"
+    },
+    {
+      "id": "category-kayak",
+      "description": "A person kayaking on a calm river.",
+      "imageUrl": "https://images.unsplash.com/photo-1570778365825-ab35f3032d13?q=80&w=2070&auto=format&fit=crop",
+      "imageHint": "kayak river"
+    },
+    {
+      "id": "product-pant-gris",
+      "description": "Grey technical pants.",
+      "imageUrl": "https://images.unsplash.com/photo-1557851895-4e0fd23888e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxncmV5JTIwcGFudHN8ZW58MHx8fHwxNzY0NTI5ODkwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "grey pants"
+    },
+    {
+      "id": "product-pant-azul",
+      "description": "Blue technical pants.",
+      "imageUrl": "https://images.unsplash.com/photo-1611937669166-be4e0503b115?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxibHVlJTIwcGFudHN8ZW58MHx8fHwxNzY0NTA4OTY3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "blue pants"
+    },
+    {
+      "id": "product-sudadera-vino",
+      "description": "Maroon windbreaker sweatshirt.",
+      "imageUrl": "https://images.unsplash.com/photo-1514407151397-0d5b926e3617?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtYXJvb24lMjBzd2VhdHNoaXJ0fGVufDB8fHx8MTc2NDUyOTg5MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "maroon sweatshirt"
+    },
+    {
+      "id": "product-sudadera-verde",
+      "description": "Green windbreaker sweatshirt.",
+      "imageUrl": "https://images.unsplash.com/photo-1563301753-a13f23aa6b78?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxncmVlbiUyMHN3ZWF0c2hpcnR8ZW58MHx8fHwxNzY0NTI5ODkwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "green sweatshirt"
+    },
+    {
+      "id": "product-polar-mujer",
+      "description": "Women's fleece jacket.",
+      "imageUrl": "https://images.unsplash.com/photo-1736427916686-11964a27e870?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxmbGVlY2UlMjBqYWNrZXR8ZW58MHx8fHwxNzY0NTI5ODkwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "fleece jacket"
+    },
+    {
       "id": "hero-background",
       "description": "A stunning mountain landscape with a trail.",
       "imageUrl": "https://images.unsplash.com/photo-1610892415063-d89a504ce049?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtb3VudGFpbiUyMGxhbmRzY2FwZXxlbnwwfHx8fDE3NjQ1MDkxNDh8MA&ixlib=rb-4.1.0&q=80&w=1080",

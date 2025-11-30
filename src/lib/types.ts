@@ -3,7 +3,7 @@ export interface Product {
   name: string;
   description: string;
   price: number;
-  category: 'Kayaking' | 'Camping' | 'Hiking';
+  category: 'Kayaking' | 'Camping' | 'Hiking' | 'Caza' | 'Trekking';
   image: string; // id from placeholder-images.json
 }
 

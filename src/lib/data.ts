@@ -2,6 +2,46 @@ import type { BlogPost, Product } from '@/lib/types';
 
 export const products: Product[] = [
   {
+    id: 'nw-extreme-gris',
+    name: 'Pantalón Newwood Extreme (Gris)',
+    description: 'Pantalón técnico para caza y aventura, resistente y cómodo en color gris.',
+    price: 49.90,
+    category: 'Caza',
+    image: 'product-pant-gris',
+  },
+  {
+    id: 'nw-extreme-drift-azul',
+    name: 'Pantalón Newwood Extreme Drift (Azul)',
+    description: 'Pantalón técnico para caza y aventura, resistente y cómodo en color azul.',
+    price: 49.90,
+    category: 'Caza',
+    image: 'product-pant-azul',
+  },
+  {
+    id: 'joluvi-wind-vino',
+    name: 'Sudadera Joluvi Wind (Vino)',
+    description: 'Sudadera cortavientos en color vino, ideal para actividades al aire libre.',
+    price: 29.90,
+    category: 'Trekking',
+    image: 'product-sudadera-vino',
+  },
+  {
+    id: 'joluvi-wind-verde',
+    name: 'Sudadera Joluvi Wind (Verde)',
+    description: 'Sudadera cortavientos en color verde, perfecta para protegerte en tus rutas.',
+    price: 29.90,
+    category: 'Trekking',
+    image: 'product-sudadera-verde',
+  },
+    {
+    id: 'joluvi-alpha-mujer',
+    name: 'Chaqueta Polar Mujer Joluvi Alpha',
+    description: 'Chaqueta polar para mujer, cálida y confortable para los días más fríos.',
+    price: 39.90,
+    category: 'Trekking',
+    image: 'product-polar-mujer',
+  },
+  {
     id: '1',
     name: 'Kayak Explorador',
     description: 'Un kayak estable y versátil para todas tus aventuras acuáticas. Perfecto para lagos, ríos y aguas costeras. Fabricado con polietileno duradero, cuenta con un cómodo sistema de asiento, amplio espacio de almacenamiento y reposapiés ajustables. Su diseño elegante garantiza un excelente seguimiento y velocidad.',

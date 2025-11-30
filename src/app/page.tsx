@@ -1,21 +1,46 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { blogPosts, products } from '@/lib/data';
+import { products } from '@/lib/data';
 import { ProductCard } from './_components/product-card';
-import { BlogPostCard } from './_components/blog-post-card';
-import { ArrowRight } from 'lucide-react';
+import { placeholderImagesById } from '@/lib/placeholder-images';
+import { ArrowRight, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+const CategoryCard = ({ name, imageId, href }: { name: string; imageId: string; href: string }) => {
+  const image = placeholderImagesById[imageId];
+  return (
+    <Link href={href} className="group relative block h-80 w-full overflow-hidden rounded-lg">
+      <Image
+        src={image.imageUrl}
+        alt={image.description}
+        fill
+        className="object-cover transition-transform duration-300 group-hover:scale-110"
+        data-ai-hint={image.imageHint}
+      />
+      <div className="absolute inset-0 bg-black/40 transition-colors group-hover:bg-black/60" />
+      <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-white">
+        <h3 className="font-headline text-3xl font-extrabold uppercase tracking-wider">{name}</h3>
+        <div className="mt-4 h-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+           <Button variant="secondary" className="bg-white/90 text-foreground hover:bg-white">
+            Ver Colección <ChevronRight className="ml-2 h-4 w-4" />
+           </Button>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
 
 export default function Home() {
-  const featuredProducts = products.slice(0, 3);
-  const latestPosts = blogPosts.slice(0, 2);
+  const newArrivals = products.slice(0, 5);
 
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="relative h-screen w-full flex items-center justify-center text-center text-white">
         <Image
-          src="https://images.unsplash.com/photo-1533240332313-0dbdd3199049?q=80&w=2070&auto=format&fit=crop"
+          src="https://images.unsplash.com/photo-1533240332313-0dbdd3199049?q=80&w=2070"
           alt="A mountaineer on the left looking at snowy peaks at sunset."
           fill
           priority
@@ -37,44 +62,38 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Featured Products */}
+      
+      {/* Main Categories */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold font-headline">Productos Destacados</h2>
-            <Button variant="link" asChild className="text-accent hover:text-accent/80">
+          <h2 className="text-3xl md:text-4xl font-bold font-headline text-center mb-12">Categorías Principales</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <CategoryCard name="TREKKING" imageId="category-trekking" href="/products?category=Trekking" />
+            <CategoryCard name="CAZA" imageId="category-caza" href="/products?category=Caza" />
+            <CategoryCard name="KAYAK" imageId="category-kayak" href="/products?category=Kayaking" />
+          </div>
+        </div>
+      </section>
+
+      {/* New Arrivals */}
+      <section className="py-16 md:py-24 bg-secondary">
+        <div className="container">
+          <div className="flex justify-between items-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold font-headline">Novedades de Temporada</h2>
+            <Button variant="link" asChild className="text-orange-500 hover:text-orange-500/80">
                 <Link href="/products">
                     Ver Todos <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
             </Button>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProducts.map((product) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {newArrivals.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         </div>
       </section>
-      
-      {/* Latest Blog Posts */}
-      <section className="py-16 md:py-24 bg-secondary">
-        <div className="container">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold font-headline">Del Blog</h2>
-             <Button variant="link" asChild className="text-accent hover:text-accent/80">
-                <Link href="/blog">
-                    Leer Más <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-            </Button>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {latestPosts.map((post) => (
-              <BlogPostCard key={post.slug} post={post} variant="horizontal" />
-            ))}
-          </div>
-        </div>
-      </section>
+
     </div>
   );
 }
