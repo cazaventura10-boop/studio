@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ShoppingCart, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -15,11 +16,14 @@ const navLinks = [
 
 function Logo() {
   return (
-    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="20" cy="20" r="20" fill="currentColor"/>
-      <path d="M25.8333 26.6667L20 18.3333L14.1667 26.6667H25.8333Z" stroke="#102A27" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M17.5 22.5L20 18.3333L22.5 22.5L17.5 22.5Z" fill="#102A27"/>
-    </svg>
+    <Image 
+        src="https://www.deporteyaventura.es/wp-content/uploads/2025/11/Gemini_Generated_Image_orrzteorrzteorrz__2___1_-removebg-preview.png"
+        alt="Deporte Y Aventura Logo"
+        width={150}
+        height={50}
+        style={{ height: 'auto' }}
+        priority
+    />
   );
 }
 
