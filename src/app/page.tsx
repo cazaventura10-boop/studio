@@ -2,13 +2,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { blogPosts, products } from '@/lib/data';
-import { placeholderImagesById } from '@/lib/placeholder-images';
 import { ProductCard } from './_components/product-card';
 import { BlogPostCard } from './_components/blog-post-card';
 import { ArrowRight } from 'lucide-react';
 
 export default function Home() {
-  const heroImage = placeholderImagesById['hero-background-mountaineer'];
   const featuredProducts = products.slice(0, 3);
   const latestPosts = blogPosts.slice(0, 2);
 
@@ -17,12 +15,12 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative h-screen w-full flex items-center justify-center text-center text-white">
         <Image
-          src={heroImage.imageUrl}
-          alt={heroImage.description}
+          src="https://images.unsplash.com/photo-1533240332313-0dbdd3199049?q=80&w=2070&auto=format&fit=crop"
+          alt="A mountaineer on the left looking at snowy peaks at sunset."
           fill
           priority
           className="object-cover"
-          data-ai-hint={heroImage.imageHint}
+          data-ai-hint="mountaineer sunset"
         />
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 flex flex-col items-center">
