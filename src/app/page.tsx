@@ -25,8 +25,8 @@ const CategoryCard = ({ name, imageSrc, imageHint, href, useBgImage = false }: {
     return (
       <Link href={href} className="group relative block h-80 w-full overflow-hidden rounded-lg">
         <div
-          style={{ backgroundImage: `url(${imageSrc})` }}
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-110"
+          style={{ backgroundImage: `url(${imageSrc})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+          className="absolute inset-0 transition-transform duration-300 group-hover:scale-110"
         ></div>
         {cardContent}
       </Link>
