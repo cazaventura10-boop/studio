@@ -24,7 +24,7 @@ export default function Home() {
           className="object-cover"
           data-ai-hint={heroImage.imageHint}
         />
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 flex flex-col items-center">
           <h1 className="text-4xl md:text-5xl font-extrabold font-headline tracking-tighter uppercase">
             Tu Próxima Cima
@@ -33,7 +33,7 @@ export default function Home() {
             Te Espera
           </p>
           <div className="mt-8">
-            <Button asChild size="lg" className="bg-[#FF5722] text-white font-bold hover:bg-[#FF5722]/90 rounded-full px-10 py-6 text-lg">
+            <Button asChild size="lg" className="bg-orange-500 text-white font-bold hover:bg-orange-500/90 rounded-full px-10 py-6 text-lg border-2 border-orange-400">
               <Link href="/products">EXPLORAR NOVEDADES</Link>
             </Button>
           </div>
