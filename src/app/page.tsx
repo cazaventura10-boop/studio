@@ -26,10 +26,10 @@ export default function Home() {
         />
         <div className="absolute inset-0 bg-black/60" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 flex flex-col items-center">
-          <h1 className="text-6xl md:text-8xl font-extrabold font-headline tracking-tighter uppercase">
+          <h1 className="text-5xl md:text-6xl font-extrabold font-headline tracking-tighter uppercase">
             Tu Próxima Cima
           </h1>
-          <p className="mt-2 text-6xl md:text-8xl font-extrabold font-headline tracking-tighter uppercase">
+          <p className="mt-2 text-5xl md:text-6xl font-extrabold font-headline tracking-tighter uppercase">
             Te Espera
           </p>
           <div className="mt-8">
