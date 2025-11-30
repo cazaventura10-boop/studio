@@ -8,14 +8,14 @@ import { BlogPostCard } from './_components/blog-post-card';
 import { ArrowRight } from 'lucide-react';
 
 export default function Home() {
-  const heroImage = placeholderImagesById['hero-background'];
+  const heroImage = placeholderImagesById['hero-background-mountaineer'];
   const featuredProducts = products.slice(0, 3);
   const latestPosts = blogPosts.slice(0, 2);
 
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative h-[60vh] md:h-[70vh] w-full flex items-center justify-center text-center text-white">
+      <section className="relative h-screen w-full flex items-center justify-center text-center text-white">
         <Image
           src={heroImage.imageUrl}
           alt={heroImage.description}
@@ -24,20 +24,17 @@ export default function Home() {
           className="object-cover"
           data-ai-hint={heroImage.imageHint}
         />
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="relative z-10 max-w-4xl mx-auto px-4">
-          <h1 className="text-4xl md:text-6xl font-extrabold font-headline tracking-tight">
-            Tu Próxima Aventura te Espera
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="relative z-10 max-w-4xl mx-auto px-4 flex flex-col items-center">
+          <h1 className="text-6xl md:text-8xl font-extrabold font-headline tracking-tighter uppercase">
+            Tu Próxima Cima
           </h1>
-          <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-neutral-200">
-            Descubre equipamiento de alta calidad e historias inspiradoras para tus actividades al aire libre.
+          <p className="mt-2 text-6xl md:text-8xl font-extrabold font-headline tracking-tighter uppercase">
+            Te Espera
           </p>
-          <div className="mt-8 flex justify-center gap-4">
-            <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-              <Link href="/products">Comprar Equipamiento</Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-              <Link href="/blog">Leer Artículos</Link>
+          <div className="mt-8">
+            <Button asChild size="lg" className="bg-[#FF5722] text-white font-bold hover:bg-[#FF5722]/90 rounded-full px-10 py-6 text-lg">
+              <Link href="/products">EXPLORAR NOVEDADES</Link>
             </Button>
           </div>
         </div>
