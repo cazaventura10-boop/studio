@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 const CategoryCard = ({ name, imageSrc, imageHint, href, useBgImage = false }: { name: string; imageSrc: string; imageHint: string; href: string, useBgImage?: boolean }) => {
   const cardContent = (
-    <>
+    <Link href={href} className="group relative block h-80 w-full overflow-hidden rounded-lg">
       <div className="absolute inset-0 bg-black/40 transition-colors group-hover:bg-black/60" />
       <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-white">
         <h3 className="font-headline text-3xl font-extrabold uppercase tracking-wider">{name}</h3>
@@ -18,23 +18,23 @@ const CategoryCard = ({ name, imageSrc, imageHint, href, useBgImage = false }: {
            </Button>
         </div>
       </div>
-    </>
+    </Link>
   );
 
   if (useBgImage) {
     return (
-      <Link href={href} className="group relative block h-80 w-full overflow-hidden rounded-lg">
+      <div className="group relative block h-80 w-full overflow-hidden rounded-lg">
         <div
           style={{ backgroundImage: `url(${imageSrc})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
           className="absolute inset-0 transition-transform duration-300 group-hover:scale-110"
         ></div>
         {cardContent}
-      </Link>
+      </div>
     );
   }
 
   return (
-    <Link href={href} className="group relative block h-80 w-full overflow-hidden rounded-lg">
+    <div className="group relative block h-80 w-full overflow-hidden rounded-lg">
       <Image
         src={imageSrc}
         alt={name}
@@ -43,7 +43,7 @@ const CategoryCard = ({ name, imageSrc, imageHint, href, useBgImage = false }: {
         data-ai-hint={imageHint}
       />
       {cardContent}
-    </Link>
+    </div>
   );
 };
 
@@ -79,9 +79,60 @@ export default function Home() {
         <div className="container">
           <h2 className="text-3xl md:text-4xl font-bold font-headline text-center mb-12">Categorías Principales</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <CategoryCard name="TREKKING" imageSrc="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=2070" imageHint="trekking mountain" href="/products?category=Trekking" />
-            <CategoryCard name="CAZA" imageSrc="https://images.unsplash.com/photo-1559160586-7a8e23548958?auto=format&fit=crop&w=800" imageHint="hunting gear" href="/products?category=Caza" useBgImage={true}/>
-            <CategoryCard name="KAYAK" imageSrc="https://images.unsplash.com/photo-1543039625-14cbd3802e7d?q=80&w=2074" imageHint="kayak river" href="/products?category=Kayaking" />
+            <Link href="/products?category=Trekking" className="group relative block h-80 w-full overflow-hidden rounded-lg">
+                <Image
+                    src="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=2070"
+                    alt="TREKKING"
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-110"
+                    data-ai-hint="trekking mountain"
+                />
+                <div className="absolute inset-0 bg-black/40 transition-colors group-hover:bg-black/60" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-white">
+                    <h3 className="font-headline text-3xl font-extrabold uppercase tracking-wider">TREKKING</h3>
+                    <div className="mt-4 h-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <Button variant="secondary" className="bg-white/90 text-foreground hover:bg-white">
+                        Ver Colección <ChevronRight className="ml-2 h-4 w-4" />
+                    </Button>
+                    </div>
+                </div>
+            </Link>
+
+            <Link href="/products?category=Caza" className="group relative block h-80 w-full overflow-hidden rounded-lg cursor-pointer">
+              <img
+                src="https://images.unsplash.com/photo-1476110900293-199427eb3263?q=80&w=2070"
+                alt="Caza en el bosque"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/40 transition-opacity group-hover:bg-black/50"></div>
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-white">
+                <h3 className="font-headline text-3xl font-extrabold uppercase tracking-wider">CAZA</h3>
+                <div className="mt-4 h-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                   <Button variant="secondary" className="bg-white/90 text-foreground hover:bg-white">
+                    Ver Colección <ChevronRight className="ml-2 h-4 w-4" />
+                   </Button>
+                </div>
+              </div>
+            </Link>
+
+            <Link href="/products?category=Kayaking" className="group relative block h-80 w-full overflow-hidden rounded-lg">
+                <Image
+                    src="https://images.unsplash.com/photo-1543039625-14cbd3802e7d?q=80&w=2074"
+                    alt="KAYAK"
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-110"
+                    data-ai-hint="kayak river"
+                />
+                 <div className="absolute inset-0 bg-black/40 transition-colors group-hover:bg-black/60" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-white">
+                    <h3 className="font-headline text-3xl font-extrabold uppercase tracking-wider">KAYAK</h3>
+                    <div className="mt-4 h-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <Button variant="secondary" className="bg-white/90 text-foreground hover:bg-white">
+                        Ver Colección <ChevronRight className="ml-2 h-4 w-4" />
+                    </Button>
+                    </div>
+                </div>
+            </Link>
           </div>
         </div>
       </section>
