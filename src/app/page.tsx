@@ -6,48 +6,6 @@ import { ArrowRight, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
-const CategoryCard = ({ name, imageSrc, imageHint, href, useBgImage = false }: { name: string; imageSrc: string; imageHint: string; href: string, useBgImage?: boolean }) => {
-  const cardContent = (
-    <Link href={href} className="group relative block h-80 w-full overflow-hidden rounded-lg">
-      <div className="absolute inset-0 bg-black/40 transition-colors group-hover:bg-black/60" />
-      <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-white">
-        <h3 className="font-headline text-3xl font-extrabold uppercase tracking-wider">{name}</h3>
-        <div className="mt-4 h-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-           <Button variant="secondary" className="bg-white/90 text-foreground hover:bg-white">
-            Ver Colección <ChevronRight className="ml-2 h-4 w-4" />
-           </Button>
-        </div>
-      </div>
-    </Link>
-  );
-
-  if (useBgImage) {
-    return (
-      <div className="group relative block h-80 w-full overflow-hidden rounded-lg">
-        <div
-          style={{ backgroundImage: `url(${imageSrc})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-          className="absolute inset-0 transition-transform duration-300 group-hover:scale-110"
-        ></div>
-        {cardContent}
-      </div>
-    );
-  }
-
-  return (
-    <div className="group relative block h-80 w-full overflow-hidden rounded-lg">
-      <Image
-        src={imageSrc}
-        alt={name}
-        fill
-        className="object-cover transition-transform duration-300 group-hover:scale-110"
-        data-ai-hint={imageHint}
-      />
-      {cardContent}
-    </div>
-  );
-};
-
-
 export default function Home() {
   const newArrivals = products.slice(0, 5);
 
@@ -79,6 +37,7 @@ export default function Home() {
         <div className="container">
           <h2 className="text-3xl md:text-4xl font-bold font-headline text-center mb-12">Categorías Principales</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Tarjeta Trekking */}
             <Link href="/products?category=Trekking" className="group relative block h-80 w-full overflow-hidden rounded-lg">
                 <Image
                     src="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=2070"
@@ -98,10 +57,14 @@ export default function Home() {
                 </div>
             </Link>
 
+            {/* Tarjeta Caza */}
             <Link href="/products?category=Caza" className="group relative block h-80 w-full overflow-hidden rounded-lg cursor-pointer">
-              <img
-                src="https://images.unsplash.com/photo-1484406566174-9da000c64787?q=80&w=2070"
-                alt="Caza en el bosque"
+              <div
+                style={{
+                  backgroundImage: 'url(https://images.unsplash.com/photo-1484406566174-9da000c64787?q=80&w=2070)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-black/40 transition-opacity group-hover:bg-black/50"></div>
@@ -115,6 +78,7 @@ export default function Home() {
               </div>
             </Link>
 
+            {/* Tarjeta Kayak */}
             <Link href="/products?category=Kayaking" className="group relative block h-80 w-full overflow-hidden rounded-lg">
                 <Image
                     src="https://images.unsplash.com/photo-1543039625-14cbd3802e7d?q=80&w=2074"
