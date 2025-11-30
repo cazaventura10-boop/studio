@@ -14,12 +14,12 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <Link href={`/products/${product.id}`} className="group block h-full">
       <Card className="overflow-hidden h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-white rounded-lg">
-        <div className="relative aspect-[4/3] w-full">
+        <div className="relative aspect-square w-full bg-white">
           <Image
             src={image.imageUrl}
             alt={image.description}
             fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            className="object-contain transition-transform duration-300 group-hover:scale-105"
             data-ai-hint={image.imageHint}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />

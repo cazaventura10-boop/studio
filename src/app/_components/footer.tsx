@@ -11,7 +11,7 @@ export function Footer() {
         alt="Deporte Y Aventura Logo"
         width={150}
         height={50}
-        style={{ height: 'auto' }}
+        style={{ height: 'auto', width: '150px' }}
         priority
       />
     );
