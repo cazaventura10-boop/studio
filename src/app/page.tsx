@@ -5,9 +5,15 @@ import { ProductCard } from './_components/product-card';
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import { placeholderImagesById } from '@/lib/placeholder-images';
 
 export default function Home() {
   const newArrivals = products.slice(0, 5);
+
+  const equipHombre = placeholderImagesById['equip-hombre'];
+  const equipMujer = placeholderImagesById['equip-mujer'];
+  const equipNinos = placeholderImagesById['equip-ninos'];
+  const equipAccesorios = placeholderImagesById['equip-accesorios'];
 
   return (
     <div className="flex flex-col">
@@ -59,13 +65,12 @@ export default function Home() {
 
             {/* Tarjeta Caza */}
             <Link href="/products?category=Caza" className="group relative block h-80 w-full overflow-hidden rounded-lg cursor-pointer">
-              <div
-                style={{
-                  backgroundImage: 'url(https://images.unsplash.com/photo-1484406566174-9da000c64787?q=80&w=2070)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                }}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              <Image
+                src="https://images.unsplash.com/photo-1484406566174-9da000c64787?q=80&w=2070"
+                alt="Caza"
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                data-ai-hint="deer nature"
               />
               <div className="absolute inset-0 bg-black/40 transition-opacity group-hover:bg-black/50"></div>
               <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-white">
@@ -101,6 +106,63 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Equipate para la Aventura Section */}
+      <section className="py-20 md:py-32 bg-background">
+        <div className="container">
+          <h2 className="text-3xl md:text-4xl font-bold font-headline text-center mb-12">Equípate para la Aventura</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <Link href="/products?tag=Hombre" className="group">
+              <div className="relative aspect-[3/4] overflow-hidden">
+                <Image
+                  src={equipHombre.imageUrl}
+                  alt={equipHombre.description}
+                  fill
+                  className="object-contain object-bottom transition-transform duration-300 group-hover:scale-105"
+                  data-ai-hint={equipHombre.imageHint}
+                />
+              </div>
+              <h3 className="mt-4 font-headline text-xl font-semibold">HOMBRE</h3>
+            </Link>
+            <Link href="/products?tag=Mujer" className="group">
+              <div className="relative aspect-[3/4] overflow-hidden">
+                <Image
+                  src={equipMujer.imageUrl}
+                  alt={equipMujer.description}
+                  fill
+                  className="object-contain object-bottom transition-transform duration-300 group-hover:scale-105"
+                  data-ai-hint={equipMujer.imageHint}
+                />
+              </div>
+              <h3 className="mt-4 font-headline text-xl font-semibold">MUJER</h3>
+            </Link>
+            <Link href="/products?tag=Ninos" className="group">
+              <div className="relative aspect-[3/4] overflow-hidden">
+                <Image
+                  src={equipNinos.imageUrl}
+                  alt={equipNinos.description}
+                  fill
+                  className="object-contain object-bottom transition-transform duration-300 group-hover:scale-105"
+                  data-ai-hint={equipNinos.imageHint}
+                />
+              </div>
+              <h3 className="mt-4 font-headline text-xl font-semibold">NIÑOS</h3>
+            </Link>
+            <Link href="/products?tag=Accesorios" className="group">
+              <div className="relative aspect-[3/4] overflow-hidden">
+                <Image
+                  src={equipAccesorios.imageUrl}
+                  alt={equipAccesorios.description}
+                  fill
+                  className="object-contain object-bottom transition-transform duration-300 group-hover:scale-105"
+                  data-ai-hint={equipAccesorios.imageHint}
+                />
+              </div>
+              <h3 className="mt-4 font-headline text-xl font-semibold">ACCESORIOS</h3>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* New Arrivals */}
       <section className="py-20 md:py-32 bg-secondary">
         <div className="container">
@@ -123,3 +185,4 @@ export default function Home() {
     </div>
   );
 }
+    

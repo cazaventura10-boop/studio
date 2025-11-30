@@ -51,7 +51,7 @@
     {
       "id": "product-polar-mujer",
       "description": "Women's fleece jacket.",
-      "imageUrl": "https://images.unsplash.com/photo-1736427916686-11964a27e870?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxmbGVlY2UlMjBqYWNrZXR8ZW58MHx8fHwxNzY0NTI5ODkwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1736427916686-11964a27e870?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxmbGVlY2UlMjBqYWNrZXR8ZW58MHx8fHwxNzY0NTImaWNj&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "fleece jacket"
     },
     {
@@ -101,6 +101,30 @@
       "description": "A scenic hiking trail through a sunlit forest.",
       "imageUrl": "https://images.unsplash.com/photo-1595202761821-57d3a4e5dc9f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxoaWtpbmclMjB0cmFpbHxlbnwwfHx8fDE3NjQ0NjY1MzB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "hiking trail"
+    },
+    {
+      "id": "equip-hombre",
+      "description": "Full body shot of a male mountaineer in technical gear.",
+      "imageUrl": "https://images.unsplash.com/photo-1613713569254-7fee3cbb1afa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtb3VudGFpbmVlciUyMG1hbnxlbnwwfHx8fDE3NjQ1MzQ2Nzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mountaineer man"
+    },
+    {
+      "id": "equip-mujer",
+      "description": "Full body shot of a female mountaineer in technical gear.",
+      "imageUrl": "https://images.unsplash.com/photo-1555060904-da25f20519d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtb3VudGFpbmVlciUyMHdvbWFufGVufDB8fHx8MTc2NDUzNDY3OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mountaineer woman"
+    },
+    {
+      "id": "equip-ninos",
+      "description": "A child in outdoor adventure clothing.",
+      "imageUrl": "https://images.unsplash.com/photo-1763819089956-5749bf52653c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhZHZlbnR1cmUlMjBjaGlsZHxlbnwwfHx8fDE3NjQ1MzQ2Nzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "adventure child"
+    },
+    {
+      "id": "equip-accesorios",
+      "description": "A close-up of a hiking backpack.",
+      "imageUrl": "https://images.unsplash.com/photo-1622260615656-96d7c7ad6c4c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxoaWtpbmclMjBiYWNrcGFja3xlbnwwfHx8fDE3NjQ0ODQzNzF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hiking backpack"
     }
   ]
 }
