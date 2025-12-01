@@ -12,11 +12,16 @@ interface GetProductsParams {
 
 export async function getProducts(params: GetProductsParams = {}): Promise<WooProduct[]> {
     try {
-        const apiParams = {
+        const apiParams: { [key: string]: any } = {
             per_page: params.per_page || 50,
             status: params.status || 'publish',
-            ...params
         };
+
+        // Combina category, tag y search en un solo término de búsqueda.
+        const searchTerm = [params.search, params.category, params.tag].filter(Boolean).join(' ');
+        if (searchTerm) {
+            apiParams.search = searchTerm;
+        }
 
         const { data } = await wooApi.get("products", apiParams);
         
@@ -100,7 +105,7 @@ export const blogPosts: BlogPost[] = [
       <h3>Equipo Multiusos</h3>
       <p>Cada artículo debe ser examinado. ¿Puede un artículo servir para múltiples propósitos? Por ejemplo, tus bastones de trekking también se pueden usar como postes para tu tienda. Una bandana puede ser un agarrador de ollas, una toalla y un pre-filtro de agua.</p>
       <h3>Abraza el Minimalismo</h3>
-      <p>¿Realmente necesitas esa silla de campamento, un juego extra de ropa o un cuchillo grande? Cuestiona cada artículo que empacas. Cuanto menos lleves, más podrás conectar con tu entorno. Se trata de cambiar tu mentalidad de "¿y si necesito esto?" a "¿puedo arreglármelas sin esto?". Este enfoque no solo aligera tu carga, sino que también simplifica toda tu experiencia de senderismo.</p>
+      <p>¿Realmente necesitas esa silla de campamento, un juego extra de ropa o un cuchillo grande? Cuestiona cada artículo que empacas. Cuanto menos lleves, más podrás conectar con tu entorno. Se trata de cambiar tu mentalidad de "¿y si necesito esto?" a "¿puedo arreglármelas sin esto?". Este enfoque no solo aligera tu carga, sino que also simplifica toda tu experiencia de senderismo.</p>
     `,
     category: 'Hiking',
     image: 'blog-trail',

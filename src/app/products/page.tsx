@@ -1,4 +1,3 @@
-
 import { getProducts } from '@/lib/data';
 import type { Product } from '@/lib/types';
 import { ProductCard } from '@/app/_components/product-card';
@@ -17,12 +16,28 @@ export default async function ProductsPage({
   const searchQuery = typeof searchParams.q === 'string' ? searchParams.q : '';
 
   let products: Product[] = [];
+  let pageTitle = "Nuestros Productos";
+  let pageDescription = "Equipamiento de alta calidad para cada una de tus necesidades.";
+
+  if (category) {
+      pageTitle = `Categoría: ${category}`;
+      pageDescription = `Explora todos nuestros productos en la categoría ${category}.`;
+  }
+  if (tag) {
+      pageTitle = `Etiqueta: ${tag}`;
+      pageDescription = `Productos etiquetados como ${tag}.`;
+  }
+   if (searchQuery) {
+      pageTitle = `Búsqueda: "${searchQuery}"`;
+      pageDescription = `Resultados para tu búsqueda de "${searchQuery}".`;
+  }
+
 
   try {
     const params: { category?: string; tag?: string; search?: string } = {};
-    if (category) params.category = category;
-    if (tag) params.tag = tag;
-    if (searchQuery) params.search = searchQuery;
+    if (category) params.search = category; // Usar category como término de búsqueda
+    if (tag) params.search = (params.search ? params.search + ' ' : '') + tag; // Añadir tag a la búsqueda
+    if (searchQuery) params.search = (params.search ? params.search + ' ' : '') + searchQuery; // Añadir query a la búsqueda
     
     products = await getProducts(params);
   } catch (error) {
@@ -33,9 +48,9 @@ export default async function ProductsPage({
   return (
     <div className="container py-12 md:py-16">
         <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-extrabold font-headline tracking-tight">Nuestros Productos</h1>
+            <h1 className="text-4xl md:text-5xl font-extrabold font-headline tracking-tight">{pageTitle}</h1>
             <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-              Equipamiento de alta calidad para cada una de tus necesidades.
+              {pageDescription}
             </p>
         </div>
 
