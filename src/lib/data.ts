@@ -1,79 +1,39 @@
-import type { BlogPost, Product } from '@/lib/types';
+import type { BlogPost, Product as WooProduct } from '@/lib/types';
+import wooApi from '@/lib/woo';
 
-export const products: Product[] = [
-  {
-    id: 'nw-extreme-gris',
-    name: 'Pantalón Newwood Extreme (Gris)',
-    description: 'Pantalón técnico para caza y aventura, resistente y cómodo en color gris.',
-    price: 49.90,
-    category: 'Caza',
-    image: 'product-pant-gris',
-  },
-  {
-    id: 'nw-extreme-drift-azul',
-    name: 'Pantalón Newwood Extreme Drift (Azul)',
-    description: 'Pantalón técnico para caza y aventura, resistente y cómodo en color azul.',
-    price: 49.90,
-    category: 'Caza',
-    image: 'product-pant-azul',
-  },
-  {
-    id: 'joluvi-wind-vino',
-    name: 'Sudadera Joluvi Wind (Vino)',
-    description: 'Sudadera cortavientos en color vino, ideal para actividades al aire libre.',
-    price: 29.90,
-    category: 'Trekking',
-    image: 'product-sudadera-vino',
-  },
-  {
-    id: 'joluvi-wind-verde',
-    name: 'Sudadera Joluvi Wind (Verde)',
-    description: 'Sudadera cortavientos en color verde, perfecta para protegerte en tus rutas.',
-    price: 29.90,
-    category: 'Trekking',
-    image: 'product-sudadera-verde',
-  },
-    {
-    id: 'joluvi-alpha-mujer',
-    name: 'Chaqueta Polar Mujer Joluvi Alpha',
-    description: 'Chaqueta polar para mujer, cálida y confortable para los días más fríos.',
-    price: 39.90,
-    category: 'Trekking',
-    image: 'product-polar-mujer',
-  },
-  {
-    id: '1',
-    name: 'Kayak Explorador',
-    description: 'Un kayak estable y versátil para todas tus aventuras acuáticas. Perfecto para lagos, ríos y aguas costeras. Fabricado con polietileno duradero, cuenta con un cómodo sistema de asiento, amplio espacio de almacenamiento y reposapiés ajustables. Su diseño elegante garantiza un excelente seguimiento y velocidad.',
-    price: 630.00,
-    category: 'Kayaking',
-    image: 'product-kayak',
-  },
-  {
-    id: '2',
-    name: 'Tienda de Campaña Salvaje',
-    description: 'Una tienda de campaña para 2 personas, ligera y duradera, ideal para mochileros y acampada. Cuenta con un cubretecho de cobertura total, dos puertas grandes para facilitar la entrada y salida, y bolsillos interiores para organización. Fácil de montar y desmontar, proporciona un refugio fiable en diversas condiciones climáticas.',
-    price: 225.00,
-    category: 'Camping',
-    image: 'product-tent',
-  },
-  {
-    id: '3',
-    name: 'Botas de Senderismo Summit',
-    description: 'Conquista cualquier sendero con estas botas de senderismo impermeables y transpirables. La suela robusta proporciona una excelente tracción, mientras que la entresuela acolchada ofrece comodidad durante todo el día. El forro de Gore-Tex mantiene los pies secos y el diseño de apoyo protege los tobillos en terrenos irregulares.',
-    price: 160.00,
-    category: 'Hiking',
-    image: 'product-hiking-boots',
-  },
-  {
-    id: '4',
-    name: 'Mochila de Trekking 65L',
-    description: 'Una mochila espaciosa y cómoda para caminatas de varios días. Cuenta con un sistema de arnés ajustable, múltiples compartimentos para organización y una funda para la lluvia integrada. El tejido duradero y la construcción robusta pueden soportar los rigores del sendero. Compatible con sistemas de hidratación.',
-    price: 200.00,
-    category: 'Hiking',
-    image: 'product-backpack',
-  },
-];
+export async function getProducts(): Promise<WooProduct[]> {
+    try {
+        const { data } = await wooApi.get("products", {
+            per_page: 20,
+            status: 'publish',
+        });
+        
+        // Map WooCommerce product data to our Product type
+        const products: WooProduct[] = data.map((product: any) => ({
+            id: product.id,
+            name: product.name,
+            description: product.description,
+            price: parseFloat(product.price),
+            // We'll take the first category name
+            category: product.categories.length > 0 ? product.categories[0].name : 'Uncategorized',
+            images: product.images,
+            permalink: product.permalink,
+            categories: product.categories,
+        }));
+
+        return products;
+
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error('Error fetching products from WooCommerce:', error.message);
+        } else {
+            console.error('An unknown error occurred while fetching products.');
+        }
+        // Return an empty array or handle error as needed
+        return [];
+    }
+}
+
 
 export const blogPosts: BlogPost[] = [
   {

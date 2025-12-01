@@ -1,26 +1,52 @@
 'use client';
 
-import { useState, useMemo, Suspense } from 'react';
+import { useState, useMemo, Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { products } from '@/lib/data';
+import { getProducts } from '@/lib/data';
+import type { Product } from '@/lib/types';
 import { ProductCard } from '@/app/_components/product-card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-
-const allCategories = ['All', ...Array.from(new Set(products.map(p => p.category)))];
+import { Skeleton } from '@/components/ui/skeleton';
 
 function ProductsContent() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('q') || '';
+  const categoryQuery = searchParams.get('category');
+  
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const [allCategories, setAllCategories] = useState<string[]>(['All']);
   const [selectedCategory, setSelectedCategory] = useState('All');
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      const fetchedProducts = await getProducts();
+      setProducts(fetchedProducts);
+      
+      const categories = ['All', ...Array.from(new Set(fetchedProducts.map(p => p.category)))];
+      setAllCategories(categories);
+
+      if (categoryQuery && categories.includes(categoryQuery)) {
+        setSelectedCategory(categoryQuery);
+      } else {
+        setSelectedCategory('All');
+      }
+
+      setLoading(false);
+    };
+    fetchProducts();
+  }, [categoryQuery]);
 
   const filteredProducts = useMemo(() => {
     return products.filter(product => {
-      const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
+      const matchesCategory = selectedCategory === 'All' || product.categories.some(cat => cat.name === selectedCategory);
       const matchesSearch = searchQuery ? product.name.toLowerCase().includes(searchQuery.toLowerCase()) || product.description.toLowerCase().includes(searchQuery.toLowerCase()) : true;
       return matchesCategory && matchesSearch;
     });
-  }, [selectedCategory, searchQuery]);
+  }, [selectedCategory, searchQuery, products]);
 
   return (
     <>
@@ -37,7 +63,19 @@ function ProductsContent() {
         ))}
       </div>
 
-      {filteredProducts.length > 0 ? (
+      {loading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="flex flex-col space-y-3">
+              <Skeleton className="h-[250px] w-full rounded-xl" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-[200px]" />
+                <Skeleton className="h-4 w-[100px]" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : filteredProducts.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />

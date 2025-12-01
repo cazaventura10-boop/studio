@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { products } from '@/lib/data';
-import { placeholderImagesById } from '@/lib/placeholder-images';
+import { getProducts } from '@/lib/data';
+import type { Product } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ShoppingCart, Package, Truck, ShieldCheck, ArrowRight } from 'lucide-react';
@@ -14,27 +14,52 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { ProductCard } from '@/app/_components/product-card';
 import Link from 'next/link';
+import wooApi from '@/lib/woo';
 
 type Props = {
   params: { id: string };
 };
 
 export async function generateStaticParams() {
+  const products = await getProducts();
   return products.map((product) => ({
-    id: product.id,
+    id: String(product.id),
   }));
 }
 
-export default function ProductDetailPage({ params }: Props) {
-  const product = products.find((p) => p.id === params.id);
+async function getProduct(id: string): Promise<Product | null> {
+    try {
+        const { data } = await wooApi.get(`products/${id}`);
+        if (!data) return null;
+
+        return {
+            id: data.id,
+            name: data.name,
+            description: data.description,
+            price: parseFloat(data.price),
+            category: data.categories.length > 0 ? data.categories[0].name : 'Uncategorized',
+            images: data.images,
+            permalink: data.permalink,
+            categories: data.categories,
+        };
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+export default async function ProductDetailPage({ params }: Props) {
+  const product = await getProduct(params.id);
 
   if (!product) {
     notFound();
   }
   
-  const relatedProducts = products.filter(p => p.id !== product.id && p.category === product.category).slice(0, 4);
+  const allProducts = await getProducts();
+  const relatedProducts = allProducts.filter(p => p.id !== product.id && p.category === product.category).slice(0, 4);
 
-  const image = placeholderImagesById[product.image];
+  const image = product.images?.[0];
+  const placeholderImage = "https://placehold.co/600x600/eee/ccc?text=No+Image";
   const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
 
   return (
@@ -46,12 +71,11 @@ export default function ProductDetailPage({ params }: Props) {
         <div className="md:sticky md:top-24 self-start">
             <div className="relative aspect-square w-full">
             <Image
-                src={image.imageUrl}
-                alt={image.description}
+                src={image?.src || placeholderImage}
+                alt={image?.alt || product.name}
                 fill
                 priority
                 className="object-cover rounded-lg shadow-lg"
-                data-ai-hint={image.imageHint}
                 sizes="(max-width: 768px) 100vw, 50vw"
             />
             </div>
@@ -97,10 +121,7 @@ export default function ProductDetailPage({ params }: Props) {
                            <Package className="h-5 w-5" /> Descripción
                         </div>
                     </AccordionTrigger>
-                    <AccordionContent className="prose prose-sm text-muted-foreground pt-2">
-                       <p>Diseñados para los aventureros más exigentes, estos pantalones de trekking ofrecen una combinación inigualable de resistencia y confort. Su tejido técnico, reforzado en zonas clave, soporta la abrasión de rocas y vegetación densa, garantizando una durabilidad excepcional en los terrenos más hostiles.</p>
-                       <p>La clave de su rendimiento reside en la tecnología de tejido elástico en 4 direcciones, que acompaña cada uno de tus movimientos sin restricciones. Ya sea ascendiendo una pendiente pronunciada o navegando por un sendero complicado, sentirás una libertad total. Además, su diseño ligero y transpirable te mantendrá fresco y seco durante toda la jornada.</p>
-                    </AccordionContent>
+                    <AccordionContent className="prose prose-sm text-muted-foreground pt-2" dangerouslySetInnerHTML={{ __html: product.description || 'Sin descripción.'}} />
                 </AccordionItem>
                 <AccordionItem value="features">
                     <AccordionTrigger className="text-lg font-semibold">

@@ -26,6 +26,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'www.deporteyaventura.es',
       },
+      {
+        protocol: 'https',
+        hostname: 'deporteyaventura.es',
+      }
     ],
   },
 };

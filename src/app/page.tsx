@@ -1,14 +1,15 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { products } from '@/lib/data';
+import { getProducts } from '@/lib/data';
 import { ProductCard } from './_components/product-card';
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { placeholderImagesById } from '@/lib/placeholder-images';
 
-export default function Home() {
-  const newArrivals = products.slice(0, 5);
+export default async function Home() {
+  const allProducts = await getProducts();
+  const newArrivals = allProducts.slice(0, 5);
 
   const equipHombre = placeholderImagesById['equip-hombre'];
   const equipMujer = placeholderImagesById['equip-mujer'];

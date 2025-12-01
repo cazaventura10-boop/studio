@@ -1,10 +1,20 @@
 export interface Product {
-  id: string;
+  id: number;
   name: string;
   description: string;
   price: number;
-  category: 'Kayaking' | 'Camping' | 'Hiking' | 'Caza' | 'Trekking';
-  image: string; // id from placeholder-images.json
+  category: string; // This will now be a string from WooCommerce
+  images: {
+    id: number;
+    src: string;
+    alt: string;
+  }[];
+  permalink: string;
+  categories: {
+      id: number;
+      name: string;
+      slug: string;
+  }[];
 }
 
 export interface BlogPost {
