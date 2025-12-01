@@ -1,4 +1,3 @@
-
 import { getProducts } from '@/lib/data';
 import type { Product } from '@/lib/types';
 import { ProductCard } from '@/app/_components/product-card';
@@ -12,9 +11,9 @@ export default async function ProductsPage({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  // 1. Capturamos el término de la URL (sea category, tag o una búsqueda directa)
-  const rawSearchTerm = searchParams.category || searchParams.tag || searchParams.q || '';
-  // 2. LIMPIEZA: Quitamos guiones y los cambiamos por espacios para una búsqueda flexible.
+  // CAMBIO CLAVE: Buscamos primero el tag (más específico), luego la category y finalmente la búsqueda general.
+  const rawSearchTerm = searchParams.tag || searchParams.category || searchParams.q || '';
+  // LIMPIEZA: Quitamos guiones y los cambiamos por espacios para una búsqueda flexible.
   const searchTerm = String(rawSearchTerm).replace(/-/g, ' ');
 
   let products: Product[] = [];
@@ -27,8 +26,12 @@ export default async function ProductsPage({
   }
 
   try {
-    // 3. Usamos el término de búsqueda limpio para llamar a la API.
-    products = await getProducts({ search: searchTerm });
+    // Usamos el término de búsqueda limpio para llamar a la API.
+    if (searchTerm) {
+        products = await getProducts({ search: searchTerm });
+    } else {
+        products = await getProducts({});
+    }
   } catch (error) {
     console.error("Error cargando productos desde WooCommerce:", error);
     // products se queda como un array vacío y se mostrará el mensaje de error
@@ -51,7 +54,7 @@ export default async function ProductsPage({
         </div>
       ) : (
         <div className="text-center py-20 bg-secondary rounded-xl">
-          <h2 className="text-2xl font-semibold mb-4 font-headline">Vaya, no hemos encontrado productos aquí.</h2>
+          <h2 className="text-2xl font-semibold mb-4 font-headline">Vaya, no hemos encontrado productos para "{searchTerm}"</h2>
           <p className="text-muted-foreground">Prueba a buscar en otra categoría o vuelve al inicio.</p>
           <Link href="/products" className="mt-6 inline-block bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition">
             Ver todos los productos
