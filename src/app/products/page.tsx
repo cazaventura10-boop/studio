@@ -11,30 +11,28 @@ export default async function ProductsPage({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  // CAMBIO CLAVE: Buscamos primero el tag (más específico), luego la category y finalmente la búsqueda general.
-  const rawSearchTerm = searchParams.tag || searchParams.category || searchParams.q || '';
-  // LIMPIEZA: Quitamos guiones y los cambiamos por espacios para una búsqueda flexible.
-  const searchTerm = String(rawSearchTerm).replace(/-/g, ' ');
+  // CAMBIO CLAVE: Priorizamos tag, luego category, y finalmente la búsqueda general 'q'.
+  const tag = typeof searchParams.tag === 'string' ? searchParams.tag : '';
+  const category = typeof searchParams.category === 'string' ? searchParams.category : '';
+  const searchQuery = typeof searchParams.q === 'string' ? searchParams.q : '';
 
   let products: Product[] = [];
   let pageTitle = "Nuestros Productos";
   let pageDescription = "Equipamiento de alta calidad para cada una de tus necesidades.";
-
-  if (searchTerm) {
-    pageTitle = `Búsqueda: "${searchTerm}"`;
-    pageDescription = `Resultados para tu búsqueda de "${searchTerm}".`;
-  }
+  let displayTerm = tag.replace(/-/g, ' ') || category.replace(/-/g, ' ') || searchQuery;
 
   try {
-    // Usamos el término de búsqueda limpio para llamar a la API.
-    if (searchTerm) {
-        products = await getProducts({ search: searchTerm });
-    } else {
-        products = await getProducts({});
-    }
+    // La lógica de la llamada a la API es ahora más inteligente.
+    // Le pasamos los parámetros y dejamos que getProducts decida la mejor estrategia.
+    products = await getProducts({ tag, category, search: searchQuery });
   } catch (error) {
     console.error("Error cargando productos desde WooCommerce:", error);
     // products se queda como un array vacío y se mostrará el mensaje de error
+  }
+  
+  if (displayTerm) {
+    pageTitle = `Búsqueda: "${displayTerm}"`;
+    pageDescription = `Resultados para tu búsqueda de "${displayTerm}".`;
   }
 
   return (
@@ -54,7 +52,7 @@ export default async function ProductsPage({
         </div>
       ) : (
         <div className="text-center py-20 bg-secondary rounded-xl">
-          <h2 className="text-2xl font-semibold mb-4 font-headline">Vaya, no hemos encontrado productos para "{searchTerm}"</h2>
+          <h2 className="text-2xl font-semibold mb-4 font-headline">Vaya, no hemos encontrado productos para "{displayTerm}"</h2>
           <p className="text-muted-foreground">Prueba a buscar en otra categoría o vuelve al inicio.</p>
           <Link href="/products" className="mt-6 inline-block bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition">
             Ver todos los productos

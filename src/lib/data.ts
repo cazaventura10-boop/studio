@@ -6,7 +6,7 @@ interface GetProductsParams {
   per_page?: number;
   status?: string;
   category?: string;
-  tag?: string;
+  tag?: string; // Se usará para buscar por slug de etiqueta
   search?: string;
 }
 
@@ -17,15 +17,33 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             status: params.status || 'publish',
         };
 
-        // Combina category, tag y search en un solo término de búsqueda.
-        // Reemplaza guiones por espacios para una búsqueda más flexible.
-        const rawSearchTerm = [params.search, params.category, params.tag].filter(Boolean).join(' ');
-        const searchTerm = rawSearchTerm.replace(/-/g, ' ');
-
-        if (searchTerm) {
-            apiParams.search = searchTerm;
+        // Si se proporciona un 'tag', necesitamos encontrar el ID de esa etiqueta primero
+        if (params.tag) {
+            const tagsResponse = await wooApi.get("products/tags", { slug: params.tag.toLowerCase() });
+            if (tagsResponse.data.length > 0) {
+                apiParams.tag = tagsResponse.data[0].id;
+            } else {
+                // Si no se encuentra el tag, es probable que no haya productos, pero hacemos una búsqueda de texto como respaldo.
+                 apiParams.search = params.tag.replace(/-/g, ' ');
+            }
+        }
+        
+        // Si se proporciona 'search' (y no se usó tag), se usa para búsqueda de texto
+        if (params.search && !params.tag) {
+            apiParams.search = params.search;
         }
 
+        // Si se proporciona 'category' (y no se usó tag), se busca el ID de la categoría
+        if (params.category && !params.tag) {
+             const catsResponse = await wooApi.get("products/categories", { slug: params.category.toLowerCase() });
+             if (catsResponse.data.length > 0) {
+                apiParams.category = catsResponse.data[0].id;
+            } else {
+                 // Fallback a búsqueda de texto si no se encuentra la categoría
+                 apiParams.search = params.category.replace(/-/g, ' ');
+            }
+        }
+        
         const { data } = await wooApi.get("products", apiParams);
         
         const products: WooProduct[] = data.map((product: any) => ({
