@@ -93,7 +93,14 @@ const trekkingMujer: NavLink[] = [
                 href: '/products?category=Trekking&tag=Pantalones-Mujer',
                 children: [
                     { title: 'Pantalones Invierno', href: '/products?tag=Pantalones-Invierno-Mujer' },
-                    { title: 'Pantalones Primavera/Verano', href: '/products?tag=Pantalones-Verano-Mujer' }
+                    { 
+                        title: 'Pantalones Primavera/Verano', 
+                        href: '/products?tag=Pantalones-Verano-Mujer',
+                         children: [
+                            { title: 'Pantalones largos y desmontables', href: '/products?tag=Pantalones-Largos-Mujer' },
+                            { title: 'Cortos y piratas', href: '/products?tag=Pantalones-Cortos-Mujer' },
+                        ]
+                    }
                 ],
             },
             {
@@ -144,7 +151,7 @@ const cazaLinks: NavLink[] = [
 ];
 
 const kayakLinks: NavLink[] = [
-    { title: "Kayaks Rígidos", href: '/products?category=Kayaking&tag=Kayaks-Rígidos' },
+    { title: "Kayaks Rígidos", href: '/products?category=Kayaking&tag=Kayaks-Rigidos' },
     { title: "Kayaks Hinchables", href: '/products?category=Kayaking&tag=Kayaks-Hinchables' },
     { title: "Palas y Remos", href: '/products?category=Kayaking&tag=Palas-y-Remos' },
     { title: "Chalecos Salvavidas", href: '/products?category=Kayaking&tag=Chalecos-Salvavidas' },
