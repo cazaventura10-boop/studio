@@ -15,31 +15,24 @@ export default async function ProductsPage({
   const tag = typeof searchParams.tag === 'string' ? searchParams.tag : '';
   const searchQuery = typeof searchParams.q === 'string' ? searchParams.q : '';
 
+  // 1. Combinamos todos los posibles filtros en un solo término de búsqueda.
+  const rawSearchTerm = [category, tag, searchQuery].filter(Boolean).join(' ');
+  // 2. LIMPIEZA: Reemplazamos guiones por espacios para una búsqueda flexible.
+  const searchTerm = rawSearchTerm.replace(/-/g, ' ');
+
   let products: Product[] = [];
   let pageTitle = "Nuestros Productos";
   let pageDescription = "Equipamiento de alta calidad para cada una de tus necesidades.";
 
-  if (category) {
-      pageTitle = `Categoría: ${category}`;
-      pageDescription = `Explora todos nuestros productos en la categoría ${category}.`;
-  }
-  if (tag) {
-      pageTitle = `Etiqueta: ${tag}`;
-      pageDescription = `Productos etiquetados como ${tag}.`;
-  }
-   if (searchQuery) {
-      pageTitle = `Búsqueda: "${searchQuery}"`;
-      pageDescription = `Resultados para tu búsqueda de "${searchQuery}".`;
+  if (searchTerm) {
+    pageTitle = `Búsqueda: "${searchTerm}"`;
+    pageDescription = `Resultados para tu búsqueda de "${searchTerm}".`;
   }
 
 
   try {
-    const params: { category?: string; tag?: string; search?: string } = {};
-    if (category) params.search = category; // Usar category como término de búsqueda
-    if (tag) params.search = (params.search ? params.search + ' ' : '') + tag; // Añadir tag a la búsqueda
-    if (searchQuery) params.search = (params.search ? params.search + ' ' : '') + searchQuery; // Añadir query a la búsqueda
-    
-    products = await getProducts(params);
+    // 3. Usamos el término de búsqueda limpio para llamar a la API.
+    products = await getProducts({ search: searchTerm });
   } catch (error) {
     console.error("Error cargando productos desde WooCommerce:", error);
     // products se queda como un array vacío y se mostrará el mensaje de error
