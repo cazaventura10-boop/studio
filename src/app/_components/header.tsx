@@ -40,7 +40,7 @@ const trekkingHombre: NavLink[] = [
         title: 'Pantalones de Hombre',
         href: '/products?category=Trekking&tag=Pantalones-Hombre',
         children: [
-          { title: 'Pantalones Invierno', href: '/products?tag=Pantalones-Invierno-Hombre' },
+          { title: 'Pantalones Invierno Hombre', href: '/products?tag=Pantalones-Invierno-Hombre' },
           { 
             title: 'Pantalones Primavera/Verano', 
             href: '/products?category=Trekking&tag=Pantalones-Verano-Hombre',
