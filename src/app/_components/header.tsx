@@ -84,47 +84,65 @@ const trekkingHombre: NavLink[] = [
 ];
 
 const trekkingMujer: NavLink[] = [
-  {
-    title: 'ROPA DE MUJER',
-    href: '/products?category=Trekking&tag=Ropa-Mujer',
-    children: [
-      {
-        title: 'Pantalones',
-        href: '/products?category=Trekking&tag=Pantalones-Mujer',
+    {
+        title: 'ROPA DE MUJER',
+        href: '/products?category=Trekking&tag=Ropa-Mujer',
         children: [
-           { title: 'Invierno/Verano', href: '/products?category=Trekking&tag=Pantalones-Temporada-Mujer' },
-        ]
-      },
-      { title: 'Chaquetas', href: '/products?category=Trekking&tag=Chaquetas-Mujer' },
-      { title: 'Sudaderas', href: '/products?category=Trekking&tag=Sudaderas-Mujer' },
-      { title: 'Camisetas', href: '/products?category=Trekking&tag=Camisetas-Mujer' },
-    ],
-  },
-  {
-    title: 'CALZADO DE MUJER',
-    href: '/products?category=Trekking&tag=Calzado-Mujer',
-    children: [
-      { title: 'Botas Trekking', href: '/products?category=Trekking&tag=Botas-Mujer' },
-      { title: 'Zapatillas Trekking', href: '/products?category=Trekking&tag=Zapatillas-Mujer' },
-      { title: 'Sandalias', href: '/products?category=Trekking&tag=Sandalias-Mujer' },
-    ],
-  },
+            {
+                title: 'Pantalones de Mujer',
+                href: '/products?category=Trekking&tag=Pantalones-Mujer',
+                children: [
+                    { title: 'Pantalones Invierno', href: '/products?tag=Pantalones-Invierno-Mujer' },
+                    { title: 'Pantalones Primavera/Verano', href: '/products?tag=Pantalones-Verano-Mujer' }
+                ],
+            },
+            {
+                title: 'Chaquetas de Mujer',
+                href: '/products?category=Trekking&tag=Chaquetas-Mujer',
+                children: [
+                    { title: 'Softshell y Térmicas', href: '/products?tag=Softshell-Mujer' },
+                    { title: 'Cortavientos e Impermeables', href: '/products?tag=Cortavientos-Mujer' },
+                    { title: 'Plumas y Primaloft', href: '/products?tag=Plumas-Mujer' },
+                ],
+            },
+            { title: 'Chalecos de Mujer', href: '/products?tag=Chalecos-Mujer' },
+            { title: 'Sudaderas de Mujer', href: '/products?tag=Sudaderas-Mujer' },
+            {
+                title: 'Camisetas de Mujer',
+                href: '/products?category=Trekking&tag=Camisetas-Mujer',
+                children: [
+                    { title: 'Térmicas y Manga Larga', href: '/products?tag=Camisetas-Larga-Mujer' },
+                    { title: 'Manga Corta', href: '/products?tag=Camisetas-Corta-Mujer' },
+                ],
+            },
+        ],
+    },
+    {
+        title: 'CALZADO DE MUJER',
+        href: '/products?category=Trekking&tag=Calzado-Mujer',
+        children: [
+            { title: 'Botas Trekking', href: '/products?tag=Botas-Trekking-Mujer' },
+            { title: 'Zapatillas Trekking', href: '/products?tag=Zapatillas-Trekking-Mujer' },
+            { title: 'Sandalias', href: '/products?tag=Sandalias-Mujer' },
+        ],
+    },
 ];
 
 const trekkingComplementos: NavLink[] = [
-  { title: "Mochilas", href: '/products?category=Trekking&tag=Mochilas'},
-  { title: "Gorros", href: '/products?category=Trekking&tag=Gorros'},
-  { title: "Bastones", href: '/products?category=Trekking&tag=Bastones'}
+    { title: "Mochilas", href: '/products?tag=Mochilas'},
+    { title: "Gorros y Gorras", href: '/products?tag=Gorros-Gorras'},
+    { title: "Bastones", href: '/products?tag=Bastones'}
 ];
 
 const cazaLinks: NavLink[] = [
-    { title: "Botas de Caza", href: '/products?category=Caza&tag=Botas-de-Caza' },
-    { title: "Pantalones", href: '/products?category=Caza&tag=Pantalones' },
-    { title: "Chaquetas", href: '/products?category=Caza&tag=Chaquetas' },
-    { title: "Chalecos", href: '/products?category=Caza&tag=Chalecos' },
-    { title: "Camisas", href: '/products?category=Caza&tag=Camisas' },
-    { title: "Varios", href: '/products?category=Caza&tag=Varios' }
+    { title: "Botas de Caza", href: '/products?tag=Botas-de-Caza' },
+    { title: "Pantalones Caza", href: '/products?tag=Pantalones-Caza' },
+    { title: "Chaquetas de Caza", href: '/products?tag=Chaquetas-Caza' },
+    { title: "Chalecos de Caza", href: '/products?tag=Chalecos-Caza' },
+    { title: "Camisas y Camisetas", href: '/products?tag=Camisas-Camisetas-Caza' },
+    { title: "Varios Caza", href: '/products?tag=Varios-Caza' }
 ];
+
 const kayakLinks: NavLink[] = [
     { title: "Kayaks Rígidos", href: '/products?category=Kayaking&tag=Kayaks-Rígidos' },
     { title: "Kayaks Hinchables", href: '/products?category=Kayaking&tag=Kayaks-Hinchables' },
