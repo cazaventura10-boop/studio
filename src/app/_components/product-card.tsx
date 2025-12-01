@@ -13,13 +13,13 @@ export function ProductCard({ product }: ProductCardProps) {
   const image = placeholderImagesById[product.image];
   return (
     <Link href={`/products/${product.id}`} className="group block h-full">
-      <Card className="overflow-hidden h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-white rounded-lg">
-        <div className="relative aspect-square w-full bg-white">
+      <Card className="overflow-hidden h-full transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-2 bg-white rounded-lg">
+        <div className="relative aspect-square w-full bg-white overflow-hidden">
           <Image
             src={image.imageUrl}
             alt={image.description}
             fill
-            className="object-contain transition-transform duration-300 group-hover:scale-105"
+            className="object-contain transition-transform duration-300 ease-in-out group-hover:scale-110"
             data-ai-hint={image.imageHint}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
