@@ -185,7 +185,7 @@ const MobileNavLink = ({ href, children, onLinkClick }: { href: string, children
 
 const MobileNavAccordion = ({ items, onLinkClick }: { items: NavLink[], onLinkClick?: () => void }) => {
     return (
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion type="multiple" className="w-full">
             {items.map(item => {
                 if (item.children && item.children.length > 0) {
                     return (
@@ -358,11 +358,11 @@ export function Header() {
                 </div>
                 <ScrollArea className="flex-1">
                   <nav className="p-4 text-lg">
-                    <Accordion type="single" collapsible className="w-full">
+                    <Accordion type="multiple" className="w-full">
                         <AccordionItem value="trekking">
                             <AccordionTrigger className="font-bold tracking-wider text-base py-3">TREKKING</AccordionTrigger>
                             <AccordionContent>
-                                <Accordion type="single" collapsible className="w-full pl-4">
+                                <Accordion type="multiple" className="w-full pl-4">
                                      <AccordionItem value="trekking-hombre">
                                         <AccordionTrigger className="font-semibold text-sm">HOMBRE</AccordionTrigger>
                                         <AccordionContent className="pl-4">
