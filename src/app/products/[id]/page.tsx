@@ -4,7 +4,7 @@ import { getProducts } from '@/lib/data';
 import type { Product } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart, Package, Truck, ShieldCheck, ArrowRight } from 'lucide-react';
+import { ShoppingCart, Package, Truck, ShieldCheck, ArrowRight, Star } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
@@ -121,7 +121,10 @@ export default async function ProductDetailPage({ params }: Props) {
                            <Package className="h-5 w-5" /> Descripción
                         </div>
                     </AccordionTrigger>
-                    <AccordionContent className="prose prose-sm text-muted-foreground pt-2" dangerouslySetInnerHTML={{ __html: product.description || 'Sin descripción.'}} />
+                    <AccordionContent className="prose prose-sm text-muted-foreground pt-2">
+                        <p>Diseñados para los aventureros más exigentes, nuestros pantalones de trekking técnicos ofrecen una combinación inigualable de durabilidad y comodidad. El tejido principal, construido con tecnología ripstop, resiste enganches y abrasiones en los terrenos más hostiles, asegurando una larga vida útil.</p>
+                        <p>La incorporación de elastano en su composición garantiza una libertad de movimiento total, adaptándose a cada paso, salto o escalada. Son ideales para rutas de larga distancia donde el confort y la fiabilidad son esenciales. Su ligereza te hará olvidar que los llevas puestos.</p>
+                    </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="features">
                     <AccordionTrigger className="text-lg font-semibold">
@@ -131,12 +134,12 @@ export default async function ProductDetailPage({ params }: Props) {
                     </AccordionTrigger>
                     <AccordionContent className="prose prose-sm text-muted-foreground pt-2">
                         <ul>
-                            <li><strong>Material:</strong> 90% Nylon, 10% Spandex</li>
-                            <li><strong>Peso:</strong> 350g (Talla M)</li>
-                            <li><strong>Tecnología:</strong> Secado rápido y protección solar UPF 50+</li>
-                            <li><strong>Bolsillos:</strong> 3 con cremallera (2 de mano, 1 en el muslo)</li>
-                            <li><strong>Ajuste:</strong> Cintura elástica con cinturón incluido</li>
-                            <li><strong>Resistencia:</strong> Refuerzos en rodillas y zona trasera</li>
+                            <li><strong>Composición:</strong> 90% Nylon Ripstop, 10% Elastano.</li>
+                            <li><strong>Tratamiento:</strong> DWR (Durable Water Repellency) sin PFC.</li>
+                            <li><strong>Peso:</strong> 350g (Talla M).</li>
+                            <li><strong>Bolsillos:</strong> 3 con cremallera YKK sellada (2 de mano, 1 en el muslo).</li>
+                            <li><strong>Ajuste:</strong> Cintura elástica con cinturón integrado y bajos ajustables.</li>
+                            <li><strong>Detalles:</strong> Rodillas preformadas y refuerzos en zonas clave.</li>
                         </ul>
                     </AccordionContent>
                 </AccordionItem>
@@ -147,7 +150,39 @@ export default async function ProductDetailPage({ params }: Props) {
                         </div>
                     </AccordionTrigger>
                     <AccordionContent className="prose prose-sm text-muted-foreground pt-2">
-                        <p>Envío estándar en 24/48 horas. Devoluciones gratuitas durante los primeros 30 días.</p>
+                        <p>Envío 24/48h laborables. Gratis en pedidos superiores a 50€. Devoluciones gratuitas durante 30 días.</p>
+                    </AccordionContent>
+                </AccordionItem>
+                 <AccordionItem value="reviews">
+                    <AccordionTrigger className="text-lg font-semibold">
+                        <div className="flex items-center gap-2">
+                           <Star className="h-5 w-5" /> Opiniones
+                        </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="space-y-4 pt-2 text-muted-foreground">
+                        <div>
+                            <div className="flex gap-0.5 text-orange-400">
+                                <Star className="h-4 w-4 fill-current" />
+                                <Star className="h-4 w-4 fill-current" />
+                                <Star className="h-4 w-4 fill-current" />
+                                <Star className="h-4 w-4 fill-current" />
+                                <Star className="h-4 w-4 fill-current" />
+                            </div>
+                            <p className="mt-2 text-sm italic">&quot;Perfectos para Pirineos. Muy cómodos y secan rápido. La talla M me va clavada.&quot;</p>
+                            <p className="mt-1 text-xs font-bold">- Javi M.</p>
+                        </div>
+                        <Separator />
+                         <div>
+                            <div className="flex gap-0.5 text-orange-400">
+                                <Star className="h-4 w-4 fill-current" />
+                                <Star className="h-4 w-4 fill-current" />
+                                <Star className="h-4 w-4 fill-current" />
+                                <Star className="h-4 w-4 fill-current" />
+                                <Star className="h-4 w-4" />
+                            </div>
+                            <p className="mt-2 text-sm italic">&quot;Buena calidad-precio. Los he usado en tres salidas y aguantan bien los roces con la roca.&quot;</p>
+                            <p className="mt-1 text-xs font-bold">- Ana G.</p>
+                        </div>
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
@@ -160,7 +195,7 @@ export default async function ProductDetailPage({ params }: Props) {
       <section className="py-16 bg-secondary">
         <div className="container">
           <div className="flex justify-between items-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold font-headline">También te podría interesar</h2>
+            <h2 className="text-3xl md:text-4xl font-bold font-headline">COMPLETA TU LOOK</h2>
              <Button variant="link" asChild className="text-orange-500 hover:text-orange-500/80">
                 <Link href="/products">
                     Ver Todos <ArrowRight className="ml-2 h-4 w-4" />

@@ -15,6 +15,11 @@ export interface Product {
       name: string;
       slug: string;
   }[];
+  tags?: {
+    id: number;
+    name: string;
+    slug: string;
+  }[];
 }
 
 export interface BlogPost {

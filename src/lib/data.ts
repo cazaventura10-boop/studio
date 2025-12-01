@@ -4,21 +4,20 @@ import wooApi from '@/lib/woo';
 export async function getProducts(): Promise<WooProduct[]> {
     try {
         const { data } = await wooApi.get("products", {
-            per_page: 20,
+            per_page: 50, // Fetch more products
             status: 'publish',
         });
         
-        // Map WooCommerce product data to our Product type
         const products: WooProduct[] = data.map((product: any) => ({
             id: product.id,
             name: product.name,
             description: product.description,
-            price: parseFloat(product.price),
-            // We'll take the first category name
+            price: parseFloat(product.price) || 0,
             category: product.categories.length > 0 ? product.categories[0].name : 'Uncategorized',
             images: product.images,
             permalink: product.permalink,
             categories: product.categories,
+            tags: product.tags,
         }));
 
         return products;
@@ -29,7 +28,6 @@ export async function getProducts(): Promise<WooProduct[]> {
         } else {
             console.error('An unknown error occurred while fetching products.');
         }
-        // Return an empty array or handle error as needed
         return [];
     }
 }
@@ -88,7 +86,7 @@ export const blogPosts: BlogPost[] = [
       <h3>Los Tres Grandes</h3>
       <p>Los artículos más pesados en la mayoría de las mochilas son el refugio, el sistema para dormir (saco y colchoneta) y la propia mochila. Centrarse en opciones ligeras para estos "Tres Grandes" proporciona el ahorro de peso más significativo. Busca tiendas de campaña hechas con Dyneema Composite Fabric, sacos de dormir tipo edredón y mochilas minimalistas sin marco.</p>
       <h3>Equipo Multiusos</h3>
-      <p>Cada artículo debe ser examinado. ¿Puede un artículo servir para múltiples propósitos? Por ejemplo, tus bastones de trekking también se могут usar como postes para tu tienda. Una bandana puede ser un agarrador de ollas, una toalla y un pre-filtro de agua.</p>
+      <p>Cada artículo debe ser examinado. ¿Puede un artículo servir para múltiples propósitos? Por ejemplo, tus bastones de trekking también se pueden usar como postes para tu tienda. Una bandana puede ser un agarrador de ollas, una toalla y un pre-filtro de agua.</p>
       <h3>Abraza el Minimalismo</h3>
       <p>¿Realmente necesitas esa silla de campamento, un juego extra de ropa o un cuchillo grande? Cuestiona cada artículo que empacas. Cuanto menos lleves, más podrás conectar con tu entorno. Se trata de cambiar tu mentalidad de "¿y si necesito esto?" a "¿puedo arreglármelas sin esto?". Este enfoque no solo aligera tu carga, sino que también simplifica toda tu experiencia de senderismo.</p>
     `,
