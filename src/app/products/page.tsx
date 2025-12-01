@@ -11,7 +11,7 @@ export default async function ProductsPage({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  // CAMBIO CLAVE: Priorizamos tag, luego category, y finalmente la búsqueda general 'q'.
+  // CLAVE: Damos prioridad al tag (más específico), luego category, y finalmente la búsqueda 'q'.
   const tag = typeof searchParams.tag === 'string' ? searchParams.tag : '';
   const category = typeof searchParams.category === 'string' ? searchParams.category : '';
   const searchQuery = typeof searchParams.q === 'string' ? searchParams.q : '';
@@ -21,27 +21,36 @@ export default async function ProductsPage({
   let pageDescription = "Equipamiento de alta calidad para cada una de tus necesidades.";
   
   // Usamos el término más específico disponible para la búsqueda y el título.
-  const searchTerm = tag || category || searchQuery;
-  const displayTerm = searchTerm.replace(/-/g, ' ');
+  // El tag tiene prioridad porque viene de los menús más específicos.
+  const displayTerm = tag.replace(/-/g, ' ') || category.replace(/-/g, ' ') || searchQuery;
 
   try {
     // Pasamos un objeto de búsqueda simple a getProducts.
-    products = await getProducts({ search: searchTerm.replace(/-/g, ' ') });
-
+    // getProducts ahora sabe cómo manejar 'tag' de forma prioritaria.
+    if (tag) {
+        products = await getProducts({ tag });
+    } else if (category) {
+        // Si no hay tag, usamos categoría como búsqueda de texto (fallback)
+        products = await getProducts({ search: category.replace(/-/g, ' ') });
+    } else if (searchQuery) {
+        products = await getProducts({ search: searchQuery });
+    } else {
+        products = await getProducts();
+    }
   } catch (error) {
     console.error("Error cargando productos desde WooCommerce:", error);
     // products se queda como un array vacío y se mostrará el mensaje de error
   }
   
   if (displayTerm) {
-    pageTitle = `Búsqueda: "${displayTerm}"`;
-    pageDescription = `Resultados para tu búsqueda de "${displayTerm}".`;
+    pageTitle = `Resultados para: "${displayTerm}"`;
+    pageDescription = `Encuentra el mejor equipamiento relacionado con "${displayTerm}".`;
   }
 
   return (
     <div className="container py-12 md:py-16">
         <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-extrabold font-headline tracking-tight">{pageTitle}</h1>
+            <h1 className="text-4xl md:text-5xl font-extrabold font-headline tracking-tight capitalize">{pageTitle}</h1>
             <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
               {pageDescription}
             </p>
@@ -56,7 +65,7 @@ export default async function ProductsPage({
       ) : (
         <div className="text-center py-20 bg-secondary rounded-xl">
           <h2 className="text-2xl font-semibold mb-4 font-headline">Vaya, no hemos encontrado productos para "{displayTerm}"</h2>
-          <p className="text-muted-foreground">Prueba a buscar en otra categoría o vuelve al inicio.</p>
+          <p className="text-muted-foreground">Prueba a buscar en otra categoría o vuelve a la tienda.</p>
           <Link href="/products" className="mt-6 inline-block bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition">
             Ver todos los productos
           </Link>

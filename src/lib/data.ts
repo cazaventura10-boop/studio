@@ -5,7 +5,8 @@ import wooApi from '@/lib/woo';
 interface GetProductsParams {
   per_page?: number;
   status?: string;
-  search?: string; // Simplificamos para usar solo la búsqueda de texto
+  search?: string;
+  tag?: string; // Añadimos tag para búsqueda específica
 }
 
 export async function getProducts(params: GetProductsParams = {}): Promise<WooProduct[]> {
@@ -15,8 +16,25 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             status: params.status || 'publish',
         };
 
-        // Si se proporciona un término de búsqueda, lo usamos.
-        if (params.search) {
+        // Lógica de búsqueda mejorada:
+        // 1. Si se proporciona un 'tag', es la búsqueda más específica.
+        if (params.tag) {
+            // Primero, encontramos el ID de la etiqueta basándonos en su nombre (slug).
+            const tagSlug = params.tag.toLowerCase();
+            const { data: tagsData } = await wooApi.get("products/tags", { slug: tagSlug });
+
+            if (tagsData && tagsData.length > 0) {
+                const tagId = tagsData[0].id;
+                // Usamos el ID de la etiqueta para filtrar los productos.
+                apiParams.tag = tagId;
+            } else {
+                // Si no se encuentra la etiqueta, es probable que no haya productos,
+                // pero por si acaso, hacemos una búsqueda de texto como fallback.
+                apiParams.search = params.tag.replace(/-/g, ' ');
+            }
+        }
+        // 2. Si no hay 'tag' pero sí 'search', usamos la búsqueda de texto.
+        else if (params.search) {
             apiParams.search = params.search;
         }
         
