@@ -1,12 +1,24 @@
 import type { BlogPost, Product as WooProduct } from '@/lib/types';
 import wooApi from '@/lib/woo';
 
-export async function getProducts(): Promise<WooProduct[]> {
+// Definimos una interfaz para los parámetros opcionales
+interface GetProductsParams {
+  per_page?: number;
+  status?: string;
+  category?: string;
+  tag?: string;
+  search?: string;
+}
+
+export async function getProducts(params: GetProductsParams = {}): Promise<WooProduct[]> {
     try {
-        const { data } = await wooApi.get("products", {
-            per_page: 50, // Fetch more products
-            status: 'publish',
-        });
+        const apiParams = {
+            per_page: params.per_page || 50,
+            status: params.status || 'publish',
+            ...params
+        };
+
+        const { data } = await wooApi.get("products", apiParams);
         
         const products: WooProduct[] = data.map((product: any) => ({
             id: product.id,
