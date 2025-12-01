@@ -40,7 +40,7 @@ const trekkingHombre: NavLink[] = [
         title: 'Pantalones de Hombre',
         href: '/products?category=Trekking&tag=Pantalones-Hombre',
         children: [
-          { title: 'Pantalones Invierno', href: '/products?category=Trekking&tag=Pantalones-Invierno-Hombre' },
+          { title: 'Pantalones Invierno', href: 'https://www.deporteyaventura.es/categoria-producto/tienda/trekking/hombre/ropa-de-hombre/pantalones-hombre/pantalones-invierno-hombre/' },
           { 
             title: 'Pantalones Primavera/Verano', 
             href: '/products?category=Trekking&tag=Pantalones-Verano-Hombre',
