@@ -4,7 +4,7 @@ import { products } from '@/lib/data';
 import { placeholderImagesById } from '@/lib/placeholder-images';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart, Package, Truck, ShieldCheck } from 'lucide-react';
+import { ShoppingCart, Package, Truck, ShieldCheck, ArrowRight } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
@@ -12,6 +12,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Separator } from '@/components/ui/separator';
+import { ProductCard } from '@/app/_components/product-card';
+import Link from 'next/link';
 
 type Props = {
   params: { id: string };
@@ -29,11 +31,14 @@ export default function ProductDetailPage({ params }: Props) {
   if (!product) {
     notFound();
   }
+  
+  const relatedProducts = products.filter(p => p.id !== product.id && p.category === product.category).slice(0, 4);
 
   const image = placeholderImagesById[product.image];
   const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
 
   return (
+    <>
     <div className="container mx-auto max-w-7xl px-4 py-12 md:py-20">
       <div className="grid md:grid-cols-2 gap-8 lg:gap-16">
         
@@ -93,7 +98,8 @@ export default function ProductDetailPage({ params }: Props) {
                         </div>
                     </AccordionTrigger>
                     <AccordionContent className="prose prose-sm text-muted-foreground pt-2">
-                       {product.description}
+                       <p>Diseñados para los aventureros más exigentes, estos pantalones de trekking ofrecen una combinación inigualable de resistencia y confort. Su tejido técnico, reforzado en zonas clave, soporta la abrasión de rocas y vegetación densa, garantizando una durabilidad excepcional en los terrenos más hostiles.</p>
+                       <p>La clave de su rendimiento reside en la tecnología de tejido elástico en 4 direcciones, que acompaña cada uno de tus movimientos sin restricciones. Ya sea ascendiendo una pendiente pronunciada o navegando por un sendero complicado, sentirás una libertad total. Además, su diseño ligero y transpirable te mantendrá fresco y seco durante toda la jornada.</p>
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="features">
@@ -104,10 +110,12 @@ export default function ProductDetailPage({ params }: Props) {
                     </AccordionTrigger>
                     <AccordionContent className="prose prose-sm text-muted-foreground pt-2">
                         <ul>
-                            <li>Tejido: Resistente a la abrasión</li>
-                            <li>Composición: 95% Poliéster, 5% Elastano</li>
-                            <li>Propiedades: Transpirable, secado rápido</li>
-                            <li>Peso: 350g (Talla M)</li>
+                            <li><strong>Material:</strong> 90% Nylon, 10% Spandex</li>
+                            <li><strong>Peso:</strong> 350g (Talla M)</li>
+                            <li><strong>Tecnología:</strong> Secado rápido y protección solar UPF 50+</li>
+                            <li><strong>Bolsillos:</strong> 3 con cremallera (2 de mano, 1 en el muslo)</li>
+                            <li><strong>Ajuste:</strong> Cintura elástica con cinturón incluido</li>
+                            <li><strong>Resistencia:</strong> Refuerzos en rodillas y zona trasera</li>
                         </ul>
                     </AccordionContent>
                 </AccordionItem>
@@ -126,5 +134,26 @@ export default function ProductDetailPage({ params }: Props) {
         </div>
       </div>
     </div>
+    
+     {relatedProducts.length > 0 && (
+      <section className="py-16 bg-secondary">
+        <div className="container">
+          <div className="flex justify-between items-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold font-headline">También te podría interesar</h2>
+             <Button variant="link" asChild className="text-orange-500 hover:text-orange-500/80">
+                <Link href="/products">
+                    Ver Todos <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+            </Button>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {relatedProducts.map((relatedProduct) => (
+              <ProductCard key={relatedProduct.id} product={relatedProduct} />
+            ))}
+          </div>
+        </div>
+      </section>
+     )}
+    </>
   );
 }
