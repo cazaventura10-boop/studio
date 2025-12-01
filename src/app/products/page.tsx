@@ -9,55 +9,6 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 
-function getTagFromProduct(product: Product): string | null {
-  const tagMapping: { [key: string]: string } = {
-    'Hombre': 'Hombre',
-    'Ropa-Hombre': 'Hombre',
-    'Pantalones-Hombre': 'Hombre',
-    'Pantalones-Invierno-Hombre': 'Hombre',
-    'Pantalones-Verano-Hombre': 'Hombre',
-    'Pantalones-Largos-Hombre': 'Hombre',
-    'Pantalones-Cortos-Hombre': 'Hombre',
-    'Chaquetas-Hombre': 'Hombre',
-    'Softshell-Hombre': 'Hombre',
-    'Cortavientos-Hombre': 'Hombre',
-    'Plumas-Hombre': 'Hombre',
-    'Chalecos-Hombre': 'Hombre',
-    'Sudaderas-Hombre': 'Hombre',
-    'Camisetas-Hombre': 'Hombre',
-    'Camisetas-Larga-Hombre': 'Hombre',
-    'Camisetas-Corta-Hombre': 'Hombre',
-    'Calzado-Hombre': 'Hombre',
-    'Botas-Hombre': 'Hombre',
-    'Zapatillas-Hombre': 'Hombre',
-    'Sandalias-Hombre': 'Hombre',
-
-    'Mujer': 'Mujer',
-    'Ropa-Mujer': 'Mujer',
-    'Pantalones-Mujer': 'Mujer',
-    'Pantalones-Temporada-Mujer': 'Mujer',
-    'Chaquetas-Mujer': 'Mujer',
-    'Sudaderas-Mujer': 'Mujer',
-    'Camisetas-Mujer': 'Mujer',
-    'Calzado-Mujer': 'Mujer',
-    'Botas-Mujer': 'Mujer',
-    'Zapatillas-Mujer': 'Mujer',
-    'Sandalias-Mujer': 'Mujer',
-    'Ninos': 'Ninos',
-    'Accesorios': 'Accesorios',
-    'Calzado': 'Calzado'
-  };
-
-  const productTags = product.tags?.map(t => t.slug) || [];
-  for (const tag of productTags) {
-    if (tag in tagMapping) {
-      return tagMapping[tag];
-    }
-  }
-  return null;
-}
-
-
 function ProductsContent() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('q') || '';
@@ -73,38 +24,68 @@ function ProductsContent() {
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
-      const fetchedProducts = await getProducts();
-      setProducts(fetchedProducts);
-      
-      const categories = ['All', ...Array.from(new Set(fetchedProducts.flatMap(p => p.categories.map(c => c.name))))];
-      setAllCategories(categories);
+      try {
+        const fetchedProducts = await getProducts();
+        setProducts(fetchedProducts);
+        
+        const categories = ['All', ...Array.from(new Set(fetchedProducts.flatMap(p => p.categories.map(c => c.name))))];
+        setAllCategories(categories);
 
-      const currentFilter = categoryQuery || tagQuery;
-      if (currentFilter) {
-          if (categoryQuery && categories.includes(categoryQuery)) {
-            setSelectedCategory(categoryQuery);
-          } else {
-             // If tag is present, we don't set a category filter button, but let the filtering logic handle it.
-             setSelectedCategory('All'); 
-          }
-      } else {
-        setSelectedCategory('All');
+        // Set the active category button based on URL
+        if (categoryQuery && categories.includes(categoryQuery)) {
+          setSelectedCategory(categoryQuery);
+        } else {
+          // If only a tag is present, we don't activate a specific category button
+          setSelectedCategory('All'); 
+        }
+
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+        setProducts([]); // Ensure products is an empty array on error
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
     fetchProducts();
-  }, [categoryQuery, tagQuery]);
+  }, []); // Fetch products only once on component mount
   
+  useEffect(() => {
+      // This effect syncs the category button with URL changes after the initial load
+      if (categoryQuery && allCategories.includes(categoryQuery)) {
+          setSelectedCategory(categoryQuery);
+      } else if (!categoryQuery && !tagQuery) {
+          setSelectedCategory('All');
+      }
+  }, [categoryQuery, tagQuery, allCategories]);
 
   const filteredProducts = useMemo(() => {
     return products.filter(product => {
-      const matchesCategory = selectedCategory === 'All' || product.categories.some(cat => cat.name === selectedCategory);
-      const matchesSearch = searchQuery ? product.name.toLowerCase().includes(searchQuery.toLowerCase()) || (product.description && product.description.toLowerCase().includes(searchQuery.toLowerCase())) : true;
-      const matchesMainCategory = categoryQuery ? product.categories.some(cat => cat.slug === categoryQuery.toLowerCase()) : true;
-      const matchesTag = tagQuery ? product.tags?.some(tag => tag.slug === tagQuery.toLowerCase()) : true;
+      // Filter by selected category button
+      const matchesCategoryButton = selectedCategory === 'All' || product.categories.some(cat => cat.name === selectedCategory);
       
-      return (selectedCategory === 'All' ? true : matchesCategory) && matchesSearch && matchesMainCategory && matchesTag;
+      // Filter by search query
+      const matchesSearch = searchQuery 
+        ? product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+          (product.description && product.description.toLowerCase().includes(searchQuery.toLowerCase())) 
+        : true;
+      
+      // Filter by category from URL (for direct navigation)
+      const matchesCategoryQuery = categoryQuery 
+        ? product.categories.some(cat => cat.slug.toLowerCase() === categoryQuery.toLowerCase()) 
+        : true;
+
+      // Filter by tag from URL
+      const matchesTagQuery = tagQuery 
+        ? product.tags?.some(tag => tag.slug.toLowerCase() === tagQuery.toLowerCase()) 
+        : true;
+      
+      // If a category or tag is in the URL, it should take precedence over the button selection.
+      // If no URL filters, then the button selection is used.
+      if (categoryQuery || tagQuery) {
+        return matchesSearch && matchesCategoryQuery && matchesTagQuery;
+      }
+
+      return matchesCategoryButton && matchesSearch;
     });
   }, [selectedCategory, searchQuery, products, categoryQuery, tagQuery]);
 
@@ -145,7 +126,7 @@ function ProductsContent() {
       ) : (
         <div className="text-center py-16">
           <h2 className="text-2xl font-semibold font-headline">No Products Found</h2>
-          <p className="mt-2 text-muted-foreground">Try adjusting your search or filters.</p>
+          <p className="mt-2 text-muted-foreground">Try adjusting your search or category filters.</p>
         </div>
       )}
     </>
@@ -161,7 +142,7 @@ export default function ProductsPage() {
                 Equipamiento de alta calidad para cada una de tus necesidades.
                 </p>
             </div>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div>Loading categories...</div>}>
                 <ProductsContent />
             </Suspense>
         </div>
