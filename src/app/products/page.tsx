@@ -31,60 +31,58 @@ function ProductsContent() {
         const categories = ['All', ...Array.from(new Set(fetchedProducts.flatMap(p => p.categories.map(c => c.name))))];
         setAllCategories(categories);
 
-        // Set the active category button based on URL
-        if (categoryQuery && categories.includes(categoryQuery)) {
-          setSelectedCategory(categoryQuery);
-        } else {
-          // If only a tag is present, we don't activate a specific category button
-          setSelectedCategory('All'); 
-        }
-
       } catch (error) {
         console.error("Failed to fetch products:", error);
-        setProducts([]); // Ensure products is an empty array on error
+        setProducts([]);
       } finally {
         setLoading(false);
       }
     };
     fetchProducts();
-  }, []); // Fetch products only once on component mount
+  }, []);
   
   useEffect(() => {
-      // This effect syncs the category button with URL changes after the initial load
+      // Sincroniza el botón de categoría activo con los parámetros de la URL
       if (categoryQuery && allCategories.includes(categoryQuery)) {
           setSelectedCategory(categoryQuery);
       } else if (!categoryQuery && !tagQuery) {
+          // Si no hay filtros de URL, resetea al botón "All"
+          setSelectedCategory('All');
+      } else if (tagQuery) {
+          // Si hay un tag, es probable que no queramos un botón de categoría activo
           setSelectedCategory('All');
       }
   }, [categoryQuery, tagQuery, allCategories]);
 
   const filteredProducts = useMemo(() => {
+    if (!products.length) return [];
+    
     return products.filter(product => {
-      // Filter by selected category button
-      const matchesCategoryButton = selectedCategory === 'All' || product.categories.some(cat => cat.name === selectedCategory);
-      
-      // Filter by search query
+      // 1. Filtro por búsqueda de texto (q)
       const matchesSearch = searchQuery 
         ? product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
           (product.description && product.description.toLowerCase().includes(searchQuery.toLowerCase())) 
         : true;
       
-      // Filter by category from URL (for direct navigation)
+      // 2. Filtro por categoría desde la URL (category)
       const matchesCategoryQuery = categoryQuery 
         ? product.categories.some(cat => cat.slug.toLowerCase() === categoryQuery.toLowerCase()) 
         : true;
 
-      // Filter by tag from URL
+      // 3. Filtro por etiqueta desde la URL (tag)
       const matchesTagQuery = tagQuery 
         ? product.tags?.some(tag => tag.slug.toLowerCase() === tagQuery.toLowerCase()) 
         : true;
-      
-      // If a category or tag is in the URL, it should take precedence over the button selection.
-      // If no URL filters, then the button selection is used.
+        
+      // 4. Filtro por el botón de categoría seleccionado en la UI
+      const matchesCategoryButton = selectedCategory === 'All' || product.categories.some(cat => cat.name === selectedCategory);
+
+      // Si la URL tiene filtros de categoría o tag, estos tienen prioridad.
       if (categoryQuery || tagQuery) {
         return matchesSearch && matchesCategoryQuery && matchesTagQuery;
       }
-
+      
+      // Si no, se usa el filtro del botón y la búsqueda.
       return matchesCategoryButton && matchesSearch;
     });
   }, [selectedCategory, searchQuery, products, categoryQuery, tagQuery]);
@@ -125,8 +123,8 @@ function ProductsContent() {
         </div>
       ) : (
         <div className="text-center py-16">
-          <h2 className="text-2xl font-semibold font-headline">No Products Found</h2>
-          <p className="mt-2 text-muted-foreground">Try adjusting your search or category filters.</p>
+          <h2 className="text-2xl font-semibold font-headline">No se encontraron productos</h2>
+          <p className="mt-2 text-muted-foreground">Prueba a cambiar los filtros o la búsqueda.</p>
         </div>
       )}
     </>
@@ -142,7 +140,19 @@ export default function ProductsPage() {
                 Equipamiento de alta calidad para cada una de tus necesidades.
                 </p>
             </div>
-            <Suspense fallback={<div>Loading categories...</div>}>
+            <Suspense fallback={
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {[...Array(8)].map((_, i) => (
+                  <div key={i} className="flex flex-col space-y-3">
+                    <Skeleton className="h-[250px] w-full rounded-xl" />
+                    <div className="space-y-2">
+                      <Skeleton className="h-4 w-[200px]" />
+                      <Skeleton className="h-4 w-[100px]" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            }>
                 <ProductsContent />
             </Suspense>
         </div>
