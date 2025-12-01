@@ -1,3 +1,4 @@
+
 import { getProducts } from '@/lib/data';
 import type { Product } from '@/lib/types';
 import { ProductCard } from '@/app/_components/product-card';
@@ -11,14 +12,10 @@ export default async function ProductsPage({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const category = typeof searchParams.category === 'string' ? searchParams.category : '';
-  const tag = typeof searchParams.tag === 'string' ? searchParams.tag : '';
-  const searchQuery = typeof searchParams.q === 'string' ? searchParams.q : '';
-
-  // 1. Combinamos todos los posibles filtros en un solo término de búsqueda.
-  const rawSearchTerm = [category, tag, searchQuery].filter(Boolean).join(' ');
-  // 2. LIMPIEZA: Reemplazamos guiones por espacios para una búsqueda flexible.
-  const searchTerm = rawSearchTerm.replace(/-/g, ' ');
+  // 1. Capturamos el término de la URL (sea category, tag o una búsqueda directa)
+  const rawSearchTerm = searchParams.category || searchParams.tag || searchParams.q || '';
+  // 2. LIMPIEZA: Quitamos guiones y los cambiamos por espacios para una búsqueda flexible.
+  const searchTerm = String(rawSearchTerm).replace(/-/g, ' ');
 
   let products: Product[] = [];
   let pageTitle = "Nuestros Productos";
@@ -28,7 +25,6 @@ export default async function ProductsPage({
     pageTitle = `Búsqueda: "${searchTerm}"`;
     pageDescription = `Resultados para tu búsqueda de "${searchTerm}".`;
   }
-
 
   try {
     // 3. Usamos el término de búsqueda limpio para llamar a la API.
