@@ -18,7 +18,10 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
         };
 
         // Combina category, tag y search en un solo término de búsqueda.
-        const searchTerm = [params.search, params.category, params.tag].filter(Boolean).join(' ');
+        // Reemplaza guiones por espacios para una búsqueda más flexible.
+        const rawSearchTerm = [params.search, params.category, params.tag].filter(Boolean).join(' ');
+        const searchTerm = rawSearchTerm.replace(/-/g, ' ');
+
         if (searchTerm) {
             apiParams.search = searchTerm;
         }
