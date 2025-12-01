@@ -5,9 +5,7 @@ import wooApi from '@/lib/woo';
 interface GetProductsParams {
   per_page?: number;
   status?: string;
-  category?: string;
-  tag?: string; // Se usará para buscar por slug de etiqueta
-  search?: string;
+  search?: string; // Simplificamos para usar solo la búsqueda de texto
 }
 
 export async function getProducts(params: GetProductsParams = {}): Promise<WooProduct[]> {
@@ -17,31 +15,9 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             status: params.status || 'publish',
         };
 
-        // Si se proporciona un 'tag', necesitamos encontrar el ID de esa etiqueta primero
-        if (params.tag) {
-            const tagsResponse = await wooApi.get("products/tags", { slug: params.tag.toLowerCase() });
-            if (tagsResponse.data.length > 0) {
-                apiParams.tag = tagsResponse.data[0].id;
-            } else {
-                // Si no se encuentra el tag, es probable que no haya productos, pero hacemos una búsqueda de texto como respaldo.
-                 apiParams.search = params.tag.replace(/-/g, ' ');
-            }
-        }
-        
-        // Si se proporciona 'search' (y no se usó tag), se usa para búsqueda de texto
-        if (params.search && !params.tag) {
+        // Si se proporciona un término de búsqueda, lo usamos.
+        if (params.search) {
             apiParams.search = params.search;
-        }
-
-        // Si se proporciona 'category' (y no se usó tag), se busca el ID de la categoría
-        if (params.category && !params.tag) {
-             const catsResponse = await wooApi.get("products/categories", { slug: params.category.toLowerCase() });
-             if (catsResponse.data.length > 0) {
-                apiParams.category = catsResponse.data[0].id;
-            } else {
-                 // Fallback a búsqueda de texto si no se encuentra la categoría
-                 apiParams.search = params.category.replace(/-/g, ' ');
-            }
         }
         
         const { data } = await wooApi.get("products", apiParams);

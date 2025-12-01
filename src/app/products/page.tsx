@@ -19,12 +19,15 @@ export default async function ProductsPage({
   let products: Product[] = [];
   let pageTitle = "Nuestros Productos";
   let pageDescription = "Equipamiento de alta calidad para cada una de tus necesidades.";
-  let displayTerm = tag.replace(/-/g, ' ') || category.replace(/-/g, ' ') || searchQuery;
+  
+  // Usamos el término más específico disponible para la búsqueda y el título.
+  const searchTerm = tag || category || searchQuery;
+  const displayTerm = searchTerm.replace(/-/g, ' ');
 
   try {
-    // La lógica de la llamada a la API es ahora más inteligente.
-    // Le pasamos los parámetros y dejamos que getProducts decida la mejor estrategia.
-    products = await getProducts({ tag, category, search: searchQuery });
+    // Pasamos un objeto de búsqueda simple a getProducts.
+    products = await getProducts({ search: searchTerm.replace(/-/g, ' ') });
+
   } catch (error) {
     console.error("Error cargando productos desde WooCommerce:", error);
     // products se queda como un array vacío y se mostrará el mensaje de error
