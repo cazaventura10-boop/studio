@@ -41,7 +41,7 @@ export default function Home() {
       {/* Main Categories */}
       <section className="py-20 md:py-32 bg-background">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold font-headline text-center mb-12">Categorías Principales</h2>
+          <h2 className="text-4xl md:text-5xl font-extrabold font-headline text-center mb-12">Categorías Principales</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Tarjeta Trekking */}
             <Link href="/products?category=Trekking" className="group relative block h-80 w-full overflow-hidden rounded-lg">
@@ -108,7 +108,7 @@ export default function Home() {
                     <p className="text-sm font-bold text-muted-foreground tracking-widest uppercase mb-2">
                         NUEVA COLECCIÓN 2025
                     </p>
-                    <h2 className="text-4xl md:text-5xl font-extrabold font-headline mb-4">
+                    <h2 className="text-5xl md:text-6xl font-extrabold font-headline mb-4">
                         Fusión de estilo y rendimiento en la montaña
                     </h2>
                     <p className="text-muted-foreground text-lg mb-8">
@@ -133,7 +133,7 @@ export default function Home() {
       {/* Equipate para la Aventura Section */}
       <section className="py-20 md:py-32 bg-background">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold font-headline text-center mb-12">Equípate para la Aventura</h2>
+          <h2 className="text-4xl md:text-5xl font-extrabold font-headline text-center mb-12">Equípate para la Aventura</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <Link href="/products?tag=Hombre" className="group">
               <div className="relative aspect-[3/4] overflow-hidden rounded-md">
@@ -205,10 +205,10 @@ export default function Home() {
       </section>
 
       {/* New Arrivals */}
-      <section className="py-20 md:py-32 bg-secondary">
+      <section className="py-20 md:py-32 bg-background">
         <div className="container">
           <div className="flex justify-between items-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold font-headline">Novedades de Temporada</h2>
+            <h2 className="text-4xl md:text-5xl font-extrabold font-headline">Novedades de Temporada</h2>
             <Button variant="link" asChild className="text-orange-500 hover:text-orange-500/80">
                 <Link href="/products">
                     Ver Todos <ArrowRight className="ml-2 h-4 w-4" />
