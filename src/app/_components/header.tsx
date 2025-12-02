@@ -68,7 +68,7 @@ const trekkingHombre: NavLink[] = [
         href: '/products?category=camisetas-hombre',
         children: [
             { title: 'Térmicas y Manga Larga Hombre', href: '/products?category=camisetas-termicas-y-manga-larga-hombre' },
-            { title: 'Manga Corta y sin Mangas Hombre', href: '/products?category=manga-corta-sin-mangas-hombre' },
+            { title: 'Manga Corta y sin Mangas Hombre', href: '/products?category=camisetas-manga-corta-y-sin-mangas-hombre' },
         ]
       },
     ],
@@ -107,26 +107,26 @@ const trekkingMujer: NavLink[] = [
 ];
 
 const trekkingComplementos: NavLink[] = [
-    { title: "Mochilas", href: '/products?tag=Mochilas'},
-    { title: "Gorros y Gorras", href: '/products?tag=Gorros-Gorras'},
-    { title: "Bastones", href: '/products?tag=Bastones'}
+    { title: "Mochilas", href: '/products?tag=mochilas'},
+    { title: "Gorros y Gorras", href: '/products?tag=gorros-y-gorras'},
+    { title: "Bastones", href: '/products?tag=bastones'}
 ];
 
 const cazaLinks: NavLink[] = [
     { title: "Botas de Caza", href: '/products?category=botas-caza' },
-    { title: "Pantalones Caza", href: '/products?tag=Pantalones-Caza' },
-    { title: "Chaquetas de Caza", href: '/products?tag=Chaquetas-Caza' },
-    { title: "Chalecos de Caza", href: '/products?tag=Chalecos-Caza' },
-    { title: "Camisas y Camisetas", href: '/products?tag=Camisas-Camisetas-Caza' },
-    { title: "Varios Caza", href: '/products?tag=Varios-Caza' }
+    { title: "Pantalones Caza", href: '/products?tag=pantalones-caza' },
+    { title: "Chaquetas de Caza", href: '/products?tag=chaquetas-caza' },
+    { title: "Chalecos de Caza", href: '/products?tag=chalecos-caza' },
+    { title: "Camisas y Camisetas", href: '/products?tag=camisas-y-camisetas-caza' },
+    { title: "Varios Caza", href: '/products?tag=varios-caza' }
 ];
 
 const kayakLinks: NavLink[] = [
-    { title: "Kayaks Rígidos", href: '/products?category=Kayaking&tag=Kayaks-Rigidos' },
-    { title: "Kayaks Hinchables", href: '/products?category=Kayaking&tag=Kayaks-Hinchables' },
-    { title: "Palas y Remos", href: '/products?category=Kayaking&tag=Palas-y-Remos' },
-    { title: "Chalecos Salvavidas", href: '/products?category=Kayaking&tag=Chalecos-Salvavidas' },
-    { title: "Accesorios y Estancos", href: '/products?category=Kayaking&tag=Accesorios-y-Estancos' }
+    { title: "Kayaks Rígidos", href: '/products?category=kayaks-rigidos' },
+    { title: "Kayaks Hinchables", href: '/products?category=kayaks-hinchables' },
+    { title: "Palas y Remos", href: '/products?tag=palas-y-remos' },
+    { title: "Chalecos Salvavidas", href: '/products?tag=chalecos-salvavidas' },
+    { title: "Accesorios y Estancos", href: '/products?tag=accesorios-y-estancos' }
 ];
 
 
@@ -157,7 +157,7 @@ const NestedList = ({ items, level = 0 }: { items: NavLink[], level?: number }) 
             {items.map((item) => (
                 <li key={item.title}>
                     <ListItem href={item.href} title={item.title} className={cn(baseClasses, levelClasses[level])} />
-                    {item.children && level < 2 && ( // Added level check
+                    {item.children && level < 2 && ( // Now supports up to level 3 rendering
                         <div className={listClasses}>
                             <NestedList items={item.children} level={level + 1} />
                         </div>
