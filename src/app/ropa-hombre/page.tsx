@@ -17,7 +17,7 @@ const categories = [
   {
     name: 'Botas y Zapatillas',
     href: '/products?category=calzado-hombre',
-    imageUrl: 'https://images.unsplash.com/photo-1520639888713-7851133b175b?q=80&w=1974&auto=format&fit=crop',
+    imageUrl: 'https://www.deporteyaventura.es/wp-content/uploads/2025/10/IKKI-ATLANTIC-6.webp',
     imageHint: 'dirty hiking boots'
   },
   {
