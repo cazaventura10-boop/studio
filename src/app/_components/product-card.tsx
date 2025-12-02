@@ -14,6 +14,7 @@ export function ProductCard({ product }: ProductCardProps) {
   
   const currentPrice = parseFloat(product.price);
   const regularPrice = product.regular_price ? parseFloat(product.regular_price) : NaN;
+  const salePrice = product.sale_price ? parseFloat(product.sale_price) : NaN;
 
   return (
     <Link href={`/products/${product.id}`} className="group block h-full">
@@ -36,20 +37,20 @@ export function ProductCard({ product }: ProductCardProps) {
                 <h3 className="font-headline font-semibold text-lg leading-tight">{product.name}</h3>
             </div>
             <div className="mt-4">
-              {product.on_sale && !isNaN(currentPrice) ? (
+              {product.on_sale && !isNaN(salePrice) ? (
                 <div className="flex items-baseline gap-2">
-                    {!isNaN(regularPrice) && (
-                       <p className="text-md text-muted-foreground line-through">
-                           {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(regularPrice)}
-                       </p>
-                    )}
-                    <p className="text-xl font-bold text-red-600">
-                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(currentPrice)}
+                  {!isNaN(regularPrice) && (
+                    <p className="text-gray-500 line-through">
+                      {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(regularPrice)}
                     </p>
+                  )}
+                  <p className="text-xl font-bold text-red-600">
+                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(salePrice)}
+                  </p>
                 </div>
               ) : (
                 <p className="text-xl font-bold text-foreground">
-                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(!isNaN(currentPrice) ? currentPrice : 0)}
+                  {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(!isNaN(currentPrice) ? currentPrice : 0)}
                 </p>
               )}
             </div>
