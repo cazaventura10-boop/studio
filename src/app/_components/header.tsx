@@ -131,7 +131,8 @@ const trekkingMujer: NavLink[] = [
 const trekkingComplementos: NavLink[] = [
     { title: "Mochilas", href: '/products?tag=mochilas'},
     { title: "Gorros y Gorras", href: '/products?tag=gorros-y-gorras'},
-    { title: "Bastones", href: '/products?tag=bastones'}
+    { title: "Bastones", href: '/products?tag=bastones'},
+    { title: "Calcetines", href: '/products?category=calcetines'}
 ];
 
 const cazaLinks: NavLink[] = [
