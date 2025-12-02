@@ -36,15 +36,15 @@ export function ProductCard({ product }: ProductCardProps) {
               {product.on_sale && product.sale_price ? (
                 <>
                   <span className="text-gray-500 line-through">
-                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.regular_price))}
+                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.regular_price.replace(',', '.')))}
                   </span>
                   <span className="text-red-600 font-bold text-lg">
-                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price))}
+                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price.replace(',', '.')))}
                   </span>
                 </>
               ) : (
                 <span className="text-gray-900 font-bold text-lg">
-                  {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price))}
+                  {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price.replace(',', '.')))}
                 </span>
               )}
             </div>
