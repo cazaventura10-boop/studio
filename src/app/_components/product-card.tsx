@@ -33,7 +33,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 <h3 className="font-headline font-semibold text-lg leading-tight">{product.name}</h3>
             </div>
             <div className="flex items-baseline gap-2 mt-4">
-              {product.on_sale && product.sale_price ? (
+              {product.on_sale ? (
                 <>
                   <span className="text-gray-500 line-through">
                     {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.regular_price.replace(',', '.')))}
