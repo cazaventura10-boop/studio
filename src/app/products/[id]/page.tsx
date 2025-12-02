@@ -102,14 +102,14 @@ export default async function ProductDetailPage({ params }: Props) {
              <div className="mb-6">
                {product.on_sale && !isNaN(salePrice) ? (
                 <div className="flex items-baseline gap-4">
-                    <p className="text-4xl font-bold text-orange-500">
-                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(salePrice)}
-                    </p>
                     {!isNaN(regularPrice) && (
                       <p className="text-2xl text-muted-foreground line-through">
                           {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(regularPrice)}
                       </p>
                     )}
+                    <p className="text-4xl font-bold text-red-600">
+                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(salePrice)}
+                    </p>
                 </div>
               ) : (
                 <p className="text-4xl font-bold text-foreground">
