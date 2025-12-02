@@ -67,7 +67,7 @@ const trekkingHombre: NavLink[] = [
         title: 'Camisetas Hombre', 
         href: '/products?category=camisetas-hombre',
         children: [
-            { title: 'Térmicas y Manga Larga Hombre', href: '/products?category=termicas-manga-larga-hombre' },
+            { title: 'Térmicas y Manga Larga Hombre', href: '/products?category=camisetas-termicas-y-manga-larga-hombre' },
             { title: 'Manga Corta y sin Mangas Hombre', href: '/products?category=manga-corta-sin-mangas-hombre' },
         ]
       },
