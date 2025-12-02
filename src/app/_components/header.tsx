@@ -58,7 +58,7 @@ const trekkingHombre: NavLink[] = [
         children: [
           { title: 'Softshell y Térmicas Hombre', href: '/products?category=softshell-y-termicas-hombre' },
           { title: 'Cortavientos e Impermeables Hombre', href: '/products?category=cortavientos-e-impermeables-hombre' },
-          { title: 'Plumas y Primaloft Hombre', href: '#' },
+          { title: 'Plumas y Primaloft Hombre', href: '/products?category=plumas-y-primaloft-hombre' },
         ],
       },
       { title: 'Chalecos Hombre', href: '/products?category=chalecos-hombre' },
