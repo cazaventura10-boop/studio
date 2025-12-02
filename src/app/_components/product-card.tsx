@@ -32,24 +32,23 @@ export function ProductCard({ product }: ProductCardProps) {
                 {product.categories?.[0]?.name && <Badge variant="secondary" className="mb-2">{product.categories[0].name}</Badge>}
                 <h3 className="font-headline font-semibold text-lg leading-tight">{product.name}</h3>
             </div>
-            <div className="mt-2 flex items-center gap-3">
-              {/* COMPROBACIÓN: Si hay precio rebajado y es distinto al normal */}
-              {product.regular_price && product.price && product.regular_price !== product.price ? (
+            <div className="mt-2 flex items-center gap-2">
+              {/* Si el producto tiene la marca de 'En Oferta' */}
+              {product.on_sale ? (
                 <>
-                  {/* Precio Original Tachado */}
-                  <span className="text-gray-400 line-through text-sm font-medium">
-                    {product.regular_price}€
+                  {/* Precio Viejo: Gris y tachado */}
+                  <span className="text-sm text-gray-400 line-through">
+                    {product.regular_price} €
                   </span>
-                  
-                  {/* Precio Oferta Rojo */}
-                  <span className="text-red-600 font-bold text-xl">
-                    {product.price}€
+                  {/* Precio Nuevo: Rojo y grande */}
+                  <span className="text-lg font-bold text-red-600">
+                    {product.price} €
                   </span>
                 </>
               ) : (
-                /* Precio Normal Negro */
-                <span className="text-gray-900 font-bold text-xl">
-                  {product.price}€
+                /* Si no hay oferta: Negro y grande */
+                <span className="text-lg font-bold text-gray-900">
+                  {product.price} €
                 </span>
               )}
             </div>
