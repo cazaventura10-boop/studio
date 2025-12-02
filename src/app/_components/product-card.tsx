@@ -3,6 +3,7 @@ import Image from 'next/image';
 import type { Product } from '@/lib/types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import PriceDisplay from './price-display';
 
 interface ProductCardProps {
   product: Product;
@@ -32,25 +33,8 @@ export function ProductCard({ product }: ProductCardProps) {
                 {product.categories?.[0]?.name && <Badge variant="secondary" className="mb-2">{product.categories[0].name}</Badge>}
                 <h3 className="font-headline font-semibold text-lg leading-tight">{product.name}</h3>
             </div>
-            <div className="mt-2 flex items-center gap-2">
-              {/* Lógica: Si está en oferta y tiene precio de oferta */}
-              {product.on_sale && product.sale_price ? (
-                <>
-                  {/* Precio Viejo: Gris, tachado y pequeño */}
-                  <span className="text-sm text-gray-400 line-through">
-                    {product.regular_price}€
-                  </span>
-                  {/* Precio Nuevo: Rojo, negrita y grande */}
-                  <span className="text-lg font-bold text-red-600">
-                    {product.sale_price}€
-                  </span>
-                </>
-              ) : (
-                /* Precio Normal: Negro, negrita y grande */
-                <span className="text-lg font-bold text-gray-900">
-                  {product.price}€
-                </span>
-              )}
+            <div className="mt-2">
+              <PriceDisplay product={product} />
             </div>
         </CardContent>
       </Card>
