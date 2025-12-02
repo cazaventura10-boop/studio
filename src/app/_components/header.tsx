@@ -143,33 +143,31 @@ function Logo() {
   );
 }
 
-const NestedList = ({ items }: { items: NavLink[]}) => (
-  <ul className="space-y-2">
-    {items.map((item) => (
-      <li key={item.title}>
-        <ListItem href={item.href} title={item.title} className="p-2 font-semibold hover:bg-accent/50" />
-        {item.children && (
-          <ul className="pl-4 mt-1 space-y-1 border-l border-border ml-2">
-            {item.children.map((child) => (
-              <li key={child.title}>
-                <ListItem href={child.href} title={child.title} className="p-2 text-sm" />
-                 {child.children && (
-                    <ul className="pl-4 mt-1 space-y-1 border-l border-border ml-2">
-                        {child.children.map((subChild) => (
-                            <li key={subChild.title}>
-                                <ListItem href={subChild.href} title={subChild.title} className="p-2 text-xs text-muted-foreground" />
-                            </li>
-                        ))}
-                    </ul>
-                 )}
-              </li>
+const NestedList = ({ items, level = 0 }: { items: NavLink[], level?: number }) => {
+    const baseClasses = "p-2";
+    const levelClasses = [
+        "font-semibold hover:bg-accent/50", // Level 0
+        "text-sm",                         // Level 1
+        "text-xs text-muted-foreground"    // Level 2
+    ];
+    const listClasses = "pl-4 mt-1 space-y-1 border-l border-border ml-2";
+
+    return (
+        <ul className="space-y-2">
+            {items.map((item) => (
+                <li key={item.title}>
+                    <ListItem href={item.href} title={item.title} className={cn(baseClasses, levelClasses[level])} />
+                    {item.children && (
+                        <div className={listClasses}>
+                            <NestedList items={item.children} level={level + 1} />
+                        </div>
+                    )}
+                </li>
             ))}
-          </ul>
-        )}
-      </li>
-    ))}
-  </ul>
-);
+        </ul>
+    );
+};
+
 
 const MobileNavLink = ({ href, children, onLinkClick }: { href: string, children: React.ReactNode, onLinkClick?: () => void }) => (
   <SheetClose asChild>
@@ -433,3 +431,5 @@ export function Header() {
     </header>
   );
 }
+
+    
