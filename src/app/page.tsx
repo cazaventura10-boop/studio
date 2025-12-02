@@ -18,6 +18,11 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col">
+      <div className="bg-background text-center py-4 border-b">
+        <Button asChild size="lg" className="bg-foreground text-background font-bold hover:bg-foreground/80">
+          <Link href="/ropa-hombre">VER PRUEBA MENÚ VISUAL HOMBRE</Link>
+        </Button>
+      </div>
       {/* Hero Section */}
       <section 
         className="relative w-full h-[600px] flex items-center justify-center text-center text-white bg-cover bg-center"
