@@ -12,10 +12,6 @@ export function ProductCard({ product }: ProductCardProps) {
   const image = product.images?.[0];
   const placeholderImage = "https://placehold.co/600x600/eee/ccc?text=No+Image";
   
-  const currentPrice = parseFloat(product.price);
-  const regularPrice = product.regular_price ? parseFloat(product.regular_price) : NaN;
-  const salePrice = product.sale_price ? parseFloat(product.sale_price) : NaN;
-
   return (
     <Link href={`/products/${product.id}`} className="group block h-full">
       <Card className="overflow-hidden h-full transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-2 bg-white rounded-lg flex flex-col">
@@ -36,22 +32,20 @@ export function ProductCard({ product }: ProductCardProps) {
                 {product.categories?.[0]?.name && <Badge variant="secondary" className="mb-2">{product.categories[0].name}</Badge>}
                 <h3 className="font-headline font-semibold text-lg leading-tight">{product.name}</h3>
             </div>
-            <div className="mt-4">
-              {product.on_sale && !isNaN(salePrice) ? (
-                <div className="flex items-baseline gap-2">
-                  {!isNaN(regularPrice) && (
-                    <p className="text-gray-500 line-through">
-                      {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(regularPrice)}
-                    </p>
-                  )}
-                  <p className="text-xl font-bold text-red-600">
-                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(salePrice)}
-                  </p>
-                </div>
+            <div className="flex items-baseline gap-2 mt-4">
+              {product.on_sale && product.sale_price ? (
+                <>
+                  <span className="text-gray-500 line-through">
+                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.regular_price))}
+                  </span>
+                  <span className="text-red-600 font-bold text-lg">
+                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price))}
+                  </span>
+                </>
               ) : (
-                <p className="text-xl font-bold text-foreground">
-                  {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(!isNaN(currentPrice) ? currentPrice : 0)}
-                </p>
+                <span className="text-gray-900 font-bold text-lg">
+                  {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price))}
+                </span>
               )}
             </div>
         </CardContent>
