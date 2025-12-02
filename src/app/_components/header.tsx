@@ -132,7 +132,7 @@ const trekkingComplementos: NavLink[] = [
     { title: "Mochilas", href: '/products?tag=mochilas'},
     { title: "Gorros y Gorras", href: '/products?tag=gorros-y-gorras'},
     { title: "Bastones", href: '/products?tag=bastones'},
-    { title: "Calcetines", href: '/products?category=calcetines'}
+    { title: "Calcetines", href: '/products?category=calcetines-y-medias-de-compresion'}
 ];
 
 const cazaLinks: NavLink[] = [
