@@ -1,9 +1,13 @@
+
 export interface Product {
   id: number;
   name: string;
   description: string;
-  price: number;
-  category: string; // This will now be a string from WooCommerce
+  price: string;
+  on_sale: boolean;
+  sale_price: string;
+  regular_price: string;
+  category: string; 
   images: {
     id: number;
     src: string;

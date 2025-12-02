@@ -1,5 +1,5 @@
 
-import type { BlogPost, Product as WooProduct } from '@/lib/types';
+import type { Product as WooProduct } from '@/lib/types';
 import wooApi from '@/lib/woo';
 
 // Definimos una interfaz para los parámetros opcionales
@@ -50,7 +50,10 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             id: product.id,
             name: product.name,
             description: product.description,
-            price: parseFloat(product.price) || 0,
+            price: product.price,
+            on_sale: product.on_sale,
+            sale_price: product.sale_price,
+            regular_price: product.regular_price,
             category: product.categories.length > 0 ? product.categories[0].name : 'Uncategorized',
             images: product.images,
             permalink: product.permalink,

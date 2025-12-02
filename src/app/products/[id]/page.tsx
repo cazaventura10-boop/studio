@@ -36,7 +36,10 @@ async function getProduct(id: string): Promise<Product | null> {
             id: data.id,
             name: data.name,
             description: data.description,
-            price: parseFloat(data.price),
+            price: data.price,
+            on_sale: data.on_sale,
+            sale_price: data.sale_price,
+            regular_price: data.regular_price,
             category: data.categories.length > 0 ? data.categories[0].name : 'Uncategorized',
             images: data.images,
             permalink: data.permalink,
@@ -78,6 +81,9 @@ export default async function ProductDetailPage({ params }: Props) {
                 className="object-cover rounded-lg shadow-lg"
                 sizes="(max-width: 768px) 100vw, 50vw"
             />
+             {product.on_sale && (
+              <Badge className="absolute top-4 left-4 bg-orange-500 text-white border-none text-base px-4 py-2">OFERTA</Badge>
+            )}
             </div>
         </div>
 
@@ -89,9 +95,22 @@ export default async function ProductDetailPage({ params }: Props) {
             
             <h1 className="text-3xl lg:text-4xl font-extrabold font-headline mb-4 tracking-tight">{product.name}</h1>
             
-            <p className="text-4xl font-bold text-orange-500 mb-6">
-                {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(product.price)}
-            </p>
+             <div className="mb-6">
+               {product.on_sale ? (
+                <div className="flex items-baseline gap-4">
+                    <p className="text-4xl font-bold text-orange-500">
+                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.sale_price))}
+                    </p>
+                    <p className="text-2xl text-muted-foreground line-through">
+                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.regular_price))}
+                    </p>
+                </div>
+              ) : (
+                <p className="text-4xl font-bold text-foreground">
+                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price))}
+                </p>
+              )}
+            </div>
             
             <Separator className="my-6" />
 
