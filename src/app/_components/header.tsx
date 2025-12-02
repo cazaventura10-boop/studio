@@ -15,6 +15,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
   ListItem,
 } from "@/components/ui/navigation-menu"
 import {
@@ -344,6 +345,15 @@ export function Header() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
+              {/* MAPA CATEGORIAS */}
+              <NavigationMenuItem>
+                <Link href="/categorias" legacyBehavior passHref>
+                  <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), navTriggerClasses)}>
+                    Mapa Categorías
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+
             </NavigationMenuList>
           </NavigationMenu>
         </div>
@@ -429,6 +439,9 @@ export function Header() {
                                 ))}
                             </AccordionContent>
                         </AccordionItem>
+
+                        <MobileNavLink href="/categorias" onLinkClick={() => setIsMobileMenuOpen(false)}>Mapa Categorías</MobileNavLink>
+
                     </Accordion>
                   </nav>
                 </ScrollArea>
