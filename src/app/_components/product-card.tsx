@@ -33,11 +33,24 @@ export function ProductCard({ product }: ProductCardProps) {
                 <h3 className="font-headline font-semibold text-lg leading-tight">{product.name}</h3>
             </div>
             <div className="mt-2 flex items-center gap-2">
-              {/* Si hay HTML de precio tachado que viene de WooCommerce, lo pintamos */}
-              <div
-                className="text-lg font-bold [&>del]:text-gray-400 [&>del]:text-sm [&>del]:mr-2 [&>ins]:text-red-600 [&>ins]:no-underline"
-                dangerouslySetInnerHTML={{ __html: product.price_html }}
-              />
+              {/* Si el producto tiene la marca de 'En Oferta' y los precios son diferentes */}
+              {product.on_sale && product.regular_price && product.price && product.regular_price !== product.price ? (
+                <>
+                  {/* Precio Viejo: Gris y tachado */}
+                  <span className="text-sm text-gray-400 line-through">
+                    {product.regular_price}€
+                  </span>
+                  {/* Precio Nuevo: Rojo y grande */}
+                  <span className="text-lg font-bold text-red-600">
+                    {product.price}€
+                  </span>
+                </>
+              ) : (
+                /* Si no hay oferta: Negro y grande */
+                <span className="text-lg font-bold text-gray-900">
+                  {product.price}€
+                </span>
+              )}
             </div>
         </CardContent>
       </Card>
