@@ -41,7 +41,7 @@ const trekkingHombre: NavLink[] = [
         title: 'Pantalones de Hombre',
         href: '/products?category=Trekking&tag=Pantalones-Hombre',
         children: [
-          { title: 'Pantalones Invierno Hombre', href: '/products?search=Newwood' },
+          { title: 'Pantalones Invierno Hombre', href: '/products?category=pantalones-invierno-hombre' },
           { 
             title: 'Pantalones Primavera/Verano', 
             href: '/products?category=Trekking&tag=Pantalones-Verano-Hombre',
