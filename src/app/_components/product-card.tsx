@@ -33,8 +33,8 @@ export function ProductCard({ product }: ProductCardProps) {
                 <h3 className="font-headline font-semibold text-lg leading-tight">{product.name}</h3>
             </div>
             <div className="mt-2 flex items-center gap-2">
-              {/* Lógica: Si está en oferta Y el precio rebajado es distinto al regular */}
-              {product.on_sale && product.regular_price && product.price !== product.regular_price ? (
+              {/* Lógica: Si está en oferta y tiene precio de oferta */}
+              {product.on_sale && product.sale_price ? (
                 <>
                   {/* Precio Viejo: Gris, tachado y pequeño */}
                   <span className="text-sm text-gray-400 line-through">
@@ -42,7 +42,7 @@ export function ProductCard({ product }: ProductCardProps) {
                   </span>
                   {/* Precio Nuevo: Rojo, negrita y grande */}
                   <span className="text-lg font-bold text-red-600">
-                    {product.price}€
+                    {product.sale_price}€
                   </span>
                 </>
               ) : (
