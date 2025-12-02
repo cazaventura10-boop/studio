@@ -11,7 +11,7 @@ const categories = [
   {
     name: 'Chaquetas y Cortavientos',
     href: '/products?category=chaquetas-hombre',
-    imageUrl: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2070&auto=format&fit=crop',
+    imageUrl: 'https://www.deporteyaventura.es/wp-content/uploads/2025/10/unnamed-copia-10.jpg',
     imageHint: 'mountaineer jacket'
   },
   {
