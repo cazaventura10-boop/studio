@@ -97,7 +97,7 @@ const trekkingMujer: NavLink[] = [
                     { title: 'Pantalones trekking primavera verano', href: '/products?category=pantalones-trekking-primavera-verano' },
                 ]
             },
-            { title: 'Chaquetas', href: '/products?category=chaquetas-mujer' },
+            { title: 'Chaquetas', href: '/products?category=chaquetas' },
             { title: 'Sudaderas', href: '/products?category=sudaderas-mujer' },
             { title: 'Camisetas', href: '/products?category=camisetas-mujer' },
         ],
