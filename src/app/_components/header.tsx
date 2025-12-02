@@ -63,7 +63,14 @@ const trekkingHombre: NavLink[] = [
       },
       { title: 'Chalecos Hombre', href: '/products?category=chalecos-hombre' },
       { title: 'Sudaderas Hombre', href: '/products?category=sudaderas-hombre' },
-      { title: 'Camisetas Hombre', href: '/products?category=camisetas-hombre' },
+      { 
+        title: 'Camisetas Hombre', 
+        href: '/products?category=camisetas-hombre',
+        children: [
+            { title: 'Térmicas y Manga Larga Hombre', href: '/products?category=termicas-manga-larga-hombre' },
+            { title: 'Manga Corta y sin Mangas Hombre', href: '/products?category=manga-corta-sin-mangas-hombre' },
+        ]
+      },
     ],
   },
   {
