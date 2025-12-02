@@ -11,9 +11,6 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const image = product.images?.[0];
   const placeholderImage = "https://placehold.co/600x600/eee/ccc?text=No+Image";
-  
-  // Simplified price display logic as requested
-  const isOnSale = product.on_sale && product.regular_price && product.price !== product.regular_price;
 
   return (
     <Link href={`/products/${product.id}`} className="group block h-full">
@@ -36,7 +33,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 <h3 className="font-headline font-semibold text-lg leading-tight">{product.name}</h3>
             </div>
             <div className="flex items-baseline gap-2 mt-4">
-              {isOnSale ? (
+              {product.on_sale && product.regular_price && product.price !== product.regular_price ? (
                 <>
                   <span className="text-gray-500 line-through">
                     {product.regular_price}€
