@@ -10,38 +10,26 @@ export default async function ProductsPage({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  // 1. Damos prioridad a los términos más específicos (tag, luego q, luego category)
-  const rawTerm = searchParams.tag || searchParams.q || searchParams.category || '';
+  const category = searchParams.category as string | undefined;
+  const tag = searchParams.tag as string | undefined;
+  const search = searchParams.q as string | undefined;
 
-  // 2. Limpiamos el término para la búsqueda (ej: "Pantalones-Invierno" -> "Pantalones Invierno")
-  const searchTerm = String(rawTerm).replace(/-/g, ' ');
+  // Limpiamos los slugs para mostrarlos en el título si es necesario
+  const displayTerm = category?.replace(/-/g, ' ') || tag?.replace(/-/g, ' ') || search;
 
   let products: Product[] = [];
-  let finalSearchTerm = searchTerm;
 
   try {
-    if (searchTerm) {
-      // 3. Primer intento de búsqueda con el término original
-      products = await getProducts({ search: searchTerm });
-
-      // 4. LÓGICA DE REINTENTO: Si no hay resultados y el término es plural, intentamos en singular
-      if (products.length === 0 && searchTerm.toLowerCase().endsWith('s') && searchTerm.length > 1) {
-        const singularSearchTerm = searchTerm.slice(0, -1);
-        finalSearchTerm = singularSearchTerm; // Actualizamos para el mensaje de "no encontrado"
-        products = await getProducts({ search: singularSearchTerm });
-      }
-    } else {
-      // Si no hay término de búsqueda, obtenemos todos los productos.
-      products = await getProducts({});
-    }
+    // La función getProducts ahora prioriza category, luego tag, y finalmente search.
+    products = await getProducts({ category, tag, search });
   } catch (error) {
     console.error("Error buscando productos:", error);
     // Dejamos el array de productos vacío para que se muestre el mensaje de error.
   }
 
-  const pageTitle = searchTerm ? `Resultados para: "${searchTerm}"` : "Nuestros Productos";
-  const pageDescription = searchTerm 
-    ? `Encuentra el mejor equipamiento relacionado con "${searchTerm}".`
+  const pageTitle = displayTerm ? `Resultados para: "${displayTerm}"` : "Nuestros Productos";
+  const pageDescription = displayTerm
+    ? `Encuentra el mejor equipamiento relacionado con "${displayTerm}".`
     : "Equipamiento de alta calidad para cada una de tus necesidades.";
 
   return (
@@ -62,7 +50,7 @@ export default async function ProductsPage({
       ) : (
         <div className="text-center py-20 bg-secondary/50 rounded-xl">
             <h2 className="text-2xl font-semibold text-foreground">
-                No hemos encontrado productos para &quot;{searchTerm}&quot;
+                No hemos encontrado productos para &quot;{displayTerm}&quot;
             </h2>
             <p className="text-muted-foreground mt-2">
                 Intenta buscar algo más general o utiliza el buscador principal.

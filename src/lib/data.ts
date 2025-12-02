@@ -1,3 +1,4 @@
+
 import type { BlogPost, Product as WooProduct } from '@/lib/types';
 import wooApi from '@/lib/woo';
 
@@ -6,7 +7,8 @@ interface GetProductsParams {
   per_page?: number;
   status?: string;
   search?: string;
-  tag?: string; // Añadimos tag para búsqueda específica
+  category?: string; // slug de la categoría
+  tag?: string; // slug de la etiqueta
 }
 
 export async function getProducts(params: GetProductsParams = {}): Promise<WooProduct[]> {
@@ -16,24 +18,28 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             status: params.status || 'publish',
         };
 
-        // Lógica de búsqueda mejorada:
-        // 1. Si se proporciona un 'tag', es la búsqueda más específica.
-        if (params.tag) {
-            // Primero, encontramos el ID de la etiqueta basándonos en su nombre (slug).
-            const tagSlug = params.tag.toLowerCase();
-            const { data: tagsData } = await wooApi.get("products/tags", { slug: tagSlug });
-
-            if (tagsData && tagsData.length > 0) {
-                const tagId = tagsData[0].id;
-                // Usamos el ID de la etiqueta para filtrar los productos.
-                apiParams.tag = tagId;
+        // Lógica de búsqueda priorizada:
+        // 1. Si se proporciona un 'category' slug, buscar por ID de categoría.
+        if (params.category) {
+            const { data: categoriesData } = await wooApi.get("products/categories", { slug: params.category });
+            if (categoriesData && categoriesData.length > 0) {
+                apiParams.category = categoriesData[0].id;
             } else {
-                // Si no se encuentra la etiqueta, es probable que no haya productos,
-                // pero por si acaso, hacemos una búsqueda de texto como fallback.
-                apiParams.search = params.tag.replace(/-/g, ' ');
+                // Si no se encuentra el slug de la categoría, es probable que no haya productos.
+                // Devolvemos un array vacío para que la UI muestre el mensaje correspondiente.
+                return [];
             }
         }
-        // 2. Si no hay 'tag' pero sí 'search', usamos la búsqueda de texto.
+        // 2. Si se proporciona un 'tag' slug, buscar por ID de tag.
+        else if (params.tag) {
+            const { data: tagsData } = await wooApi.get("products/tags", { slug: params.tag });
+            if (tagsData && tagsData.length > 0) {
+                apiParams.tag = tagsData[0].id;
+            } else {
+                return [];
+            }
+        }
+        // 3. Si no hay ni 'category' ni 'tag', pero sí 'search', usamos la búsqueda de texto.
         else if (params.search) {
             apiParams.search = params.search;
         }
