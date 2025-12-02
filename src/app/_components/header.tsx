@@ -97,7 +97,15 @@ const trekkingMujer: NavLink[] = [
                     { title: 'Pantalones trekking primavera verano', href: '/products?category=pantalones-trekking-primavera-verano' },
                 ]
             },
-            { title: 'Chaquetas', href: '/products?category=chaquetas' },
+            { 
+                title: 'Chaquetas', 
+                href: '/products?category=chaquetas',
+                children: [
+                    { title: 'Softshell y térmicas', href: '/products?category=softshell-y-termicas' },
+                    { title: 'Cortavientos', href: '/products?category=cortavientos' },
+                    { title: 'Plumas y Primaloft', href: '/products?category=plumas-y-primaloft' },
+                ]
+            },
             { title: 'Sudaderas', href: '/products?category=sudaderas-mujer' },
             { title: 'Camisetas', href: '/products?category=camisetas-mujer' },
         ],
