@@ -32,10 +32,24 @@ export function ProductCard({ product }: ProductCardProps) {
                 {product.categories?.[0]?.name && <Badge variant="secondary" className="mb-2">{product.categories[0].name}</Badge>}
                 <h3 className="font-headline font-semibold text-lg leading-tight">{product.name}</h3>
             </div>
-            <div
-              className="mt-2 text-lg font-bold text-gray-900 [&>del]:text-gray-400 [&>del]:text-sm [&>del]:mr-2 [&>ins]:text-red-600 [&>ins]:no-underline"
-              dangerouslySetInnerHTML={{ __html: product.price_html }}
-            />
+            <div className="mt-2 flex items-center gap-3">
+              {/* Si hay oferta, mostramos el tachado */}
+              {product.regular_price && product.sale_price && product.regular_price !== product.sale_price ? (
+                <>
+                  <span className="text-gray-400 line-through text-sm font-medium">
+                    {product.regular_price}€
+                  </span>
+                  <span className="text-red-600 font-bold text-xl">
+                    {product.sale_price}€
+                  </span>
+                </>
+              ) : (
+                /* Si no hay oferta, solo el precio normal */
+                <span className="text-gray-900 font-bold text-xl">
+                  {product.price}€
+                </span>
+              )}
+            </div>
         </CardContent>
       </Card>
     </Link>
