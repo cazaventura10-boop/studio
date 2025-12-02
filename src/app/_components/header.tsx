@@ -89,7 +89,14 @@ const trekkingMujer: NavLink[] = [
         title: 'ROPA DE MUJER',
         href: '/products?category=ropa-de-mujer',
         children: [
-            { title: 'Pantalones', href: '/products?category=pantalones-mujer' },
+            {
+                title: 'Pantalones',
+                href: '/products?category=pantalones-mujer',
+                children: [
+                    { title: 'Pantalones trekking invierno', href: '/products?category=pantalones-trekking-invierno' },
+                    { title: 'Pantalones trekking primavera verano', href: '/products?category=pantalones-trekking-primavera-verano' },
+                ]
+            },
             { title: 'Chaquetas', href: '/products?category=chaquetas-mujer' },
             { title: 'Sudaderas', href: '/products?category=sudaderas-mujer' },
             { title: 'Camisetas', href: '/products?category=camisetas-mujer' },
