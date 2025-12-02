@@ -1,29 +1,28 @@
-import Link from 'next/link';
 import Image from 'next/image';
-import { Card, CardContent } from '@/components/ui/card';
+import Link from 'next/link';
 
 const categories = [
   {
     name: 'Pantalones Trekking',
-    href: '/products?search=pantalones%20hombre',
+    href: '/products?category=pantalones-hombre',
     imageUrl: 'https://images.unsplash.com/photo-1599409333945-f435a2d10a7a?q=80&w=1974&auto=format&fit=crop',
     imageHint: 'technical pants'
   },
   {
     name: 'Chaquetas y Cortavientos',
-    href: '/products?search=chaquetas%20hombre',
+    href: '/products?category=chaquetas-hombre',
     imageUrl: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2070&auto=format&fit=crop',
     imageHint: 'mountaineer jacket'
   },
   {
     name: 'Botas y Zapatillas',
-    href: '/products?search=botas%20hombre',
+    href: '/products?category=calzado-hombre',
     imageUrl: 'https://images.unsplash.com/photo-1520639888713-7851133b175b?q=80&w=1974&auto=format&fit=crop',
     imageHint: 'dirty hiking boots'
   },
   {
     name: 'Sudaderas y Polares',
-    href: '/products?search=sudaderas%20hombre',
+    href: '/products?category=sudaderas-hombre',
     imageUrl: 'https://images.unsplash.com/photo-1616151375837-a90c6574f0d4?q=80&w=1964&auto=format&fit=crop',
     imageHint: 'lifestyle hoodie'
   }
