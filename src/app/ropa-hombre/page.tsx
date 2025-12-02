@@ -23,7 +23,7 @@ const categories = [
   {
     name: 'Sudaderas y Polares',
     href: '/products?category=sudaderas-hombre',
-    imageUrl: 'https://images.unsplash.com/photo-1616151375837-a90c6574f0d4?q=80&w=1964&auto=format&fit=crop',
+    imageUrl: 'https://www.deporteyaventura.es/wp-content/uploads/2022/11/imj05218_000577_3.webp',
     imageHint: 'lifestyle hoodie'
   }
 ];
