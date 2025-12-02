@@ -18,11 +18,7 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col">
-      <div className="bg-background text-center py-4 border-b">
-        <Button asChild size="lg" className="bg-foreground text-background font-bold hover:bg-foreground/80">
-          <Link href="/ropa-hombre">VER PRUEBA MENÚ VISUAL HOMBRE</Link>
-        </Button>
-      </div>
+      
       {/* Hero Section */}
       <section 
         className="relative w-full h-[600px] flex items-center justify-center text-center text-white bg-cover bg-center"
@@ -30,6 +26,13 @@ export default async function Home() {
         >
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 flex flex-col items-center">
+          
+          <div className="absolute top-8">
+            <Button asChild size="lg" className="bg-orange-500 text-white font-bold hover:bg-orange-500/90 rounded-full px-8 py-4">
+              <Link href="/ropa-hombre">VER PRUEBA MENÚ VISUAL HOMBRE</Link>
+            </Button>
+          </div>
+
           <h1 className="text-4xl md:text-5xl font-extrabold font-headline tracking-tighter uppercase">
             Tu Próxima Cima
           </h1>
