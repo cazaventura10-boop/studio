@@ -299,7 +299,7 @@ export function Header() {
                     </div>
                     {/* Columna COMPLEMENTOS */}
                     <div className="flex flex-col">
-                      <h3 className="mb-2 text-sm font-bold text-accent">COMPLEMENTOS</h3>
+                      <a href="/products?category=complementos-trekking" className="mb-2 text-sm font-bold text-accent hover:underline">COMPLEMENTOS</a>
                        <p className="text-xs text-muted-foreground mb-3">Accesorios para tus aventuras</p>
                        <ul>
                           {trekkingComplementos.map((item) => (
