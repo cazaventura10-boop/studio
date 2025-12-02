@@ -38,48 +38,41 @@ const trekkingHombre: NavLink[] = [
     href: '/products?category=ropa-de-hombre',
     children: [
       {
-        title: 'Pantalones de Hombre',
+        title: 'Pantalones Hombre',
         href: '/products?category=pantalones-hombre',
         children: [
           { title: 'Pantalones Invierno Hombre', href: '/products?category=pantalones-invierno-hombre' },
           { 
-            title: 'Pantalones Primavera/Verano', 
+            title: 'Pantalones Primavera/Verano Hombre', 
             href: '/products?category=pantalones-primavera-verano-hombre',
             children: [
-                { title: 'Largos y Desmontables', href: '/products?category=largos-y-desmontables-hombre' },
-                { title: 'Cortos y Piratas', href: '/products?category=cortos-y-piratas-hombre' },
+                { title: 'Cortos y Piratas Hombre', href: '/products?category=cortos-y-piratas-hombre' },
+                { title: 'Largos y Desmontables Hombre', href: '/products?category=largos-y-desmontables-hombre' },
             ]
           },
         ],
       },
       {
-        title: 'Chaquetas de Hombre',
-        href: '/products?category=Trekking&tag=Chaquetas-Hombre',
+        title: 'Chaquetas Hombre',
+        href: '/products?category=chaquetas-hombre',
         children: [
-          { title: 'Softshell y Térmicas', href: '/products?category=Trekking&tag=Softshell-Hombre' },
-          { title: 'Cortavientos e Impermeables', href: '/products?category=Trekking&tag=Cortavientos-Hombre' },
-          { title: 'Plumas y Primaloft', href: '/products?category=Trekking&tag=Plumas-Hombre' },
+          { title: 'Softshell y Térmicas Hombre', href: '/products?category=softshell-termicas-hombre' },
+          { title: 'Cortavientos e Impermeables Hombre', href: '/products?category=cortavientos-impermeables-hombre' },
+          { title: 'Plumas y Primaloft Hombre', href: '/products?category=plumas-primaloft-hombre' },
         ],
       },
-      { title: 'Chalecos de Hombre', href: '/products?category=Trekking&tag=Chalecos-Hombre' },
-      { title: 'Sudaderas de Hombre', href: '/products?category=Trekking&tag=Sudaderas-Hombre' },
-      {
-        title: 'Camisetas de Hombre',
-        href: '/products?category=Trekking&tag=Camisetas-Hombre',
-        children: [
-          { title: 'Térmicas y Manga Larga', href: '/products?category=Trekking&tag=Camisetas-Larga-Hombre' },
-          { title: 'Manga Corta y Sin Mangas', href: '/products?category=Trekking&tag=Camisetas-Corta-Hombre' },
-        ],
-      },
+      { title: 'Chalecos Hombre', href: '/products?category=chalecos-hombre' },
+      { title: 'Sudaderas Hombre', href: '/products?category=sudaderas-hombre' },
+      { title: 'Camisetas Hombre', href: '/products?category=camisetas-hombre' },
     ],
   },
   {
     title: 'CALZADO DE HOMBRE',
-    href: '/products?category=Trekking&tag=Calzado-Hombre',
+    href: '/products?category=calzado-hombre',
     children: [
-      { title: 'Botas de Montaña', href: '/products?category=Trekking&tag=Botas-Hombre' },
-      { title: 'Zapatos y Zapatillas', href: '/products?category=Trekking&tag=Zapatillas-Hombre' },
-      { title: 'Sandalias', href: '/products?category=Trekking&tag=Sandalias-Hombre' },
+      { title: 'Botas de Montaña Hombre', href: '/products?category=botas-montana-hombre' },
+      { title: 'Zapatillas Trekking Hombre', href: '/products?category=zapatillas-trekking-hombre' },
+      { title: 'Sandalias Hombre', href: '/products?category=sandalias-hombre' },
     ],
   },
 ];
@@ -87,51 +80,21 @@ const trekkingHombre: NavLink[] = [
 const trekkingMujer: NavLink[] = [
     {
         title: 'ROPA DE MUJER',
-        href: '/products?category=Trekking&tag=Ropa-Mujer',
+        href: '/products?category=ropa-de-mujer',
         children: [
-            {
-                title: 'Pantalones de Mujer',
-                href: '/products?category=Trekking&tag=Pantalones-Mujer',
-                children: [
-                    { title: 'Pantalones Invierno', href: '/products?tag=Pantalones-Invierno-Mujer' },
-                    { 
-                        title: 'Pantalones Primavera/Verano', 
-                        href: '/products?tag=Pantalones-Verano-Mujer',
-                         children: [
-                            { title: 'Pantalones largos y desmontables', href: '/products?tag=Pantalones-Largos-Mujer' },
-                            { title: 'Cortos y piratas', href: '/products?tag=Pantalones-Cortos-Mujer' },
-                        ]
-                    }
-                ],
-            },
-            {
-                title: 'Chaquetas de Mujer',
-                href: '/products?category=Trekking&tag=Chaquetas-Mujer',
-                children: [
-                    { title: 'Softshell y Térmicas', href: '/products?tag=Softshell-Mujer' },
-                    { title: 'Cortavientos e Impermeables', href: '/products?tag=Cortavientos-Mujer' },
-                    { title: 'Plumas y Primaloft', href: '/products?tag=Plumas-Mujer' },
-                ],
-            },
-            { title: 'Chalecos de Mujer', href: '/products?tag=Chalecos-Mujer' },
-            { title: 'Sudaderas de Mujer', href: '/products?tag=Sudaderas-Mujer' },
-            {
-                title: 'Camisetas de Mujer',
-                href: '/products?category=Trekking&tag=Camisetas-Mujer',
-                children: [
-                    { title: 'Térmicas y Manga Larga', href: '/products?tag=Camisetas-Larga-Mujer' },
-                    { title: 'Manga Corta', href: '/products?tag=Camisetas-Corta-Mujer' },
-                ],
-            },
+            { title: 'Pantalones', href: '/products?category=pantalones-mujer' },
+            { title: 'Chaquetas', href: '/products?category=chaquetas-mujer' },
+            { title: 'Sudaderas', href: '/products?category=sudaderas-mujer' },
+            { title: 'Camisetas', href: '/products?category=camisetas-mujer' },
         ],
     },
     {
         title: 'CALZADO DE MUJER',
-        href: '/products?category=Trekking&tag=Calzado-Mujer',
+        href: '/products?category=calzado-mujer',
         children: [
-            { title: 'Botas Trekking', href: '/products?tag=Botas-Trekking-Mujer' },
-            { title: 'Zapatillas Trekking', href: '/products?tag=Zapatillas-Trekking-Mujer' },
-            { title: 'Sandalias', href: '/products?tag=Sandalias-Mujer' },
+            { title: 'Botas', href: '/products?category=botas-mujer' },
+            { title: 'Zapatillas', href: '/products?category=zapatillas-mujer' },
+            { title: 'Sandalias', href: '/products?category=sandalias-mujer' },
         ],
     },
 ];
