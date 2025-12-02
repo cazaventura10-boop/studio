@@ -78,7 +78,7 @@ const trekkingHombre: NavLink[] = [
     href: '/products?category=calzado-hombre',
     children: [
       { title: 'Botas de Montaña Hombre', href: '/products?category=botas-de-montana-y-trekking-hombre' },
-      { title: 'Zapatillas Trekking Hombre', href: '/products?category=zapatillas-trekking-hombre' },
+      { title: 'Zapatillas Trekking Hombre', href: '/products?category=zapatos-y-zapatillas-trekking-hombre' },
       { title: 'Sandalias Hombre', href: '/products?category=sandalias-hombre' },
     ],
   },
