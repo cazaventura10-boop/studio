@@ -64,6 +64,10 @@ export default async function ProductDetailPage({ params }: Props) {
   const image = product.images?.[0];
   const placeholderImage = "https://placehold.co/600x600/eee/ccc?text=No+Image";
   const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
+  
+  const salePrice = product.sale_price ? parseFloat(product.sale_price) : NaN;
+  const regularPrice = product.regular_price ? parseFloat(product.regular_price) : NaN;
+  const price = parseFloat(product.price);
 
   return (
     <>
@@ -96,18 +100,20 @@ export default async function ProductDetailPage({ params }: Props) {
             <h1 className="text-3xl lg:text-4xl font-extrabold font-headline mb-4 tracking-tight">{product.name}</h1>
             
              <div className="mb-6">
-               {product.on_sale ? (
+               {product.on_sale && !isNaN(salePrice) ? (
                 <div className="flex items-baseline gap-4">
                     <p className="text-4xl font-bold text-orange-500">
-                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.sale_price))}
+                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(salePrice)}
                     </p>
-                    <p className="text-2xl text-muted-foreground line-through">
-                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.regular_price))}
-                    </p>
+                    {!isNaN(regularPrice) && (
+                      <p className="text-2xl text-muted-foreground line-through">
+                          {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(regularPrice)}
+                      </p>
+                    )}
                 </div>
               ) : (
                 <p className="text-4xl font-bold text-foreground">
-                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price))}
+                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(!isNaN(price) ? price : 0)}
                 </p>
               )}
             </div>
@@ -141,8 +147,7 @@ export default async function ProductDetailPage({ params }: Props) {
                         </div>
                     </AccordionTrigger>
                     <AccordionContent className="prose prose-sm text-muted-foreground pt-2">
-                        <p>Diseñados para los aventureros más exigentes, nuestros pantalones de trekking técnicos ofrecen una combinación inigualable de durabilidad y comodidad. El tejido principal, construido con tecnología ripstop, resiste enganches y abrasiones en los terrenos más hostiles, asegurando una larga vida útil.</p>
-                        <p>La incorporación de elastano en su composición garantiza una libertad de movimiento total, adaptándose a cada paso, salto o escalada. Son ideales para rutas de larga distancia donde el confort y la fiabilidad son esenciales. Su ligereza te hará olvidar que los llevas puestos.</p>
+                        <div dangerouslySetInnerHTML={{ __html: product.description || '' }} />
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="features">
