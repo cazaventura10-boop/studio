@@ -98,20 +98,20 @@ export default async function ProductDetailPage({ params }: Props) {
             <h1 className="text-3xl lg:text-4xl font-extrabold font-headline mb-4 tracking-tight">{product.name}</h1>
             
             <div className="flex items-baseline gap-2 mt-4">
-                {product.on_sale && product.regular_price ? (
-                    <>
-                    <span className="text-gray-500 line-through">
-                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.regular_price))}
-                    </span>
-                    <span className="text-red-600 font-bold text-lg">
-                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price))}
-                    </span>
-                    </>
-                ) : (
-                    <span className="text-gray-900 font-bold text-lg">
+              {product.on_sale && product.sale_price ? (
+                <>
+                  <span className="text-gray-500 line-through">
+                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.regular_price))}
+                  </span>
+                  <span className="text-red-600 font-bold text-lg">
                     {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price))}
-                    </span>
-                )}
+                  </span>
+                </>
+              ) : (
+                <span className="text-gray-900 font-bold text-lg">
+                  {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price))}
+                </span>
+              )}
             </div>
             
             <Separator className="my-6" />
