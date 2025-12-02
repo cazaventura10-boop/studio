@@ -56,7 +56,7 @@ const trekkingHombre: NavLink[] = [
         title: 'Chaquetas Hombre',
         href: '/products?category=chaquetas-hombre',
         children: [
-          { title: 'Softshell y Térmicas Hombre', href: '/products?category=softshell-termicas-hombre' },
+          { title: 'Softshell y Térmicas Hombre', href: '/products?category=softshell-y-termicas-hombre' },
           { title: 'Cortavientos e Impermeables Hombre', href: '/products?category=cortavientos-impermeables-hombre' },
           { title: 'Plumas y Primaloft Hombre', href: '/products?category=plumas-primaloft-hombre' },
         ],
@@ -157,7 +157,7 @@ const NestedList = ({ items, level = 0 }: { items: NavLink[], level?: number }) 
             {items.map((item) => (
                 <li key={item.title}>
                     <ListItem href={item.href} title={item.title} className={cn(baseClasses, levelClasses[level])} />
-                    {item.children && (
+                    {item.children && level < 2 && ( // Added level check
                         <div className={listClasses}>
                             <NestedList items={item.children} level={level + 1} />
                         </div>
