@@ -106,7 +106,7 @@ const trekkingMujer: NavLink[] = [
                     { title: 'Plumas y Primaloft', href: '/products?category=primaloft-y-plumas' },
                 ]
             },
-            { title: 'Sudaderas', href: '/products?category=sudaderas-mujer' },
+            { title: 'Sudaderas', href: '/products?category=sudaderas' },
             { title: 'Camisetas', href: '/products?category=camisetas-mujer' },
         ],
     },
