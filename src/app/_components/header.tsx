@@ -143,7 +143,7 @@ const trekkingComplementos: NavLink[] = [
 ];
 
 const cazaLinks: NavLink[] = [
-    { title: "Botas de Caza", href: '/products?tag=Botas-de-Caza' },
+    { title: "Botas de Caza", href: '/products?category=botas-caza' },
     { title: "Pantalones Caza", href: '/products?tag=Pantalones-Caza' },
     { title: "Chaquetas de Caza", href: '/products?tag=Chaquetas-Caza' },
     { title: "Chalecos de Caza", href: '/products?tag=Chalecos-Caza' },
