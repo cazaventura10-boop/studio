@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getProducts } from '@/lib/data';
@@ -44,6 +45,7 @@ async function getProduct(id: string): Promise<Product | null> {
             images: data.images,
             permalink: data.permalink,
             categories: data.categories,
+            tags: data.tags,
         };
     } catch (error) {
         console.error(error);
@@ -95,21 +97,21 @@ export default async function ProductDetailPage({ params }: Props) {
             
             <h1 className="text-3xl lg:text-4xl font-extrabold font-headline mb-4 tracking-tight">{product.name}</h1>
             
-             <div className="flex items-baseline gap-2 mt-4">
-              {product.on_sale && product.sale_price ? (
-                <>
-                  <span className="text-gray-500 line-through">
-                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.regular_price))}
-                  </span>
-                  <span className="text-red-600 font-bold text-lg">
+            <div className="flex items-baseline gap-2 mt-4">
+                {product.on_sale && product.regular_price ? (
+                    <>
+                    <span className="text-gray-500 line-through">
+                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.regular_price))}
+                    </span>
+                    <span className="text-red-600 font-bold text-lg">
+                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price))}
+                    </span>
+                    </>
+                ) : (
+                    <span className="text-gray-900 font-bold text-lg">
                     {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price))}
-                  </span>
-                </>
-              ) : (
-                <span className="text-gray-900 font-bold text-lg">
-                  {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price))}
-                </span>
-              )}
+                    </span>
+                )}
             </div>
             
             <Separator className="my-6" />
