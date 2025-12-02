@@ -33,18 +33,21 @@ export function ProductCard({ product }: ProductCardProps) {
                 <h3 className="font-headline font-semibold text-lg leading-tight">{product.name}</h3>
             </div>
             <div className="mt-2 flex items-center gap-3">
-              {/* Si hay oferta, mostramos el tachado */}
-              {product.regular_price && product.sale_price && product.regular_price !== product.sale_price ? (
+              {/* COMPROBACIÓN: Si hay precio rebajado y es distinto al normal */}
+              {product.regular_price && product.price && product.regular_price !== product.price ? (
                 <>
+                  {/* Precio Original Tachado */}
                   <span className="text-gray-400 line-through text-sm font-medium">
                     {product.regular_price}€
                   </span>
+                  
+                  {/* Precio Oferta Rojo */}
                   <span className="text-red-600 font-bold text-xl">
-                    {product.sale_price}€
+                    {product.price}€
                   </span>
                 </>
               ) : (
-                /* Si no hay oferta, solo el precio normal */
+                /* Precio Normal Negro */
                 <span className="text-gray-900 font-bold text-xl">
                   {product.price}€
                 </span>
