@@ -12,9 +12,8 @@ export function ProductCard({ product }: ProductCardProps) {
   const image = product.images?.[0];
   const placeholderImage = "https://placehold.co/600x600/eee/ccc?text=No+Image";
   
-  const salePrice = product.sale_price ? parseFloat(product.sale_price) : NaN;
+  const currentPrice = parseFloat(product.price);
   const regularPrice = product.regular_price ? parseFloat(product.regular_price) : NaN;
-  const price = parseFloat(product.price);
 
   return (
     <Link href={`/products/${product.id}`} className="group block h-full">
@@ -37,7 +36,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 <h3 className="font-headline font-semibold text-lg leading-tight">{product.name}</h3>
             </div>
             <div className="mt-4">
-              {product.on_sale && !isNaN(salePrice) ? (
+              {product.on_sale && !isNaN(currentPrice) ? (
                 <div className="flex items-baseline gap-2">
                     {!isNaN(regularPrice) && (
                        <p className="text-md text-muted-foreground line-through">
@@ -45,12 +44,12 @@ export function ProductCard({ product }: ProductCardProps) {
                        </p>
                     )}
                     <p className="text-xl font-bold text-red-600">
-                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(salePrice)}
+                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(currentPrice)}
                     </p>
                 </div>
               ) : (
                 <p className="text-xl font-bold text-foreground">
-                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(!isNaN(price) ? price : 0)}
+                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(!isNaN(currentPrice) ? currentPrice : 0)}
                 </p>
               )}
             </div>

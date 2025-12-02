@@ -65,9 +65,8 @@ export default async function ProductDetailPage({ params }: Props) {
   const placeholderImage = "https://placehold.co/600x600/eee/ccc?text=No+Image";
   const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
   
-  const salePrice = product.sale_price ? parseFloat(product.sale_price) : NaN;
+  const currentPrice = parseFloat(product.price);
   const regularPrice = product.regular_price ? parseFloat(product.regular_price) : NaN;
-  const price = parseFloat(product.price);
 
   return (
     <>
@@ -100,7 +99,7 @@ export default async function ProductDetailPage({ params }: Props) {
             <h1 className="text-3xl lg:text-4xl font-extrabold font-headline mb-4 tracking-tight">{product.name}</h1>
             
              <div className="mb-6">
-               {product.on_sale && !isNaN(salePrice) ? (
+               {product.on_sale && !isNaN(currentPrice) ? (
                 <div className="flex items-baseline gap-4">
                     {!isNaN(regularPrice) && (
                       <p className="text-2xl text-muted-foreground line-through">
@@ -108,12 +107,12 @@ export default async function ProductDetailPage({ params }: Props) {
                       </p>
                     )}
                     <p className="text-4xl font-bold text-red-600">
-                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(salePrice)}
+                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(currentPrice)}
                     </p>
                 </div>
               ) : (
                 <p className="text-4xl font-bold text-foreground">
-                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(!isNaN(price) ? price : 0)}
+                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(!isNaN(currentPrice) ? currentPrice : 0)}
                 </p>
               )}
             </div>
