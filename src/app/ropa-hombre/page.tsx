@@ -5,7 +5,7 @@ const categories = [
   {
     name: 'Pantalones Trekking',
     href: '/products?category=pantalones-hombre',
-    imageUrl: 'https://images.unsplash.com/photo-1599409333945-f435a2d10a7a?q=80&w=1974&auto=format&fit=crop',
+    imageUrl: 'https://www.deporteyaventura.es/wp-content/uploads/2025/10/unnamed-2-2.jpg',
     imageHint: 'technical pants'
   },
   {
