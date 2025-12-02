@@ -37,6 +37,7 @@ async function getProduct(id: string): Promise<Product | null> {
             name: data.name,
             description: data.description,
             price: data.price,
+            price_html: data.price_html,
             on_sale: data.on_sale,
             sale_price: data.sale_price,
             regular_price: data.regular_price,

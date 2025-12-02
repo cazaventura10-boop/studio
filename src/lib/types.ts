@@ -4,6 +4,7 @@ export interface Product {
   name: string;
   description: string;
   price: string;
+  price_html: string;
   on_sale: boolean;
   sale_price: string;
   regular_price: string;

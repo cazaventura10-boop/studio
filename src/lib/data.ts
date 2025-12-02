@@ -51,6 +51,7 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             name: product.name,
             description: product.description,
             price: product.price,
+            price_html: product.price_html,
             on_sale: product.on_sale,
             sale_price: product.sale_price,
             regular_price: product.regular_price,
