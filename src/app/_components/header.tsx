@@ -107,7 +107,14 @@ const trekkingMujer: NavLink[] = [
                 ]
             },
             { title: 'Sudaderas', href: '/products?category=sudaderas' },
-            { title: 'Camisetas', href: '/products?category=camisetas-mujer' },
+            { 
+                title: 'Camisetas', 
+                href: '/products?category=camisetas-mujer',
+                children: [
+                    { title: 'Camisetas Manga Corta y sin mangas', href: '/products?category=camisetas-manga-corta-y-sin-mangas' },
+                    { title: 'Camisetas térmicas y manga larga', href: '/products?category=camisetas-termicas-y-manga-larga' },
+                ]
+            },
         ],
     },
     {
