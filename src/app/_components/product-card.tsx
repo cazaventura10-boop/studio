@@ -12,6 +12,9 @@ export function ProductCard({ product }: ProductCardProps) {
   const image = product.images?.[0];
   const placeholderImage = "https://placehold.co/600x600/eee/ccc?text=No+Image";
   
+  // Simplified price display logic as requested
+  const isOnSale = product.on_sale && product.regular_price && product.price !== product.regular_price;
+
   return (
     <Link href={`/products/${product.id}`} className="group block h-full">
       <Card className="overflow-hidden h-full transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-2 bg-white rounded-lg flex flex-col">
@@ -33,18 +36,18 @@ export function ProductCard({ product }: ProductCardProps) {
                 <h3 className="font-headline font-semibold text-lg leading-tight">{product.name}</h3>
             </div>
             <div className="flex items-baseline gap-2 mt-4">
-              {product.on_sale ? (
+              {isOnSale ? (
                 <>
                   <span className="text-gray-500 line-through">
-                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.regular_price.replace(',', '.')))}
+                    {product.regular_price}€
                   </span>
                   <span className="text-red-600 font-bold text-lg">
-                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price.replace(',', '.')))}
+                    {product.price}€
                   </span>
                 </>
               ) : (
                 <span className="text-gray-900 font-bold text-lg">
-                  {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price.replace(',', '.')))}
+                  {product.price}€
                 </span>
               )}
             </div>
