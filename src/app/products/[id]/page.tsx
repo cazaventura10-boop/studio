@@ -61,7 +61,7 @@ export default async function ProductDetailPage({ params }: Props) {
   }
   
   const allProducts = await getProducts();
-  const relatedProducts = allProducts.filter(p => p.id !== product.id && p.category === product.category).slice(0, 4);
+  const relatedProducts = allProducts.filter(p => p.id !== product.id && p.categories[0]?.name === product.categories[0]?.name).slice(0, 4);
 
   const image = product.images?.[0];
   const placeholderImage = "https://placehold.co/600x600/eee/ccc?text=No+Image";
@@ -97,18 +97,18 @@ export default async function ProductDetailPage({ params }: Props) {
             
             <h1 className="text-3xl lg:text-4xl font-extrabold font-headline mb-4 tracking-tight">{product.name}</h1>
             
-            <div className="flex items-baseline gap-2 mt-4">
-              {product.on_sale && product.sale_price ? (
+             <div className="flex items-baseline gap-2 mt-4">
+              {product.on_sale && product.regular_price ? (
                 <>
-                  <span className="text-gray-500 line-through">
+                  <span className="text-gray-500 line-through text-lg">
                     {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.regular_price))}
                   </span>
-                  <span className="text-red-600 font-bold text-lg">
+                  <span className="text-red-600 font-bold text-2xl">
                     {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price))}
                   </span>
                 </>
               ) : (
-                <span className="text-gray-900 font-bold text-lg">
+                <span className="text-gray-900 font-bold text-2xl">
                   {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price))}
                 </span>
               )}
@@ -233,3 +233,5 @@ export default async function ProductDetailPage({ params }: Props) {
     </>
   );
 }
+
+    
