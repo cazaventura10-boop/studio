@@ -103,7 +103,7 @@ const trekkingMujer: NavLink[] = [
                 children: [
                     { title: 'Softshell y térmicas', href: '/products?category=chaquetas-tecnicas-y-softshell' },
                     { title: 'Cortavientos', href: '/products?category=cortavientos' },
-                    { title: 'Plumas y Primaloft', href: '/products?category=plumas-y-primaloft' },
+                    { title: 'Plumas y Primaloft', href: '/products?category=primaloft-y-plumas' },
                 ]
             },
             { title: 'Sudaderas', href: '/products?category=sudaderas-mujer' },
