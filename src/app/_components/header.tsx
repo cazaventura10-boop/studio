@@ -137,11 +137,11 @@ const trekkingComplementos: NavLink[] = [
 
 const cazaLinks: NavLink[] = [
     { title: "Botas de Caza", href: '/products?category=botas-caza' },
-    { title: "Pantalones Caza", href: '/products?tag=pantalones-caza' },
-    { title: "Chaquetas de Caza", href: '/products?tag=chaquetas-caza' },
-    { title: "Chalecos de Caza", href: '/products?tag=chalecos-caza' },
-    { title: "Camisas y Camisetas", href: '/products?tag=camisas-y-camisetas-caza' },
-    { title: "Varios Caza", href: '/products?tag=varios-caza' }
+    { title: "Pantalones Caza", href: '/products?category=pantalones-caza' },
+    { title: "Chaquetas de Caza", href: '/products?category=chaquetas-caza' },
+    { title: "Chalecos de Caza", href: '/products?category=chalecos-caza' },
+    { title: "Camisas y Camisetas", href: '/products?category=camisas-y-camisetas-caza' },
+    { title: "Varios Caza", href: '/products?category=varios-caza' }
 ];
 
 const kayakLinks: NavLink[] = [
@@ -314,14 +314,11 @@ export function Header() {
 
               {/* CAZA */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className={navTriggerClasses}>CAZA</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[200px] gap-3 p-4">
-                    {cazaLinks.map((link) => (
-                       <ListItem key={link.title} href={link.href} title={link.title} />
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
+                <Link href="/products?category=caza" legacyBehavior passHref>
+                   <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), navTriggerClasses)}>
+                     CAZA
+                   </NavigationMenuLink>
+                </Link>
               </NavigationMenuItem>
 
               {/* KAYAK */}
