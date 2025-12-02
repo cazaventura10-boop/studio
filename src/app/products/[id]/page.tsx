@@ -65,9 +65,6 @@ export default async function ProductDetailPage({ params }: Props) {
   const placeholderImage = "https://placehold.co/600x600/eee/ccc?text=No+Image";
   const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
   
-  const currentPrice = parseFloat(product.price);
-  const regularPrice = product.regular_price ? parseFloat(product.regular_price) : NaN;
-
   return (
     <>
     <div className="container mx-auto max-w-7xl px-4 py-12 md:py-20">
@@ -98,22 +95,20 @@ export default async function ProductDetailPage({ params }: Props) {
             
             <h1 className="text-3xl lg:text-4xl font-extrabold font-headline mb-4 tracking-tight">{product.name}</h1>
             
-             <div className="mb-6">
-               {product.on_sale && !isNaN(currentPrice) ? (
-                <div className="flex items-baseline gap-4">
-                    {!isNaN(regularPrice) && (
-                      <p className="text-2xl text-muted-foreground line-through">
-                          {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(regularPrice)}
-                      </p>
-                    )}
-                    <p className="text-4xl font-bold text-red-600">
-                        {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(currentPrice)}
-                    </p>
-                </div>
+             <div className="flex items-baseline gap-2 mt-4">
+              {product.on_sale && product.sale_price ? (
+                <>
+                  <span className="text-gray-500 line-through">
+                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.regular_price))}
+                  </span>
+                  <span className="text-red-600 font-bold text-lg">
+                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price))}
+                  </span>
+                </>
               ) : (
-                <p className="text-4xl font-bold text-foreground">
-                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(!isNaN(currentPrice) ? currentPrice : 0)}
-                </p>
+                <span className="text-gray-900 font-bold text-lg">
+                  {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price))}
+                </span>
               )}
             </div>
             
