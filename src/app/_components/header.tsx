@@ -314,11 +314,14 @@ export function Header() {
 
               {/* CAZA */}
               <NavigationMenuItem>
-                <Link href="/products?category=caza" legacyBehavior passHref>
-                   <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), navTriggerClasses)}>
-                     CAZA
-                   </NavigationMenuLink>
-                </Link>
+                <NavigationMenuTrigger className={navTriggerClasses}>CAZA</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[220px] gap-3 p-4">
+                    {cazaLinks.map((link) => (
+                      <ListItem key={link.title} href={link.href} title={link.title} />
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
               </NavigationMenuItem>
 
               {/* KAYAK */}
