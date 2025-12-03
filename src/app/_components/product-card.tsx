@@ -1,64 +1,93 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { ShoppingBag, Tag } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+
+// Función "Trituradora": Limpia el precio y lo convierte a número real
+const parsePrice = (price: any): number => {
+  if (!price) return 0;
+  // 1. Convertimos a texto, reemplazamos coma por punto
+  const cleanString = String(price).replace(',', '.');
+  // 2. Quitamos cualquier cosa que no sea número o punto (para casos como "€1,200.50")
+  const justNumbers = cleanString.replace(/[^0-9.]/g, '');
+  // 3. Convertimos a número
+  const value = parseFloat(justNumbers);
+  return isNaN(value) ? 0 : value;
+};
 
 export default function ProductCard({ product }: { product: any }) {
-  // Lógica simple: Si los textos son distintos y existen, es una oferta
-  const showSale = product.regular_price && product.price && product.regular_price !== product.price;
+  // 1. Obtenemos los números limpios
+  const regularPrice = parsePrice(product.regular_price);
+  const salePrice = parsePrice(product.sale_price);
+  const currentPrice = parsePrice(product.price);
+  
+  // 2. ¿Es una oferta real? El precio de venta debe ser menor que el regular.
+  const isOnSale = product.on_sale && salePrice > 0 && regularPrice > salePrice;
+  
+  // 3. Calculamos el porcentaje, asegurándonos de no dividir por cero
+  const discountPercentage = isOnSale
+    ? Math.round(((regularPrice - salePrice) / regularPrice) * 100)
+    : 0;
+
+  const placeholderImage = "https://placehold.co/600x600/f0f0f0/ccc?text=Sin+Imagen";
 
   return (
-    <Link href={`/products/${product.id}`} className="group relative block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
-      {/* IMAGEN */}
-      <div className="aspect-square relative overflow-hidden bg-gray-50">
-        {product.images && product.images[0] ? (
-            <Image
-                src={product.images[0].src}
-                alt={product.name}
-                fill
-                className="object-contain p-4 transition-transform duration-500 group-hover:scale-105"
-            />
-        ) : (
-            <div className="flex h-full items-center justify-center text-gray-300">Sin Imagen</div>
-        )}
-        
-        {/* Etiqueta Roja SIMPLE */}
-        {showSale && (
-          <div className="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md z-10">
-            OFERTA
-          </div>
-        )}
-      </div>
+    <div className="group relative flex flex-col bg-card rounded-lg overflow-hidden border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300 h-full">
+      <Link href={`/products/${product.id}`} className="block">
+        <div className="relative aspect-square bg-muted/50">
+          <Image
+            src={product.images?.[0]?.src || placeholderImage}
+            alt={product.name}
+            fill
+            className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
+          />
 
-      {/* INFO */}
-      <div className="p-4">
-        <p className="text-xs text-gray-400 mb-1 uppercase tracking-wide">
-          {product.categories && product.categories[0] ? product.categories[0].name : 'Producto'}
-        </p>
-        <h3 className="font-bold text-gray-900 text-sm leading-tight min-h-[2.5rem] line-clamp-2 mb-2 group-hover:text-orange-600 transition-colors">
-          {product.name}
-        </h3>
+          {/* --- Etiquetas sobre la imagen --- */}
+          <div className="absolute bottom-3 left-3 flex flex-col gap-2">
+            {isOnSale && discountPercentage > 0 && (
+              <div className="flex items-center gap-1.5 bg-red-600 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-md">
+                <Tag className="h-3 w-3" />
+                <span>{discountPercentage}% dto.</span>
+              </div>
+            )}
+            {/* Opcional: Etiqueta de "Nuevo Producto" si tienes ese dato */}
+            {/* <div className="bg-secondary text-secondary-foreground text-xs font-semibold px-3 py-1.5 rounded-full shadow-md">
+              Nuevo producto
+            </div> */}
+          </div>
+          
+           {/* --- Botón de Añadir al Carrito --- */}
+          <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+             <Button size="icon" className="rounded-full h-10 w-10 bg-foreground/80 text-background backdrop-blur-sm hover:bg-foreground">
+                <ShoppingBag className="h-5 w-5" />
+                <span className="sr-only">Añadir al carrito</span>
+             </Button>
+          </div>
+
+        </div>
+      </Link>
+
+      {/* --- INFO --- */}
+      <div className="p-4 flex flex-col flex-grow">
+        <Link href={`/products/${product.id}`} className="block">
+          <h3 className="font-semibold text-foreground text-sm leading-tight line-clamp-2 flex-grow">
+            {product.name}
+          </h3>
+        </Link>
         
-        {/* PRECIOS - SIN MATH.ROUND NI PARSEFLOAT */}
-        <div className="flex items-center gap-3 mt-1">
-          {showSale ? (
-            <>
-              {/* Precio Viejo Tachado */}
-              <span className="text-sm text-gray-500 line-through font-medium">
-                {product.regular_price} €
-              </span>
-              {/* Precio Nuevo Rojo */}
-              <span className="text-xl font-black text-red-600">
-                {product.price} €
-              </span>
-            </>
-          ) : (
-            /* Precio Normal Negro */
-            <span className="text-xl font-black text-gray-900">
-              {product.price} €
+        {/* --- PRECIOS --- */}
+        <div className="mt-3 flex items-baseline gap-2">
+          <span className="text-xl font-extrabold text-foreground">
+             {currentPrice.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+          </span>
+           {isOnSale && (
+            <span className="text-sm text-muted-foreground line-through">
+                {regularPrice.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
             </span>
           )}
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
