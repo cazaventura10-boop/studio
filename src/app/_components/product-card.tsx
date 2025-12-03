@@ -44,6 +44,10 @@ export default function ProductCard({ product }: { product: any }) {
             {product.name}
             </h3>
         </Link>
+        {/* ZONA DE DETECTIVE - BORRAR LUEGO */}
+        <div className='text-xs bg-yellow-200 p-1 mb-1 text-black'>
+          DEBUG: Reg="{product.regular_price}" | Price="{product.price}" | Sale="{product.sale_price}"
+        </div>
         {/* PRECIOS */}
         <div className="mt-auto flex items-baseline gap-2">
           {hasSalePrice ? (
