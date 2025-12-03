@@ -1,82 +1,71 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-// --- FUNCIÓN AUXILIAR SEGURA PARA EL PORCENTAJE ---
-// Esta función intenta limpiar el precio (comas, puntos) para calcular el %.
-// Si falla, no pasa nada, devuelve 0 y el resto de la tarjeta sigue funcionando.
-const parsePriceSafe = (price: any) => {
-  try {
-    if (!price) return 0;
-    // Reemplaza coma decimal por punto y quita caracteres no numéricos
-    const clean = String(price).replace(',', '.').replace(/[^0-9.]/g, '');
-    const num = parseFloat(clean);
-    return isNaN(num) ? 0 : num;
-  } catch (e) {
-    return 0;
-  }
-};
-
 export default function ProductCard({ product }: { product: any }) {
-  // 1. Usamos el HTML directo para los precios de abajo (ESTO ES LO QUE YA FUNCIONA)
+  // 1. Usamos el HTML directo para los precios de abajo (ESTO FUNCIONA SEGURO)
   const priceHtml = product.price_html || `<span class="amount">${product.price}€</span>`;
-  const isOnSaleHtml = priceHtml.includes('<del');
+  
+  // 2. Detectamos si hay oferta mirando si el HTML tiene la etiqueta <del> (tachado)
+  // O si el producto tiene la propiedad on_sale activa
+  const isOnSale = priceHtml.includes('<del') || product.on_sale;
 
-  // 2. Cálculo INDEPENDIENTE para la etiqueta de porcentaje
-  const regNum = parsePriceSafe(product.regular_price);
-  const saleNum = parsePriceSafe(product.sale_price || product.price);
-  let discountPercent = 0;
-  if (regNum > saleNum && regNum > 0) {
-    discountPercent = Math.round(((regNum - saleNum) / regNum) * 100);
+  // 3. Intento de calcular porcentaje (solo visual, si falla no rompe nada)
+  let badgeText = "OFERTA";
+  try {
+    // Limpiamos los precios para intentar calcular
+    const regPrice = parseFloat(String(product.regular_price).replace(',', '.'));
+    const salePrice = parseFloat(String(product.sale_price || product.price).replace(',', '.'));
+    
+    if (regPrice > salePrice && regPrice > 0) {
+      const percent = Math.round(((regPrice - salePrice) / regPrice) * 100);
+      if (percent > 0) badgeText = `-${percent}%`;
+    }
+  } catch (e) {
+    // Si falla el cálculo, nos quedamos con "OFERTA"
   }
-
-  // Lógica de la etiqueta: Si hay porcentaje, lo usamos. Si no, miramos si el HTML dice que es oferta.
-  const showBadge = discountPercent > 0 || isOnSaleHtml || product.on_sale;
-  const badgeText = discountPercent > 0 ? `-${discountPercent}%` : 'OFERTA';
-  const placeholderImage = 'https://placehold.co/600x600/f0f0f0/ccc?text=Sin+Imagen';
 
   return (
-    <Link
-      href={`/products/${product.id}`}
-      className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-xl"
+    <Link 
+      href={`/products/${product.id}`} 
+      className="group relative block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100"
     >
       {/* IMAGEN */}
       <div className="aspect-square relative overflow-hidden bg-gray-50">
-        <Image
-          src={product.images?.[0]?.src || placeholderImage}
-          alt={product.name}
-          fill
-          className="object-contain p-4 transition-transform duration-500 group-hover:scale-105"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
-        
-        {/* ETIQUETA ROJA (Porcentaje u Oferta) */}
-        {showBadge && (
-          <div className="absolute top-2 left-2 z-10 rounded bg-red-600 px-2 py-1 text-xs font-bold text-white shadow-md">
+        {product.images && product.images[0] ? (
+          <img
+            src={product.images[0].src}
+            alt={product.name}
+            className="absolute inset-0 w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div className="flex h-full items-center justify-center text-gray-300">Sin Imagen</div>
+        )}
+
+        {/* ETIQUETA ROJA (Porcentaje o Oferta) */}
+        {isOnSale && (
+          <div className="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md z-10">
             {badgeText}
           </div>
         )}
       </div>
 
       {/* INFO */}
-      <div className="flex flex-grow flex-col p-4">
-        <div className="flex-grow">
-          <p className="text-xs uppercase tracking-wide text-gray-400">
-            {product.categories && product.categories[0]
-              ? product.categories[0].name
-              : 'Producto'}
-          </p>
-          <h3 className="mb-2 min-h-[2.5rem] text-sm font-bold leading-tight text-gray-900 line-clamp-2 transition-colors group-hover:text-orange-600">
-            {product.name}
-          </h3>
-        </div>
-        
+      <div className="p-4">
+        <p className="text-xs text-gray-400 mb-1 uppercase tracking-wide">
+          {product.categories && product.categories[0] ? product.categories[0].name : 'Producto'}
+        </p>
+
+        <h3 className="font-bold text-gray-900 text-sm leading-tight min-h-[2.5rem] line-clamp-2 mb-2 group-hover:text-orange-600 transition-colors">
+          {product.name}
+        </h3>
+
         {/* PRECIOS (ESTO NO SE TOCA, SIGUE USANDO EL TRUCO CSS QUE FUNCIONA) */}
-        <div
+        <div 
           className="
-            mt-auto font-bold flex items-baseline gap-2 flex-wrap
+            mt-1 font-bold flex items-center gap-2 flex-wrap
             text-[0px] /* Oculta basura */
             [&_.screen-reader-text]:hidden
-            [&>del]:text-sm [&>del]:text-gray-400 [&>del]:font-medium
+            [&>del]:text-sm [&>del]:text-gray-500 [&>del]:font-medium [&>del]:line-through
             [&>ins]:text-xl [&>ins]:text-red-600 [&>ins]:font-black [&>ins]:no-underline
             [&>.amount]:text-xl [&>.amount]:text-gray-900
           "
