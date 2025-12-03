@@ -2,22 +2,23 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 // Función auxiliar para limpiar precios y convertirlos a número
-const parsePrice = (price: any) => {
-  if (!price) return 0;
-  // Quita todo lo que no sea número, punto o coma
-  const clean = String(price).replace(/[^0-9.,]/g, '').replace(',', '.');
+const parsePrice = (price: any): number => {
+  if (typeof price === 'number') return price;
+  if (typeof price !== 'string' || !price) return 0;
+  // Elimina puntos de miles y reemplaza la coma decimal por un punto
+  const clean = price.replace(/\./g, '').replace(',', '.');
   return parseFloat(clean) || 0;
 };
 
 export default function ProductCard({ product }: { product: any }) {
-  // 1. Extraemos los precios limpios
+  // 1. Extraemos los precios limpios y nos aseguramos de que sean números
   const regularPrice = parsePrice(product.regular_price);
   const currentPrice = parsePrice(product.price);
   
-  // 2. Calculamos si hay oferta real (si el precio actual es menor que el regular)
-  const isOnSale = regularPrice > currentPrice;
+  // 2. Calculamos si hay oferta real
+  const isOnSale = product.on_sale && regularPrice > 0 && regularPrice > currentPrice;
   
-  // 3. Calculamos el porcentaje de descuento
+  // 3. Calculamos el porcentaje de descuento solo si está en oferta
   const discountPercentage = isOnSale 
     ? Math.round(((regularPrice - currentPrice) / regularPrice) * 100) 
     : 0;
@@ -31,23 +32,13 @@ export default function ProductCard({ product }: { product: any }) {
     >
       {/* --- IMAGEN --- */}
       <div className="aspect-square relative overflow-hidden bg-gray-50">
-        {product.images && product.images[0] ? (
-          <Image
-            src={product.images[0].src}
-            alt={product.name}
-            fill
-            className="object-contain p-4 transition-transform duration-500 group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
-        ) : (
-          <Image
-            src={placeholderImage}
-            alt="Placeholder"
-            fill
-            className="object-contain p-4"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
-        )}
+        <Image
+          src={product.images?.[0]?.src || placeholderImage}
+          alt={product.name || 'Imagen de producto'}
+          fill
+          className="object-contain p-4 transition-transform duration-500 group-hover:scale-105"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
 
         {/* --- ETIQUETA DE OFERTA (Estilo IZAS) --- */}
         {isOnSale && discountPercentage > 0 && (
@@ -61,7 +52,7 @@ export default function ProductCard({ product }: { product: any }) {
       <div className="p-4 flex flex-col flex-grow">
         {/* Categoría */}
         <p className="text-xs text-gray-400 mb-1 uppercase tracking-wide">
-          {product.categories && product.categories[0] ? product.categories[0].name : 'Producto'}
+          {product.categories?.[0]?.name || 'Producto'}
         </p>
 
         {/* Nombre */}
@@ -70,21 +61,21 @@ export default function ProductCard({ product }: { product: any }) {
         </h3>
 
         {/* --- PRECIOS --- */}
-        <div className="flex items-center gap-2 mt-auto pt-2">
+        <div className="flex items-baseline gap-2 mt-auto pt-2">
           {isOnSale ? (
             <>
               {/* Precio Viejo Tachado */}
-              <span className="text-xs text-gray-400 line-through decoration-gray-400">
+              <span className="text-sm text-gray-500 line-through">
                 {product.regular_price}€
               </span>
               {/* Precio Nuevo Rojo */}
-              <span className="text-lg font-black text-red-600">
+              <span className="text-lg font-bold text-red-600">
                 {product.price}€
               </span>
             </>
           ) : (
             /* Precio Normal Negro */
-            <span className="text-lg font-black text-gray-900">
+            <span className="text-lg font-bold text-gray-900">
               {product.price}€
             </span>
           )}
