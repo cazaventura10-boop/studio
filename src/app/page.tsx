@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { getProducts } from '@/lib/data';
-import { ProductCard } from './_components/product-card';
+import ProductCard from './_components/product-card';
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';

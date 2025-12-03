@@ -12,7 +12,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Separator } from '@/components/ui/separator';
-import { ProductCard } from '@/app/_components/product-card';
+import ProductCard from '@/app/_components/product-card';
 import Link from 'next/link';
 import wooApi from '@/lib/woo';
 

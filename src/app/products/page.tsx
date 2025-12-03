@@ -1,6 +1,6 @@
 import type { Product } from '@/lib/types';
 import { getProducts } from '@/lib/data';
-import { ProductCard } from '@/app/_components/product-card';
+import ProductCard from '@/app/_components/product-card';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
