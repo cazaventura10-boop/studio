@@ -3,7 +3,6 @@ import Image from 'next/image';
 import type { Product } from '@/lib/types';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import PriceDisplay from './price-display';
 
 interface ProductCardProps {
   product: Product;
@@ -14,8 +13,8 @@ export function ProductCard({ product }: ProductCardProps) {
   const placeholderImage = "https://placehold.co/600x600/eee/ccc?text=No+Image";
 
   // Cálculo del Descuento
-  const regularPrice = product.regular_price ? parseFloat(product.regular_price) : 0;
-  const salePrice = product.sale_price ? parseFloat(product.sale_price) : 0;
+  const regularPrice = parseFloat(product.regular_price);
+  const salePrice = parseFloat(product.sale_price);
   const discountPercentage = product.on_sale && regularPrice > 0 && salePrice > 0 
     ? Math.round(((regularPrice - salePrice) / regularPrice) * 100) 
     : 0;
@@ -45,8 +44,8 @@ export function ProductCard({ product }: ProductCardProps) {
                 {product.categories?.[0]?.name && <Badge variant="secondary" className="mb-2">{product.categories[0].name}</Badge>}
                 <h3 className="font-headline font-semibold text-lg leading-tight">{product.name}</h3>
             </div>
-            <div className="mt-2 flex items-center gap-2">
-              {product.on_sale && product.regular_price && product.sale_price !== product.regular_price ? (
+             <div className="mt-2 flex items-center gap-2">
+              {product.on_sale && product.regular_price && product.sale_price && product.regular_price !== product.sale_price ? (
                 <>
                   <span className="text-gray-400 line-through text-sm font-medium">{product.regular_price} €</span>
                   <span className="text-red-600 font-bold text-lg">{product.sale_price} €</span>
