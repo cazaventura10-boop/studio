@@ -13,6 +13,13 @@ export function ProductCard({ product }: ProductCardProps) {
   const image = product.images?.[0];
   const placeholderImage = "https://placehold.co/600x600/eee/ccc?text=No+Image";
 
+  // Cálculo del Descuento
+  const regularPrice = product.regular_price ? parseFloat(product.regular_price) : 0;
+  const salePrice = product.sale_price ? parseFloat(product.sale_price) : 0;
+  const discountPercentage = product.on_sale && regularPrice > 0 && salePrice > 0 
+    ? Math.round(((regularPrice - salePrice) / regularPrice) * 100) 
+    : 0;
+
   return (
     <Link href={`/products/${product.id}`} className="group block h-full">
       <Card className="overflow-hidden h-full transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-2 bg-white rounded-lg flex flex-col">
@@ -27,14 +34,26 @@ export function ProductCard({ product }: ProductCardProps) {
            {product.on_sale && (
              <Badge className="absolute top-2 left-2 bg-orange-500 text-white border-none">OFERTA</Badge>
            )}
+           {discountPercentage > 0 && (
+            <div className="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-md z-10 shadow-sm">
+                -{discountPercentage}%
+            </div>
+           )}
         </div>
         <CardContent className="p-4 flex flex-col flex-grow justify-between">
             <div>
                 {product.categories?.[0]?.name && <Badge variant="secondary" className="mb-2">{product.categories[0].name}</Badge>}
                 <h3 className="font-headline font-semibold text-lg leading-tight">{product.name}</h3>
             </div>
-            <div className="mt-2">
-              <PriceDisplay product={product} />
+            <div className="mt-2 flex items-center gap-2">
+              {product.on_sale && product.regular_price && product.sale_price !== product.regular_price ? (
+                <>
+                  <span className="text-gray-400 line-through text-sm font-medium">{product.regular_price} €</span>
+                  <span className="text-red-600 font-bold text-lg">{product.sale_price} €</span>
+                </>
+              ) : (
+                <span className="text-gray-900 font-bold text-lg">{product.price} €</span>
+              )}
             </div>
         </CardContent>
       </Card>
