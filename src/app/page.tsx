@@ -74,7 +74,7 @@ export default async function Home() {
 
             {/* Tarjeta Caza */}
             <Link href="/products?category=Caza" className="group relative block h-80 w-full overflow-hidden rounded-lg cursor-pointer">
-              <img src='https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2070' alt='Caza' className='absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110' />
+              <img src='https://www.deporteyaventura.es/wp-content/uploads/2025/11/76a44fa8-2306-4fc3-88bd-99262c1d4512-1-3-1.png' alt='Caza' className='absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110' />
               <div className="absolute inset-0 bg-black/40 transition-opacity group-hover:bg-black/50"></div>
               <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-white">
                 <h3 className="font-headline text-3xl font-extrabold uppercase tracking-wider">CAZA</h3>
