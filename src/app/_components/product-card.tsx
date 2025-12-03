@@ -33,7 +33,7 @@ export default function ProductCard({ product }: { product: any }) {
 
       {/* INFO */}
       <div className="flex flex-grow flex-col p-4">
-        <div className='flex-grow'>
+        <div className="flex-grow">
           <p className="text-xs uppercase tracking-wide text-gray-400">
             {product.categories && product.categories[0]
               ? product.categories[0].name
@@ -44,9 +44,21 @@ export default function ProductCard({ product }: { product: any }) {
           </h3>
         </div>
 
-        {/* PRECIO HTML PURO (Estilos forzados con CSS global o inline) */}
+        {/* PRECIOS - CON FILTRO DE LIMPIEZA CSS */}
         <div 
-          className="mt-auto text-gray-900 font-bold text-lg [&>del]:text-sm [&>del]:font-medium [&>del]:text-gray-400 [&>del]:mr-2 [&>ins]:text-red-600 [&>ins]:font-black [&>ins]:text-xl [&>ins]:no-underline"
+          className="
+            mt-auto font-bold flex items-baseline gap-2 flex-wrap
+            /* TRUCO: Tamaño 0 para ocultar texto basura suelto */
+            text-[0px] 
+            /* Ocultar textos de accesibilidad repetidos */
+            [&_.screen-reader-text]:hidden
+            /* Restaurar tamaño y color del precio tachado (<del>) */
+            [&>del]:text-sm [&>del]:text-gray-400 [&>del]:font-medium
+            /* Restaurar tamaño y color del precio nuevo (<ins>) */
+            [&>ins]:text-xl [&>ins]:text-red-600 [&>ins]:font-black [&>ins]:no-underline
+            /* Asegurar que el precio normal se vea si no hay oferta */
+            [&>.amount]:text-xl [&>.amount]:text-gray-900
+          "
           dangerouslySetInnerHTML={{ __html: priceHtml }}
         />
       </div>
