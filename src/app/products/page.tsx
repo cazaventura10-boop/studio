@@ -13,6 +13,7 @@ export default async function ProductsPage({
   const category = searchParams.category as string | undefined;
   const tag = searchParams.tag as string | undefined;
   const search = searchParams.q as string | undefined;
+  const onSale = searchParams.on_sale === 'true';
 
   // Limpiamos los slugs para mostrarlos en el título si es necesario
   const displayTerm = category?.replace(/-/g, ' ') || tag?.replace(/-/g, ' ') || search;
@@ -21,16 +22,18 @@ export default async function ProductsPage({
 
   try {
     // La función getProducts ahora prioriza category, luego tag, y finalmente search.
-    products = await getProducts({ category, tag, search });
+    products = await getProducts({ category, tag, search, on_sale: onSale });
   } catch (error) {
     console.error("Error buscando productos:", error);
     // Dejamos el array de productos vacío para que se muestre el mensaje de error.
   }
 
-  const pageTitle = displayTerm ? `Resultados para: "${displayTerm}"` : "Nuestros Productos";
-  const pageDescription = displayTerm
-    ? `Encuentra el mejor equipamiento relacionado con "${displayTerm}".`
-    : "Equipamiento de alta calidad para cada una de tus necesidades.";
+  const pageTitle = onSale ? "Productos en Oferta" : (displayTerm ? `Resultados para: "${displayTerm}"` : "Nuestros Productos");
+  const pageDescription = onSale
+    ? "Aprovecha nuestros descuentos especiales por tiempo limitado."
+    : (displayTerm
+        ? `Encuentra el mejor equipamiento relacionado con "${displayTerm}".`
+        : "Equipamiento de alta calidad para cada una de tus necesidades.");
 
   return (
     <>
@@ -52,7 +55,7 @@ export default async function ProductsPage({
         ) : (
           <div className="text-center py-20 bg-secondary/50 rounded-xl">
               <h2 className="text-2xl font-semibold text-foreground">
-                  No hemos encontrado productos para &quot;{displayTerm}&quot;
+                  No hemos encontrado productos para &quot;{displayTerm || "la oferta actual"}&quot;
               </h2>
               <p className="text-muted-foreground mt-2">
                   Intenta buscar algo más general o utiliza el buscador principal.

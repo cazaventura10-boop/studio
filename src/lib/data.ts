@@ -9,6 +9,7 @@ interface GetProductsParams {
   search?: string;
   category?: string; // slug de la categoría
   tag?: string; // slug de la etiqueta
+  on_sale?: boolean; // para filtrar por productos en oferta
 }
 
 export async function getProducts(params: GetProductsParams = {}): Promise<WooProduct[]> {
@@ -17,6 +18,10 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             per_page: params.per_page || 50,
             status: params.status || 'publish',
         };
+
+        if (params.on_sale) {
+            apiParams.on_sale = true;
+        }
 
         // Lógica de búsqueda priorizada:
         // 1. Si se proporciona un 'category' slug, buscar por ID de categoría.
@@ -60,6 +65,7 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             permalink: product.permalink,
             categories: product.categories,
             tags: product.tags,
+            regular_price_html: product.regular_price_html,
         }));
 
         return products;
