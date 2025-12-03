@@ -44,8 +44,8 @@ export function ProductCard({ product }: ProductCardProps) {
                 {product.categories?.[0]?.name && <Badge variant="secondary" className="mb-2">{product.categories[0].name}</Badge>}
                 <h3 className="font-headline font-semibold text-lg leading-tight">{product.name}</h3>
             </div>
-             <div className="mt-2 flex items-center gap-2">
-              {product.on_sale && product.regular_price && product.sale_price && product.regular_price !== product.sale_price ? (
+            <div className="mt-2 flex items-center gap-2">
+              {product.on_sale && product.regular_price && product.sale_price && product.sale_price !== product.regular_price ? (
                 <>
                   <span className="text-gray-400 line-through text-sm font-medium">{product.regular_price} €</span>
                   <span className="text-red-600 font-bold text-lg">{product.sale_price} €</span>
