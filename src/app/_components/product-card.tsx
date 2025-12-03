@@ -41,6 +41,7 @@ export default function ProductCard({ product }: { product: any }) {
             alt={product.name}
             fill
             className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
 
           {/* --- Etiquetas sobre la imagen --- */}
@@ -51,10 +52,6 @@ export default function ProductCard({ product }: { product: any }) {
                 <span>{discountPercentage}% dto.</span>
               </div>
             )}
-            {/* Opcional: Etiqueta de "Nuevo Producto" si tienes ese dato */}
-            {/* <div className="bg-secondary text-secondary-foreground text-xs font-semibold px-3 py-1.5 rounded-full shadow-md">
-              Nuevo producto
-            </div> */}
           </div>
           
            {/* --- Botón de Añadir al Carrito --- */}
@@ -70,8 +67,8 @@ export default function ProductCard({ product }: { product: any }) {
 
       {/* --- INFO --- */}
       <div className="p-4 flex flex-col flex-grow">
-        <Link href={`/products/${product.id}`} className="block">
-          <h3 className="font-semibold text-foreground text-sm leading-tight line-clamp-2 flex-grow">
+        <Link href={`/products/${product.id}`} className="block flex-grow">
+          <h3 className="font-semibold text-foreground text-sm leading-tight line-clamp-2">
             {product.name}
           </h3>
         </Link>
