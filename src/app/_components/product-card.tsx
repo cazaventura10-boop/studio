@@ -1,32 +1,39 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-// Función robusta para limpiar precios
-const parsePriceSafe = (price: any) => {
-  try {
-    if (!price) return 0;
-    const clean = String(price).replace(',', '.').replace(/[^0-9.]/g, '');
-    return parseFloat(clean) || 0;
-  } catch (e) {
-    return 0;
-  }
+// --- FUNCIÓN LIMPIADORA DE PRECIOS ---
+// Convierte "1.200,50€" -> 1200.50 (Número real)
+const parsePrice = (price: any) => {
+  if (!price) return 0;
+  // 1. Convertir a texto
+  let clean = String(price);
+  // 2. Reemplazar la coma decimal por punto (clave para español)
+  clean = clean.replace(',', '.');
+  // 3. Eliminar todo lo que no sea número o punto
+  clean = clean.replace(/[^0-9.]/g, '');
+
+  return parseFloat(clean) || 0;
 };
 
 export default function ProductCard({ product }: { product: any }) {
-  // 1. Precios HTML directos (para no fallar visualmente abajo)
+  // 1. Usamos el HTML directo para mostrar los precios abajo (Visualización segura)
   const priceHtml = product.price_html || `<span class="amount">${product.price}€</span>`;
-  const isOnSale = priceHtml.includes('<del>') || product.on_sale;
 
-  // 2. Cálculo del porcentaje para la etiqueta
-  const regNum = parsePriceSafe(product.regular_price);
-  const saleNum = parsePriceSafe(product.sale_price || product.price);
+  // 2. Cálculos matemáticos para la ETIQUETA DE ARRIBA
+  const regularNum = parsePrice(product.regular_price);
+  const saleNum = parsePrice(product.sale_price || product.price);
+
+  // Comprobamos si hay oferta real (precio viejo > precio nuevo)
+  const isSaleMath = regularNum > saleNum && regularNum > 0;
+
+  // Calculamos porcentaje
   let discountPercent = 0;
-
-  if (regNum > saleNum && regNum > 0) {
-    discountPercent = Math.round(((regNum - saleNum) / regNum) * 100);
+  if (isSaleMath) {
+    discountPercent = Math.round(((regularNum - saleNum) / regularNum) * 100);
   }
 
-  // Texto de la etiqueta
+  // Lógica de visualización de la etiqueta
+  const showBadge = isSaleMath || product.on_sale;
   const badgeText = discountPercent > 0 ? `-${discountPercent}%` : 'OFERTA';
 
   return (
@@ -48,7 +55,7 @@ export default function ProductCard({ product }: { product: any }) {
         )}
 
         {/* ETIQUETA ROJA */}
-        {isOnSale && (
+        {showBadge && (
           <div className="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md z-10">
             {badgeText}
           </div>
@@ -62,11 +69,11 @@ export default function ProductCard({ product }: { product: any }) {
         <h3 className="font-bold text-gray-900 text-sm leading-tight min-h-[2.5rem] line-clamp-2 mb-2 group-hover:text-orange-600 transition-colors">
           {product.name}
         </h3>
-        {/* PRECIOS (Visualización segura HTML) */}
-        <div 
+        {/* PRECIOS (Visualización HTML directa) */}
+        <div
           className="
             mt-1 font-bold flex items-center gap-2 flex-wrap
-            text-[0px]
+            text-[0px] /* Oculta textos basura */
             [&_.screen-reader-text]:hidden
             [&>del]:text-sm [&>del]:text-gray-500 [&>del]:font-medium [&>del]:line-through
             [&>ins]:text-xl [&>ins]:text-red-600 [&>ins]:font-black [&>ins]:no-underline
