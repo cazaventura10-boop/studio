@@ -11,7 +11,7 @@ const categories = [
   {
     name: 'Chaquetas',
     href: '/products?category=chaquetas-mujer',
-    imageUrl: 'https://images.unsplash.com/photo-1545652985-5edd3ebc9927?q=80&w=800',
+    imageUrl: 'https://www.deporteyaventura.es/wp-content/uploads/2025/11/unnamed-2-1.jpg',
     imageHint: 'woman hiking jacket'
   },
   {
