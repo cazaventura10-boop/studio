@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import type { Product } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Star } from 'lucide-react';
+import { ArrowRight, Star, ChevronRight, Truck, ShieldCheck } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
@@ -13,7 +13,7 @@ import {
 import { Separator } from '@/components/ui/separator';
 import ProductCard from '@/app/_components/product-card';
 import wooApi from '@/lib/woo';
-import { ProductDetailsClient } from './_components/product-details-client';
+import { getProductVariations } from '@/lib/woo';
 
 
 type Props = {
@@ -74,22 +74,6 @@ async function getProduct(id: string): Promise<Product | null> {
     }
 }
 
-async function getProductVariations(productId: number | string) {
-  try {
-    const { data } = await wooApi.get(`products/${productId}/variations`, {
-      per_page: 100,
-    });
-    return data;
-  } catch (error) {
-    if (error instanceof Error) {
-        console.error('Error fetching variations:', error.message);
-    } else {
-        console.error('An unknown error occurred while fetching variations.');
-    }
-    return [];
-  }
-}
-
 async function getRelatedProducts(product: Product) {
     if (!product.categories || product.categories.length === 0) return [];
     try {
@@ -120,6 +104,34 @@ export default async function ProductDetailPage({ params }: Props) {
 
   const randomReviews = [...reviewsPool].sort(() => 0.5 - Math.random()).slice(0, 3);
   
+  const priceHtml = product.price_html || `<span class="amount">${product.price}€</span>`;
+  
+  // Función para comprobar si una opción (ej: "42") tiene stock
+    const checkStock = (attributeName: string, optionName: string): boolean => {
+        // Si no hay variaciones, asumimos que hay stock (producto simple)
+        if (!variations || variations.length === 0) {
+            if (product.manage_stock) {
+                return (product.stock_quantity ?? 0) > 0;
+            }
+            return product.stock_status === 'instock';
+        }
+
+        // Buscamos la variación que coincida con esta opción
+        const match = variations.find((v: any) =>
+        v.attributes.some((a: any) =>
+            a.name.toLowerCase() === attributeName.toLowerCase() &&
+            a.option.toLowerCase() === optionName.toLowerCase()
+        )
+        );
+
+        // Si encontramos la variación, miramos su stock
+        if (match) {
+        return match.stock_status === 'instock' && (match.manage_stock ? (match.stock_quantity ?? 0) > 0 : true);
+        }
+        return false; // Si no existe la variación, no hay stock
+    };
+
+
   return (
     <>
     <div className="container mx-auto max-w-7xl px-4 py-12 md:py-20">
@@ -127,7 +139,8 @@ export default async function ProductDetailPage({ params }: Props) {
         
         {/* Columna Izquierda: Galería de Imágenes */}
         <div className="md:sticky md:top-24 self-start">
-            <div className="relative aspect-square w-full">
+            <div className="aspect-square relative rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 shadow-sm">
+            {product.images && product.images[0] ? (
             <Image
                 src={image?.src || placeholderImage}
                 alt={image?.alt || product.name}
@@ -136,29 +149,77 @@ export default async function ProductDetailPage({ params }: Props) {
                 className="object-contain rounded-lg p-6"
                 sizes="(max-width: 768px) 100vw, 50vw"
             />
+            ) : (
+                <div className="flex h-full items-center justify-center text-gray-300">Sin Imagen</div>
+            )}
              {product.on_sale && (
               <Badge className="absolute top-4 left-4 bg-orange-500 text-white border-none text-base px-4 py-2">OFERTA</Badge>
             )}
             </div>
-             {/* Acordeones de Información (Solo en móvil) */}
-             <div className="md:hidden">
-              <Accordion type="single" collapsible className="w-full mt-8" defaultValue="description">
-                  <AccordionItem value="description">
-                      <AccordionTrigger className="text-lg font-semibold">
-                          <div className="flex items-center gap-2">
-                            Descripción
-                          </div>
-                      </AccordionTrigger>
-                      <AccordionContent className="prose prose-sm text-muted-foreground pt-2">
-                          <div dangerouslySetInnerHTML={{ __html: product.description || product.short_description || '' }} />
-                      </AccordionContent>
-                  </AccordionItem>
-              </Accordion>
-            </div>
         </div>
 
         {/* Columna Derecha: Información del Producto */}
-        <ProductDetailsClient product={product} variations={variations} />
+        <div className="sticky top-24 h-fit">
+            <h1 className="text-3xl md:text-4xl font-black text-gray-900 mb-4 leading-tight">
+                {product.name}
+            </h1>
+            
+            <div
+                className="text-2xl mb-6 flex items-center gap-3 font-bold
+                text-[0px] [&_.screen-reader-text]:hidden
+                [&>del]:text-lg [&>del]:text-gray-400 [&>del]:line-through
+                [&>ins]:text-4xl [&>ins]:text-red-600 [&>ins]:font-black [&>ins]:no-underline
+                [&>.amount]:text-4xl [&>.amount]:font-black [&>.amount]:text-gray-900"
+                dangerouslySetInnerHTML={{ __html: priceHtml }}
+            />
+            
+            <div className="prose text-gray-600 mb-8" dangerouslySetInnerHTML={{ __html: product.short_description || ''}} />
+            
+            {/* SELECTOR DE TALLAS CON STOCK REAL */}
+            {product.attributes && product.attributes.filter(attr => attr.variation).map((attr: any) => (
+                <div key={attr.id} className="mb-6">
+                <p className="text-sm font-bold text-gray-900 mb-3 uppercase tracking-wide">{attr.name}:</p>
+                <div className="flex flex-wrap gap-2">
+                    {attr.options.map((option: string) => {
+                    const inStock = checkStock(attr.name, option);
+                    return (
+                        <button 
+                        key={option}
+                        disabled={!inStock}
+                        className={`px-4 py-3 border rounded-lg text-sm font-bold transition-all
+                            ${inStock 
+                            ? 'border-gray-200 text-gray-900 hover:border-orange-500 hover:text-orange-600 cursor-pointer' 
+                            : 'border-gray-100 text-gray-300 bg-gray-50 cursor-not-allowed line-through'
+                            }`}
+                        >
+                        {option}
+                        </button>
+                    );
+                    })}
+                </div>
+                </div>
+            ))}
+
+            <button className="w-full bg-orange-600 hover:bg-orange-700 text-white text-xl font-bold py-4 rounded-xl shadow-lg transition-transform active:scale-95 flex justify-center items-center gap-2 mt-8">
+                Añadir al Carrito
+            </button>
+            
+            <div className="grid grid-cols-2 gap-4 mt-8 pt-8 border-t border-gray-100">
+                <div className="flex items-center gap-3 text-sm font-medium text-gray-700">
+                <Truck className="text-orange-600" /> Envío Rápido 24/48h
+                </div>
+                <div className="flex items-center gap-3 text-sm font-medium text-gray-700">
+                <ShieldCheck className="text-orange-600" /> Garantía de Calidad
+                </div>
+            </div>
+            
+            <div className="mt-8 space-y-2">
+                <details className="group p-4 bg-gray-50 rounded-lg cursor-pointer">
+                <summary className="font-bold flex justify-between list-none">Descripción del Producto <span className="group-open:rotate-180 transition">▼</span></summary>
+                <div className="mt-4 text-gray-600 text-sm" dangerouslySetInnerHTML={{ __html: product.description || ''}} />
+                </details>
+            </div>
+        </div>
       </div>
     </div>
     
