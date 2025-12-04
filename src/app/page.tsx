@@ -67,17 +67,17 @@ export default async function Home() {
               </div>
               <h3 className="mt-4 font-headline text-xl font-semibold">MUJER</h3>
             </Link>
-            <Link href="/products?tag=Accesorios" className="group">
+            <Link href="/products?category=complementos-trekking" className="group">
               <div className="relative aspect-[3/4] overflow-hidden rounded-md">
                 <Image
-                  src={equipAccesorios.imageUrl}
-                  alt={equipAccesorios.description}
+                  src="https://www.deporteyaventura.es/wp-content/uploads/2024/01/Travelbag-2-image-4.jpg"
+                  alt="Complementos de trekking"
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  data-ai-hint={equipAccesorios.imageHint}
+                  data-ai-hint="hiking backpack"
                 />
               </div>
-              <h3 className="mt-4 font-headline text-xl font-semibold">ACCESORIOS</h3>
+              <h3 className="mt-4 font-headline text-xl font-semibold">COMPLEMENTOS</h3>
             </Link>
           </div>
         </div>
