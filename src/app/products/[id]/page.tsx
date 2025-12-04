@@ -129,23 +129,21 @@ export default async function ProductDetailPage({ params }: Props) {
 
             {/* SELECTOR DE TALLAS DINÁMICO */}
             {product.attributes && product.attributes.map((attr: any) => (
-              (attr.name.toLowerCase() === 'talla' || attr.name.toLowerCase() === 'size' || attr.name.toLowerCase() === 'tallas') && (
-                <div key={attr.id} className="mb-6">
-                  <p className="text-sm font-medium text-gray-900 mb-3">
-                    {attr.name}:
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {attr.options.map((option: string) => (
-                      <button 
-                        key={option}
-                        className="px-4 py-2 border border-gray-200 rounded-md text-sm font-medium text-gray-900 hover:bg-gray-50 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
-                      >
-                        {option}
-                      </button>
-                    ))}
-                  </div>
+              <div key={attr.id} className="mb-6">
+                <p className="text-sm font-medium text-gray-900 mb-3 capitalize">
+                  {attr.name}:
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {attr.options.map((option: string) => (
+                    <button 
+                      key={option}
+                      className="px-4 py-2 border border-gray-200 rounded-md text-sm font-medium text-gray-900 hover:bg-gray-50 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                    >
+                      {option}
+                    </button>
+                  ))}
                 </div>
-              )
+              </div>
             ))}
 
             {/* Botón Añadir al Carrito */}
