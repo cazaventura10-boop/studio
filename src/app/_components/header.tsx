@@ -339,7 +339,7 @@ export function Header() {
 
               {/* MAPA CATEGORIAS */}
               <NavigationMenuItem>
-                <Link href="/categorias" passHref>
+                <Link href="/categorias" legacyBehavior passHref>
                   <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), navTriggerClasses)}>
                     Mapa Categorías
                   </NavigationMenuLink>
