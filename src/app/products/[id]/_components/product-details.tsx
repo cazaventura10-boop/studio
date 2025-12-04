@@ -130,7 +130,7 @@ export function ProductDetails({ product, variations, relatedProducts }: Product
             <AddToCartButton product={cartProduct} quantity={quantity} disabled={!selectedVariation} />
             
             <div className="grid grid-cols-2 gap-4 mt-8 pt-8 border-t border-gray-100">
-                <div className="flex items-center gap-3 text-sm font-medium text-gray-700"><Truck className="text-orange-600" /> Envío Rápido 24/48h</div>
+                <div className="flex items-center gap-3 text-sm font-medium text-gray-700"><Truck className="text-orange-600" /> Envío Rápido 24/72h</div>
                 <div className="flex items-center gap-3 text-sm font-medium text-gray-700"><ShieldCheck className="text-orange-600" /> Garantía de Calidad</div>
             </div>
 
