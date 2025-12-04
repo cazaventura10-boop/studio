@@ -30,7 +30,7 @@ const categories = [
 
 export default function RopaMujerPage() {
   return (
-    <div className="container py-12 md:py-16">
+    <div className="container py-12 md:py-16 pt-24 md:pt-32">
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-extrabold font-headline tracking-tight">
           ROPA DE MONTAÑA Y TREKKING MUJER
