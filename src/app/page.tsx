@@ -11,7 +11,6 @@ export default async function Home() {
   const allProducts = await getProducts();
   const newArrivals = allProducts.slice(0, 5);
 
-  const equipMujer = placeholderImagesById['equip-mujer'];
   const equipAccesorios = placeholderImagesById['equip-accesorios'];
 
   return (
@@ -56,14 +55,14 @@ export default async function Home() {
               </div>
               <h3 className="mt-4 font-headline text-xl font-semibold">HOMBRE</h3>
             </Link>
-            <Link href="/products?tag=Mujer" className="group">
+            <Link href="/ropa-mujer" className="group">
               <div className="relative aspect-[3/4] overflow-hidden rounded-md">
                 <Image
-                  src={equipMujer.imageUrl}
-                  alt={equipMujer.description}
+                  src="https://www.deporteyaventura.es/wp-content/uploads/2025/10/3.jpg"
+                  alt="Equipamiento para mujer"
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  data-ai-hint={equipMujer.imageHint}
+                  data-ai-hint="mountaineer woman"
                 />
               </div>
               <h3 className="mt-4 font-headline text-xl font-semibold">MUJER</h3>
