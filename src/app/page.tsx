@@ -40,6 +40,51 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      {/* Equipate para la Aventura Section */}
+      <section className="py-20 md:py-32 bg-background">
+        <div className="container">
+          <h2 className="text-4xl md:text-5xl font-extrabold font-headline text-center mb-12">Equípate para la Aventura</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <Link href="/products?tag=Hombre" className="group">
+              <div className="relative aspect-[3/4] overflow-hidden rounded-md">
+                <Image
+                  src={equipHombre.imageUrl}
+                  alt={equipHombre.description}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  data-ai-hint={equipHombre.imageHint}
+                />
+              </div>
+              <h3 className="mt-4 font-headline text-xl font-semibold">HOMBRE</h3>
+            </Link>
+            <Link href="/products?tag=Mujer" className="group">
+              <div className="relative aspect-[3/4] overflow-hidden rounded-md">
+                <Image
+                  src={equipMujer.imageUrl}
+                  alt={equipMujer.description}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  data-ai-hint={equipMujer.imageHint}
+                />
+              </div>
+              <h3 className="mt-4 font-headline text-xl font-semibold">MUJER</h3>
+            </Link>
+            <Link href="/products?tag=Accesorios" className="group">
+              <div className="relative aspect-[3/4] overflow-hidden rounded-md">
+                <Image
+                  src={equipAccesorios.imageUrl}
+                  alt={equipAccesorios.description}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  data-ai-hint={equipAccesorios.imageHint}
+                />
+              </div>
+              <h3 className="mt-4 font-headline text-xl font-semibold">ACCESORIOS</h3>
+            </Link>
+          </div>
+        </div>
+      </section>
       
       {/* Main Categories */}
       <section className="py-20 md:py-32 bg-background">
@@ -130,63 +175,6 @@ export default async function Home() {
                     />
                 </div>
             </div>
-        </div>
-      </section>
-
-      {/* Equipate para la Aventura Section */}
-      <section className="py-20 md:py-32 bg-background">
-        <div className="container">
-          <h2 className="text-4xl md:text-5xl font-extrabold font-headline text-center mb-12">Equípate para la Aventura</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <Link href="/products?tag=Hombre" className="group">
-              <div className="relative aspect-[3/4] overflow-hidden rounded-md">
-                <Image
-                  src={equipHombre.imageUrl}
-                  alt={equipHombre.description}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  data-ai-hint={equipHombre.imageHint}
-                />
-              </div>
-              <h3 className="mt-4 font-headline text-xl font-semibold">HOMBRE</h3>
-            </Link>
-            <Link href="/products?tag=Mujer" className="group">
-              <div className="relative aspect-[3/4] overflow-hidden rounded-md">
-                <Image
-                  src={equipMujer.imageUrl}
-                  alt={equipMujer.description}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  data-ai-hint={equipMujer.imageHint}
-                />
-              </div>
-              <h3 className="mt-4 font-headline text-xl font-semibold">MUJER</h3>
-            </Link>
-            <Link href="/products?tag=Ninos" className="group">
-              <div className="relative aspect-[3/4] overflow-hidden rounded-md">
-                <Image
-                  src={equipNinos.imageUrl}
-                  alt={equipNinos.description}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  data-ai-hint={equipNinos.imageHint}
-                />
-              </div>
-              <h3 className="mt-4 font-headline text-xl font-semibold">NIÑOS</h3>
-            </Link>
-            <Link href="/products?tag=Accesorios" className="group">
-              <div className="relative aspect-[3/4] overflow-hidden rounded-md">
-                <Image
-                  src={equipAccesorios.imageUrl}
-                  alt={equipAccesorios.description}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  data-ai-hint={equipAccesorios.imageHint}
-                />
-              </div>
-              <h3 className="mt-4 font-headline text-xl font-semibold">ACCESORIOS</h3>
-            </Link>
-          </div>
         </div>
       </section>
 
