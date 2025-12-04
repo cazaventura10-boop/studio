@@ -44,7 +44,7 @@ export default async function Home() {
         <div className="container">
           <h2 className="text-4xl md:text-5xl font-extrabold font-headline text-center mb-12">Equípate para la Aventura</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <Link href="/products?tag=Hombre" className="group">
+            <Link href="/ropa-hombre" className="group">
               <div className="relative aspect-[3/4] overflow-hidden rounded-md">
                 <Image
                   src="https://www.deporteyaventura.es/wp-content/uploads/2025/10/unnamed-3-7.jpg"
