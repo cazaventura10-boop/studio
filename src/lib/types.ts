@@ -1,4 +1,5 @@
 
+
 export interface Product {
   id: number;
   name: string;
@@ -33,6 +34,23 @@ export interface Product {
     variation: boolean;
   }[];
 }
+
+export interface ProductVariation {
+  id: number;
+  price: string;
+  regular_price: string;
+  sale_price: string;
+  on_sale: boolean;
+  stock_quantity: number | null;
+  stock_status: 'instock' | 'outofstock' | 'onbackorder';
+  manage_stock: boolean;
+  attributes: {
+    id: number;
+    name: string;
+    option: string;
+  }[];
+}
+
 
 export interface BlogPost {
   slug: string;
