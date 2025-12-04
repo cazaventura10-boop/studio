@@ -55,6 +55,7 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             id: product.id,
             name: product.name,
             description: product.description,
+            short_description: product.short_description,
             price: product.price,
             price_html: product.price_html,
             on_sale: product.on_sale,
@@ -65,7 +66,10 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             permalink: product.permalink,
             categories: product.categories,
             tags: product.tags,
-            regular_price_html: product.regular_price_html,
+            attributes: product.attributes,
+            manage_stock: product.manage_stock,
+            stock_quantity: product.stock_quantity,
+            stock_status: product.stock_status,
         }));
 
         return products;
@@ -142,3 +146,14 @@ export const blogPosts: BlogPost[] = [
     image: 'blog-trail',
   },
 ];
+
+export type BlogPost = {
+  slug: string;
+  title: string;
+  author: string;
+  date: string; // ISO 8601 format
+  excerpt: string;
+  content: string;
+  category: 'Climbing' | 'Cycling' | 'Hiking';
+  image: string; // id from placeholder-images.json
+};

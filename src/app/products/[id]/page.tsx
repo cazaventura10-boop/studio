@@ -1,5 +1,4 @@
-
-
+import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getProducts } from '@/lib/data';
@@ -15,8 +14,7 @@ import {
 } from "@/components/ui/accordion"
 import { Separator } from '@/components/ui/separator';
 import ProductCard from '@/app/_components/product-card';
-import Link from 'next/link';
-import wooApi from '@/lib/woo';
+import wooApi, { getProductVariations } from '@/lib/woo';
 import { AddToCartButton } from '@/app/_components/add-to-cart-button';
 
 type Props = {
@@ -50,6 +48,7 @@ async function getProduct(id: string): Promise<Product | null> {
             id: data.id,
             name: data.name,
             description: data.description,
+            short_description: data.short_description,
             price: data.price,
             price_html: data.price_html,
             on_sale: data.on_sale,
@@ -70,11 +69,13 @@ async function getProduct(id: string): Promise<Product | null> {
 
 export default async function ProductDetailPage({ params }: Props) {
   const product = await getProduct(params.id);
-
+  
   if (!product) {
     notFound();
   }
-  
+
+  const variations = await getProductVariations(params.id); // ¡DATOS DE STOCK REALES!
+
   const allProducts = await getProducts({ per_page: 100 });
   const relatedProducts = allProducts
     .filter(p => p.id !== product.id && p.categories[0]?.id === product.categories[0]?.id)
@@ -85,7 +86,33 @@ export default async function ProductDetailPage({ params }: Props) {
 
   // Seleccionar 3 opiniones aleatorias
   const randomReviews = [...reviewsPool].sort(() => 0.5 - Math.random()).slice(0, 3);
+  const priceHtml = product.price_html || `<span class="amount">${product.price}€</span>`;
   
+  // Función para comprobar si una opción (ej: "42") tiene stock
+  const checkStock = (attributeName: string, optionName: string) => {
+    // Si no hay variaciones, asumimos que hay stock (producto simple)
+    if (!variations || variations.length === 0) {
+        // Si el producto simple gestiona stock, lo comprobamos
+        if (product.manage_stock) {
+            return product.stock_quantity > 0;
+        }
+        return product.stock_status === 'instock';
+    }
+
+    // Buscamos la variación que coincida con esta opción
+    const match = variations.find((v: any) => 
+      v.attributes.some((a: any) => 
+        a.name.toLowerCase() === attributeName.toLowerCase() && 
+        a.option.toLowerCase() === optionName.toLowerCase()
+      )
+    );
+    // Si encontramos la variación, miramos su stock
+    if (match) {
+      return match.stock_status === 'instock' && (match.manage_stock ? match.stock_quantity > 0 : true);
+    }
+    return false; // Si no existe la variación, no hay stock
+  };
+
   return (
     <>
     <div className="container mx-auto max-w-7xl px-4 py-12 md:py-20">
@@ -127,23 +154,31 @@ export default async function ProductDetailPage({ params }: Props) {
             
             <Separator className="my-6" />
 
-            {/* SELECTOR DE TALLAS DINÁMICO */}
+            {/* SELECTOR DE TALLAS CON STOCK REAL */}
             {product.attributes && product.attributes.map((attr: any) => (
-              <div key={attr.id} className="mb-6">
-                <p className="text-sm font-medium text-gray-900 mb-3 capitalize">
-                  {attr.name}:
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {attr.options.map((option: string) => (
-                    <button 
-                      key={option}
-                      className="px-4 py-2 border border-gray-200 rounded-md text-sm font-medium text-gray-900 hover:bg-gray-50 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-              </div>
+                (attr.variation) && (
+                    <div key={attr.id} className="mb-6">
+                    <p className="text-sm font-bold text-gray-900 mb-3 uppercase tracking-wide">{attr.name}:</p>
+                    <div className="flex flex-wrap gap-2">
+                        {attr.options.map((option: string) => {
+                        const inStock = checkStock(attr.name, option);
+                        return (
+                            <button 
+                            key={option}
+                            disabled={!inStock}
+                            className={`px-4 py-3 border rounded-lg text-sm font-bold transition-all
+                                ${inStock 
+                                ? 'border-gray-300 text-gray-900 hover:border-orange-500 hover:text-orange-600 cursor-pointer focus:border-orange-500 focus:ring-2 focus:ring-orange-200' 
+                                : 'border-gray-200 text-gray-400 bg-gray-50 cursor-not-allowed line-through'
+                                }`}
+                            >
+                            {option}
+                            </button>
+                        );
+                        })}
+                    </div>
+                    </div>
+                )
             ))}
 
             {/* Botón Añadir al Carrito */}
@@ -207,7 +242,7 @@ export default async function ProductDetailPage({ params }: Props) {
           <div className="flex justify-between items-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold font-headline">COMPLETA TU LOOK</h2>
              <Button variant="link" asChild className="text-orange-500 hover:text-orange-500/80">
-                <Link href="/products">
+                <Link href="/products?category=${product.categories[0]?.slug}">
                     Ver Todos <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
             </Button>
@@ -223,5 +258,3 @@ export default async function ProductDetailPage({ params }: Props) {
     </>
   );
 }
-
-    

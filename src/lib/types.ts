@@ -3,6 +3,7 @@ export interface Product {
   id: number;
   name: string;
   description: string;
+  short_description?: string;
   price: string;
   price_html: string;
   on_sale: boolean;
@@ -29,7 +30,11 @@ export interface Product {
     id: number;
     name: string;
     options: string[];
+    variation: boolean;
   }[];
+  manage_stock?: boolean;
+  stock_quantity?: number;
+  stock_status?: 'instock' | 'outofstock' | 'onbackorder';
 }
 
 export interface BlogPost {
