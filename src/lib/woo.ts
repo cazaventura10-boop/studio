@@ -13,21 +13,3 @@ const wooApi = new WooCommerceRestApi({
 });
 
 export default wooApi;
-
-
-// Función para obtener las variaciones completas (con stock) de un producto
-export async function getProductVariations(productId: number | string) {
-  try {
-    const { data } = await wooApi.get(`products/${productId}/variations`, {
-      per_page: 100, // Traer todas las tallas posibles
-    });
-    return data;
-  } catch (error) {
-    if (error instanceof Error) {
-        console.error('Error fetching variations:', error.message);
-    } else {
-        console.error('An unknown error occurred while fetching variations.');
-    }
-    return [];
-  }
-}

@@ -7,7 +7,7 @@ interface GetProductsParams {
   per_page?: number;
   status?: string;
   search?: string;
-  category?: string; // slug de la categoría
+  category?: string | number; // puede ser slug o id
   tag?: string; // slug de la etiqueta
   on_sale?: boolean; // para filtrar por productos en oferta
 }
@@ -23,19 +23,18 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             apiParams.on_sale = true;
         }
 
-        // Lógica de búsqueda priorizada:
-        // 1. Si se proporciona un 'category' slug, buscar por ID de categoría.
-        if (params.category) {
+        // Si se pasa category y es string, asumimos que es un slug
+        if (params.category && typeof params.category === 'string') {
             const { data: categoriesData } = await wooApi.get("products/categories", { slug: params.category });
             if (categoriesData && categoriesData.length > 0) {
                 apiParams.category = categoriesData[0].id;
             } else {
-                // Si no se encuentra el slug de la categoría, es probable que no haya productos.
-                // Devolvemos un array vacío para que la UI muestre el mensaje correspondiente.
                 return [];
             }
+        } else if (params.category) { // si es número, lo usamos directamente
+            apiParams.category = params.category;
         }
-        // 2. Si se proporciona un 'tag' slug, buscar por ID de tag.
+
         if (params.tag) {
             const { data: tagsData } = await wooApi.get("products/tags", { slug: params.tag });
             if (tagsData && tagsData.length > 0) {
@@ -44,7 +43,7 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
                 return [];
             }
         }
-        // 3. Si no hay ni 'category' ni 'tag', pero sí 'search', usamos la búsqueda de texto.
+        
         if (params.search) {
             apiParams.search = params.search;
         }
@@ -67,9 +66,6 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             categories: product.categories,
             tags: product.tags,
             attributes: product.attributes,
-            manage_stock: product.manage_stock,
-            stock_quantity: product.stock_quantity,
-            stock_status: product.stock_status,
         }));
 
         return products;
@@ -81,6 +77,35 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             console.error('An unknown error occurred while fetching products.');
         }
         return [];
+    }
+}
+
+
+export async function getProduct(id: string): Promise<WooProduct | null> {
+    try {
+        const { data } = await wooApi.get(`products/${id}`);
+        if (!data) return null;
+
+        return {
+            id: data.id,
+            name: data.name,
+            description: data.description,
+            short_description: data.short_description,
+            price: data.price,
+            price_html: data.price_html,
+            on_sale: data.on_sale,
+            sale_price: data.sale_price,
+            regular_price: data.regular_price,
+            category: data.categories.length > 0 ? data.categories[0].name : 'Uncategorized',
+            images: data.images,
+            permalink: data.permalink,
+            categories: data.categories,
+            tags: data.tags,
+            attributes: data.attributes,
+        };
+    } catch (error) {
+        console.error(error);
+        return null;
     }
 }
 

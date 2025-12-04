@@ -32,9 +32,6 @@ export interface Product {
     options: string[];
     variation: boolean;
   }[];
-  manage_stock?: boolean;
-  stock_quantity?: number;
-  stock_status?: 'instock' | 'outofstock' | 'onbackorder';
 }
 
 export interface BlogPost {

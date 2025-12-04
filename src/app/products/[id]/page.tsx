@@ -1,3 +1,4 @@
+import { getProduct } from '@/lib/data';
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
@@ -13,7 +14,7 @@ import {
 import { Separator } from '@/components/ui/separator';
 import ProductCard from '@/app/_components/product-card';
 import wooApi from '@/lib/woo';
-import { getProductVariations } from '@/lib/woo';
+import { getProducts } from '@/lib/data';
 
 
 type Props = {
@@ -31,19 +32,7 @@ const reviewsPool = [
     { user: "David G.", text: "Resistentes y ligeros. Justo lo que buscaba.", stars: 4 }, 
 ];
 
-export async function generateStaticParams() {
-  try {
-    const { data: products } = await wooApi.get("products", { per_page: 100 });
-    return products.map((product: any) => ({
-      id: String(product.id),
-    }));
-  } catch (error) {
-    console.error("Failed to generate static params for products", error);
-    return [];
-  }
-}
-
-async function getProduct(id: string): Promise<Product | null> {
+async function getSingleProduct(id: string): Promise<Product | null> {
     try {
         const { data } = await wooApi.get(`products/${id}`);
         if (!data) return null;
@@ -64,15 +53,13 @@ async function getProduct(id: string): Promise<Product | null> {
             categories: data.categories,
             tags: data.tags,
             attributes: data.attributes,
-            manage_stock: data.manage_stock,
-            stock_quantity: data.stock_quantity,
-            stock_status: data.stock_status,
         };
     } catch (error) {
         console.error(error);
         return null;
     }
 }
+
 
 async function getRelatedProducts(product: Product) {
     if (!product.categories || product.categories.length === 0) return [];
@@ -90,13 +77,12 @@ async function getRelatedProducts(product: Product) {
 }
 
 export default async function ProductDetailPage({ params }: Props) {
-  const product = await getProduct(params.id);
+  const product = await getSingleProduct(params.id);
   
   if (!product) {
     notFound();
   }
 
-  const variations = await getProductVariations(params.id);
   const relatedProducts = await getRelatedProducts(product);
 
   const image = product.images?.[0];
@@ -106,32 +92,6 @@ export default async function ProductDetailPage({ params }: Props) {
   
   const priceHtml = product.price_html || `<span class="amount">${product.price}€</span>`;
   
-  // Función para comprobar si una opción (ej: "42") tiene stock
-    const checkStock = (attributeName: string, optionName: string): boolean => {
-        // Si no hay variaciones, asumimos que hay stock (producto simple)
-        if (!variations || variations.length === 0) {
-            if (product.manage_stock) {
-                return (product.stock_quantity ?? 0) > 0;
-            }
-            return product.stock_status === 'instock';
-        }
-
-        // Buscamos la variación que coincida con esta opción
-        const match = variations.find((v: any) =>
-        v.attributes.some((a: any) =>
-            a.name.toLowerCase() === attributeName.toLowerCase() &&
-            a.option.toLowerCase() === optionName.toLowerCase()
-        )
-        );
-
-        // Si encontramos la variación, miramos su stock
-        if (match) {
-        return match.stock_status === 'instock' && (match.manage_stock ? (match.stock_quantity ?? 0) > 0 : true);
-        }
-        return false; // Si no existe la variación, no hay stock
-    };
-
-
   return (
     <>
     <div className="container mx-auto max-w-7xl px-4 py-12 md:py-20">
@@ -175,29 +135,22 @@ export default async function ProductDetailPage({ params }: Props) {
             
             <div className="prose text-gray-600 mb-8" dangerouslySetInnerHTML={{ __html: product.short_description || ''}} />
             
-            {/* SELECTOR DE TALLAS CON STOCK REAL */}
-            {product.attributes && product.attributes.filter(attr => attr.variation).map((attr: any) => (
-                <div key={attr.id} className="mb-6">
-                <p className="text-sm font-bold text-gray-900 mb-3 uppercase tracking-wide">{attr.name}:</p>
+            {product.attributes && product.attributes.map((attr: any) => (
+              <div key={attr.id} className="mb-6">
+                <p className="text-sm font-medium text-gray-900 mb-3 capitalize">
+                  {attr.name}:
+                </p>
                 <div className="flex flex-wrap gap-2">
-                    {attr.options.map((option: string) => {
-                    const inStock = checkStock(attr.name, option);
-                    return (
-                        <button 
-                        key={option}
-                        disabled={!inStock}
-                        className={`px-4 py-3 border rounded-lg text-sm font-bold transition-all
-                            ${inStock 
-                            ? 'border-gray-200 text-gray-900 hover:border-orange-500 hover:text-orange-600 cursor-pointer' 
-                            : 'border-gray-100 text-gray-300 bg-gray-50 cursor-not-allowed line-through'
-                            }`}
-                        >
-                        {option}
-                        </button>
-                    );
-                    })}
+                  {attr.options.map((option: string) => (
+                    <button 
+                      key={option}
+                      className="px-4 py-2 border border-gray-200 rounded-md text-sm font-medium text-gray-900 hover:bg-gray-50 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                    >
+                      {option}
+                    </button>
+                  ))}
                 </div>
-                </div>
+              </div>
             ))}
 
             <button className="w-full bg-orange-600 hover:bg-orange-700 text-white text-xl font-bold py-4 rounded-xl shadow-lg transition-transform active:scale-95 flex justify-center items-center gap-2 mt-8">
