@@ -1,4 +1,4 @@
-import { getProduct, getProducts } from '@/lib/data';
+import { getProduct } from '@/lib/data';
 import wooApi from '@/lib/woo';
 import { notFound } from 'next/navigation';
 import { ProductDetails } from './_components/product-details';
@@ -26,18 +26,12 @@ export default async function ProductPage({ params }: { params: { id: string } }
 
   const variations: ProductVariation[] = await getProductVariations(params.id);
   
-  // Fetch related products using the IDs from the main product
-  const relatedProducts: Product[] = product.related_ids.length > 0 
-    ? await getProducts({ include: product.related_ids })
-    : [];
-
   return (
     <div className="container mx-auto max-w-7xl px-4 py-12 md:py-20">
        <Suspense fallback={<div className="min-h-screen" />}>
          <ProductDetails 
             product={product} 
             variations={variations}
-            relatedProducts={relatedProducts}
          />
       </Suspense>
     </div>

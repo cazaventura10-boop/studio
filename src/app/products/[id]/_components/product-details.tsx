@@ -23,10 +23,9 @@ const reviewsPool = [
 interface ProductDetailsProps {
     product: Product;
     variations: ProductVariation[];
-    relatedProducts: Product[];
 }
 
-export function ProductDetails({ product, variations, relatedProducts }: ProductDetailsProps) {
+export function ProductDetails({ product, variations }: ProductDetailsProps) {
     const [selectedVariation, setSelectedVariation] = useState<ProductVariation | null>(null);
     const [quantity, setQuantity] = useState(1);
     const [selectedImage, setSelectedImage] = useState(product.images?.[0] || null);
@@ -240,17 +239,6 @@ export function ProductDetails({ product, variations, relatedProducts }: Product
             ))}
         </div>
       </div>
-      
-       {relatedProducts && relatedProducts.length > 0 && (
-        <div className="my-20">
-          <h2 className="text-3xl font-extrabold font-headline mb-8">También te podría interesar</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {relatedProducts.map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
-        </div>
-      )}
     </>
     );
 }
