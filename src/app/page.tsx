@@ -11,9 +11,7 @@ export default async function Home() {
   const allProducts = await getProducts();
   const newArrivals = allProducts.slice(0, 5);
 
-  const equipHombre = placeholderImagesById['equip-hombre'];
   const equipMujer = placeholderImagesById['equip-mujer'];
-  const equipNinos = placeholderImagesById['equip-ninos'];
   const equipAccesorios = placeholderImagesById['equip-accesorios'];
 
   return (
@@ -49,11 +47,11 @@ export default async function Home() {
             <Link href="/products?tag=Hombre" className="group">
               <div className="relative aspect-[3/4] overflow-hidden rounded-md">
                 <Image
-                  src={equipHombre.imageUrl}
-                  alt={equipHombre.description}
+                  src="https://www.deporteyaventura.es/wp-content/uploads/2025/10/unnamed-3-7.jpg"
+                  alt="Equipamiento para hombre"
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  data-ai-hint={equipHombre.imageHint}
+                  data-ai-hint="mountaineer man"
                 />
               </div>
               <h3 className="mt-4 font-headline text-xl font-semibold">HOMBRE</h3>
