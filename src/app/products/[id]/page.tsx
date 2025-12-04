@@ -28,7 +28,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
 
   // Lógica para obtener productos relacionados
   let relatedProducts: Product[] = [];
-  const linkedProductIds = [...new Set([...product.upsell_ids, ...product.cross_sell_ids, ...product.related_ids])];
+  const linkedProductIds = [...new Set(product.upsell_ids)];
 
   if (linkedProductIds.length > 0) {
     // Si hay productos vinculados manualmente, los buscamos
