@@ -23,7 +23,7 @@ const categories = [
   {
     name: 'Sudaderas y Polares',
     href: '/products?category=sudaderas-mujer',
-    imageUrl: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800',
+    imageUrl: 'https://www.deporteyaventura.es/wp-content/uploads/2025/11/Captura-de-pantalla-2025-11-13-163918.png',
     imageHint: 'woman fashion hoodie'
   }
 ];
