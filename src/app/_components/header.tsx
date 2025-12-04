@@ -119,7 +119,7 @@ const trekkingMujer: NavLink[] = [
     },
     {
         title: 'CALZADO DE MUJER',
-        href: '/products?category=calzado-mujer',
+        href: '/products?category=calzado-de-mujer',
         children: [
             { title: 'Botas', href: '/products?category=botas-trekking-y-montana-mujer' },
             { title: 'Zapatillas', href: '/products?category=zapatillas-trekking-mujer' },
