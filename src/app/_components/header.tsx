@@ -35,7 +35,7 @@ type NavLink = {
 const trekkingHombre: NavLink[] = [
   {
     title: 'ROPA DE HOMBRE',
-    href: '/products?category=ropa-de-hombre',
+    href: '/ropa-hombre',
     children: [
       {
         title: 'Pantalones Hombre',
