@@ -4,7 +4,7 @@ import Link from 'next/link';
 const categories = [
   {
     name: 'Pantalones Trekking',
-    href: '/products?category=pantalones-mujer',
+    href: '/products?category=pantalones-montana',
     imageUrl: 'https://images.unsplash.com/photo-1596701799732-c36399990267?q=80&w=800',
     imageHint: 'woman hiking pants'
   },
