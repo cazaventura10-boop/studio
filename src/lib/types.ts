@@ -26,7 +26,7 @@ export interface Product {
     name: string;
     slug: string;
   }[];
-  attributes?: {
+  attributes: {
     id: number;
     name: string;
     options: string[];

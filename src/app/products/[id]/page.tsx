@@ -1,11 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { getProducts } from '@/lib/data';
 import type { Product } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { ShoppingCart, Package, Truck, ShieldCheck, ArrowRight, Star } from 'lucide-react';
+import { ArrowRight, Star } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
@@ -14,8 +12,9 @@ import {
 } from "@/components/ui/accordion"
 import { Separator } from '@/components/ui/separator';
 import ProductCard from '@/app/_components/product-card';
-import wooApi, { getProductVariations } from '@/lib/woo';
-import { AddToCartButton } from '@/app/_components/add-to-cart-button';
+import wooApi from '@/lib/woo';
+import { ProductDetailsClient } from './_components/product-details-client';
+
 
 type Props = {
   params: { id: string };
@@ -33,10 +32,15 @@ const reviewsPool = [
 ];
 
 export async function generateStaticParams() {
-  const products = await getProducts();
-  return products.map((product) => ({
-    id: String(product.id),
-  }));
+  try {
+    const { data: products } = await wooApi.get("products", { per_page: 100 });
+    return products.map((product: any) => ({
+      id: String(product.id),
+    }));
+  } catch (error) {
+    console.error("Failed to generate static params for products", error);
+    return [];
+  }
 }
 
 async function getProduct(id: string): Promise<Product | null> {
@@ -60,10 +64,44 @@ async function getProduct(id: string): Promise<Product | null> {
             categories: data.categories,
             tags: data.tags,
             attributes: data.attributes,
+            manage_stock: data.manage_stock,
+            stock_quantity: data.stock_quantity,
+            stock_status: data.stock_status,
         };
     } catch (error) {
         console.error(error);
         return null;
+    }
+}
+
+async function getProductVariations(productId: number | string) {
+  try {
+    const { data } = await wooApi.get(`products/${productId}/variations`, {
+      per_page: 100,
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+        console.error('Error fetching variations:', error.message);
+    } else {
+        console.error('An unknown error occurred while fetching variations.');
+    }
+    return [];
+  }
+}
+
+async function getRelatedProducts(product: Product) {
+    if (!product.categories || product.categories.length === 0) return [];
+    try {
+        const { data } = await wooApi.get("products", {
+            category: product.categories[0].id,
+            per_page: 5, // fetch one more to exclude the current product
+            exclude: [product.id]
+        });
+        return data.slice(0, 4);
+    } catch (error) {
+        console.error("Failed to fetch related products", error);
+        return [];
     }
 }
 
@@ -74,45 +112,14 @@ export default async function ProductDetailPage({ params }: Props) {
     notFound();
   }
 
-  const variations = await getProductVariations(params.id); // ¡DATOS DE STOCK REALES!
-
-  const allProducts = await getProducts({ per_page: 100 });
-  const relatedProducts = allProducts
-    .filter(p => p.id !== product.id && p.categories[0]?.id === product.categories[0]?.id)
-    .slice(0, 4);
+  const variations = await getProductVariations(params.id);
+  const relatedProducts = await getRelatedProducts(product);
 
   const image = product.images?.[0];
   const placeholderImage = "https://placehold.co/600x600/eee/ccc?text=No+Image";
 
-  // Seleccionar 3 opiniones aleatorias
   const randomReviews = [...reviewsPool].sort(() => 0.5 - Math.random()).slice(0, 3);
-  const priceHtml = product.price_html || `<span class="amount">${product.price}€</span>`;
   
-  // Función para comprobar si una opción (ej: "42") tiene stock
-  const checkStock = (attributeName: string, optionName: string) => {
-    // Si no hay variaciones, asumimos que hay stock (producto simple)
-    if (!variations || variations.length === 0) {
-        // Si el producto simple gestiona stock, lo comprobamos
-        if (product.manage_stock) {
-            return product.stock_quantity > 0;
-        }
-        return product.stock_status === 'instock';
-    }
-
-    // Buscamos la variación que coincida con esta opción
-    const match = variations.find((v: any) => 
-      v.attributes.some((a: any) => 
-        a.name.toLowerCase() === attributeName.toLowerCase() && 
-        a.option.toLowerCase() === optionName.toLowerCase()
-      )
-    );
-    // Si encontramos la variación, miramos su stock
-    if (match) {
-      return match.stock_status === 'instock' && (match.manage_stock ? match.stock_quantity > 0 : true);
-    }
-    return false; // Si no existe la variación, no hay stock
-  };
-
   return (
     <>
     <div className="container mx-auto max-w-7xl px-4 py-12 md:py-20">
@@ -133,85 +140,29 @@ export default async function ProductDetailPage({ params }: Props) {
               <Badge className="absolute top-4 left-4 bg-orange-500 text-white border-none text-base px-4 py-2">OFERTA</Badge>
             )}
             </div>
+             {/* Acordeones de Información (Solo en móvil) */}
+             <div className="md:hidden">
+              <Accordion type="single" collapsible className="w-full mt-8" defaultValue="description">
+                  <AccordionItem value="description">
+                      <AccordionTrigger className="text-lg font-semibold">
+                          <div className="flex items-center gap-2">
+                            Descripción
+                          </div>
+                      </AccordionTrigger>
+                      <AccordionContent className="prose prose-sm text-muted-foreground pt-2">
+                          <div dangerouslySetInnerHTML={{ __html: product.description || product.short_description || '' }} />
+                      </AccordionContent>
+                  </AccordionItem>
+              </Accordion>
+            </div>
         </div>
 
         {/* Columna Derecha: Información del Producto */}
-        <div className="flex flex-col">
-            <div className="mb-4">
-                <Badge variant="outline" className="text-sm">{product.category}</Badge>
-            </div>
-            
-            <h1 className="text-3xl lg:text-4xl font-extrabold font-headline mb-4 tracking-tight">{product.name}</h1>
-            
-            <div
-                className="text-2xl mb-6 flex items-center gap-3 font-bold
-                text-[0px] [&_.screen-reader-text]:hidden
-                [&>del]:text-lg [&>del]:text-gray-400 [&>del]:line-through
-                [&>ins]:text-4xl [&>ins]:text-red-600 [&>ins]:font-black [&>ins]:no-underline
-                [&>.amount]:text-4xl [&>.amount]:font-black [&>.amount]:text-gray-900"
-                dangerouslySetInnerHTML={{ __html: product.price_html }}
-            />
-            
-            <Separator className="my-6" />
-
-            {/* SELECTOR DE TALLAS CON STOCK REAL */}
-            {product.attributes && product.attributes.map((attr: any) => (
-                (attr.variation) && (
-                    <div key={attr.id} className="mb-6">
-                    <p className="text-sm font-bold text-gray-900 mb-3 uppercase tracking-wide">{attr.name}:</p>
-                    <div className="flex flex-wrap gap-2">
-                        {attr.options.map((option: string) => {
-                        const inStock = checkStock(attr.name, option);
-                        return (
-                            <button 
-                            key={option}
-                            disabled={!inStock}
-                            className={`px-4 py-3 border rounded-lg text-sm font-bold transition-all
-                                ${inStock 
-                                ? 'border-gray-300 text-gray-900 hover:border-orange-500 hover:text-orange-600 cursor-pointer focus:border-orange-500 focus:ring-2 focus:ring-orange-200' 
-                                : 'border-gray-200 text-gray-400 bg-gray-50 cursor-not-allowed line-through'
-                                }`}
-                            >
-                            {option}
-                            </button>
-                        );
-                        })}
-                    </div>
-                    </div>
-                )
-            ))}
-
-            {/* Botón Añadir al Carrito */}
-            <AddToCartButton product={product} />
-
-            <div className="grid grid-cols-2 gap-4 mt-8 pt-8 border-t border-gray-100">
-                <div className="flex items-center gap-3 text-sm font-medium text-gray-700">
-                    <Truck className="text-orange-600" /> Envío Rápido 24/48h
-                </div>
-                <div className="flex items-center gap-3 text-sm font-medium text-gray-700">
-                    <ShieldCheck className="text-orange-600" /> Garantía de Calidad
-                </div>
-            </div>
-            
-            {/* Acordeones de Información */}
-            <Accordion type="single" collapsible className="w-full mt-8" defaultValue="description">
-                <AccordionItem value="description">
-                    <AccordionTrigger className="text-lg font-semibold">
-                        <div className="flex items-center gap-2">
-                           <Package className="h-5 w-5" /> Descripción
-                        </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="prose prose-sm text-muted-foreground pt-2">
-                        <div dangerouslySetInnerHTML={{ __html: product.description || '' }} />
-                    </AccordionContent>
-                </AccordionItem>
-            </Accordion>
-
-        </div>
+        <ProductDetailsClient product={product} variations={variations} />
       </div>
     </div>
     
-    {/* --- NUEVA SECCIÓN: OPINIONES --- */}
+    {/* --- SECCIÓN: OPINIONES --- */}
     <div className="bg-gray-50 py-16">
         <div className="container">
             <h2 className="text-2xl font-black text-center mb-10 flex items-center justify-center gap-2">
@@ -242,7 +193,7 @@ export default async function ProductDetailPage({ params }: Props) {
           <div className="flex justify-between items-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold font-headline">COMPLETA TU LOOK</h2>
              <Button variant="link" asChild className="text-orange-500 hover:text-orange-500/80">
-                <Link href="/products?category=${product.categories[0]?.slug}">
+                <Link href={`/products?category=${product.categories[0]?.slug}`}>
                     Ver Todos <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
             </Button>
