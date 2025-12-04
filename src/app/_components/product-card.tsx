@@ -3,27 +3,26 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default function ProductCard({ product }: { product: any }) {
-  // 1. Usamos el HTML directo para los precios de abajo (ESTO FUNCIONA SEGURO)
   const priceHtml = product.price_html || `<span class="amount">${product.price}€</span>`;
-  
-  // 2. Detectamos si hay oferta mirando si el HTML tiene la etiqueta <del> (tachado)
-  // O si el producto tiene la propiedad on_sale activa
-  const isOnSale = priceHtml.includes('<del') || product.on_sale;
+  const isOnSale = product.on_sale && product.regular_price && product.sale_price && parseFloat(String(product.regular_price).replace(',', '.')) > parseFloat(String(product.sale_price).replace(',', '.'));
 
-  // 3. Intento de calcular porcentaje (solo visual, si falla no rompe nada)
-  let badgeText = "OFERTA";
-  try {
-    // Limpiamos los precios para intentar calcular
-    const regPrice = parseFloat(String(product.regular_price).replace(',', '.'));
-    const salePrice = parseFloat(String(product.sale_price || product.price).replace(',', '.'));
-    
-    if (regPrice > salePrice && regPrice > 0) {
-      const percent = Math.round(((regPrice - salePrice) / regPrice) * 100);
-      if (percent > 0) badgeText = `-${percent}%`;
+  let badgeText = "";
+  if (isOnSale) {
+    try {
+      const regPrice = parseFloat(String(product.regular_price).replace(',', '.'));
+      const salePrice = parseFloat(String(product.sale_price).replace(',', '.'));
+      
+      if (regPrice > salePrice && regPrice > 0) {
+        const percent = Math.round(((regPrice - salePrice) / regPrice) * 100);
+        if (percent > 0) {
+          badgeText = `-${percent}%`;
+        }
+      }
+    } catch (e) {
+      badgeText = "OFERTA";
     }
-  } catch (e) {
-    // Si falla el cálculo, nos quedamos con "OFERTA"
   }
+
 
   return (
     <Link 
@@ -45,7 +44,7 @@ export default function ProductCard({ product }: { product: any }) {
         )}
 
         {/* ETIQUETA ROJA (Porcentaje o Oferta) */}
-        {isOnSale && (
+        {badgeText && (
           <div className="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md z-10">
             {badgeText}
           </div>
