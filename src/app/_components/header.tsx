@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ShoppingCart, Search } from 'lucide-react';
+import { Menu, X, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
@@ -25,6 +25,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { CartSheet } from '@/app/_components/cart-sheet';
 
 type NavLink = {
   title: string;
@@ -351,10 +352,7 @@ export function Header() {
         
         <div className="flex items-center gap-2">
            <div className="hidden md:flex items-center gap-2">
-             <Button variant="ghost" size="icon" className={iconButtonClasses}>
-                <ShoppingCart className="h-6 w-6" />
-                <span className="sr-only">Carrito</span>
-             </Button>
+             <CartSheet />
              <Button variant="ghost" size="icon" className={iconButtonClasses}>
                 <Search className="h-6 w-6" />
                 <span className="sr-only">Buscar</span>
@@ -437,10 +435,7 @@ export function Header() {
                   </nav>
                 </ScrollArea>
                  <div className="p-4 mt-auto flex items-center gap-4 border-t">
-                    <Button variant="ghost" size="icon">
-                        <ShoppingCart className="h-6 w-6" />
-                        <span className="sr-only">Carrito</span>
-                    </Button>
+                    <CartSheet />
                     <Button variant="ghost" size="icon">
                         <Search className="h-6 w-6" />
                         <span className="sr-only">Buscar</span>

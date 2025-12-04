@@ -4,6 +4,7 @@ import { Header } from '@/app/_components/header';
 import { Footer } from '@/app/_components/footer';
 import { Toaster } from '@/components/ui/toaster';
 import { WhatsAppButton } from './_components/whatsapp-button';
+import { CartProvider } from '@/lib/cart-context';
 
 export const metadata: Metadata = {
   title: 'DeporteY Aventura Next',
@@ -24,11 +25,13 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <WhatsAppButton />
-        <Footer />
-        <Toaster />
+        <CartProvider>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <WhatsAppButton />
+          <Footer />
+          <Toaster />
+        </CartProvider>
       </body>
     </html>
   );

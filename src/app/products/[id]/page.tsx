@@ -15,6 +15,7 @@ import { Separator } from '@/components/ui/separator';
 import ProductCard from '@/app/_components/product-card';
 import Link from 'next/link';
 import wooApi from '@/lib/woo';
+import { AddToCartButton } from '@/app/_components/add-to-cart-button';
 
 type Props = {
   params: { id: string };
@@ -129,10 +130,7 @@ export default async function ProductDetailPage({ params }: Props) {
             </div>
 
             {/* Botón Añadir al Carrito */}
-            <Button size="lg" className="w-full h-14 text-lg bg-orange-500 hover:bg-orange-600 text-white font-bold mb-8">
-                <ShoppingCart className="mr-3 h-6 w-6" />
-                Añadir al Carrito
-            </Button>
+            <AddToCartButton product={product} />
             
             {/* Acordeones de Información */}
             <Accordion type="single" collapsible className="w-full" defaultValue="description">
@@ -233,4 +231,3 @@ export default async function ProductDetailPage({ params }: Props) {
     </>
   );
 }
-    
