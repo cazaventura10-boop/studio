@@ -8,7 +8,14 @@ export default function ProductCard({ product }: { product: any }) {
 
   let badgeText = "";
   if (isOnSale) {
-      badgeText = "OFERTA";
+      const regularPrice = parseFloat(String(product.regular_price).replace(',', '.'));
+      const salePrice = parseFloat(String(product.sale_price).replace(',', '.'));
+      if (regularPrice > 0) {
+        const discount = Math.round(((regularPrice - salePrice) / regularPrice) * 100);
+        badgeText = `-${discount}%`;
+      } else {
+        badgeText = "OFERTA";
+      }
   }
 
 
