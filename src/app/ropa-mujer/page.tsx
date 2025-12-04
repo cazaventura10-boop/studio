@@ -10,7 +10,7 @@ const categories = [
   },
   {
     name: 'Chaquetas',
-    href: '/products?category=chaquetas-mujer',
+    href: '/products?category=chaquetas',
     imageUrl: 'https://www.deporteyaventura.es/wp-content/uploads/2025/11/unnamed-2-1.jpg',
     imageHint: 'woman hiking jacket'
   },
