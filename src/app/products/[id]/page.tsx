@@ -25,10 +25,11 @@ export default async function ProductPage({ params }: { params: { id: string } }
   }
 
   const variations: ProductVariation[] = await getProductVariations(params.id);
-  const relatedProducts: Product[] = await getProducts({ category: product.categories[0]?.slug, per_page: 4 });
-
-  // Filter out the current product from related products
-  const filteredRelated = relatedProducts.filter(p => p.id !== product.id).slice(0, 4);
+  
+  // Fetch related products using the IDs from the main product
+  const relatedProducts: Product[] = product.related_ids.length > 0 
+    ? await getProducts({ include: product.related_ids })
+    : [];
 
   return (
     <div className="container mx-auto max-w-7xl px-4 py-12 md:py-20">
@@ -36,7 +37,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
          <ProductDetails 
             product={product} 
             variations={variations}
-            relatedProducts={filteredRelated}
+            relatedProducts={relatedProducts}
          />
       </Suspense>
     </div>

@@ -72,6 +72,7 @@ export function ProductDetails({ product, variations, relatedProducts }: Product
         id: selectedVariation.id,
         price: selectedVariation.price,
         price_html: displayPriceHtml,
+        related_ids: product.related_ids,
         name: `${product.name} - ${selectedVariation.attributes.map(a => a.option).join(', ')}`
       } 
     : product;
@@ -240,7 +241,7 @@ export function ProductDetails({ product, variations, relatedProducts }: Product
         </div>
       </div>
       
-       {relatedProducts.length > 0 && (
+       {relatedProducts && relatedProducts.length > 0 && (
         <div className="my-20">
           <h2 className="text-3xl font-extrabold font-headline mb-8">También te podría interesar</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">

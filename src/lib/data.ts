@@ -10,6 +10,7 @@ interface GetProductsParams {
   category?: string | number; // puede ser slug o id
   tag?: string; // slug de la etiqueta
   on_sale?: boolean; // para filtrar por productos en oferta
+  include?: number[]; // para buscar por IDs
 }
 
 export async function getProducts(params: GetProductsParams = {}): Promise<WooProduct[]> {
@@ -21,6 +22,10 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
 
         if (params.on_sale) {
             apiParams.on_sale = true;
+        }
+
+        if (params.include && params.include.length > 0) {
+            apiParams.include = params.include.join(',');
         }
 
         // Si se pasa category y es string, asumimos que es un slug
@@ -60,6 +65,7 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             on_sale: product.on_sale,
             sale_price: product.sale_price,
             regular_price: product.regular_price,
+            related_ids: product.related_ids,
             category: product.categories.length > 0 ? product.categories[0].name : 'Uncategorized',
             images: product.images,
             permalink: product.permalink,
@@ -96,6 +102,7 @@ export async function getProduct(id: string): Promise<WooProduct | null> {
             on_sale: data.on_sale,
             sale_price: data.sale_price,
             regular_price: data.regular_price,
+            related_ids: data.related_ids,
             category: data.categories.length > 0 ? data.categories[0].name : 'Uncategorized',
             images: data.images,
             permalink: data.permalink,

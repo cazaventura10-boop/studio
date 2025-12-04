@@ -1,5 +1,6 @@
 
 
+
 export interface Product {
   id: number;
   name: string;
@@ -17,6 +18,7 @@ export interface Product {
     alt: string;
   }[];
   permalink: string;
+  related_ids: number[];
   categories: {
       id: number;
       name: string;
