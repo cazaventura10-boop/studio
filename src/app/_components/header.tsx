@@ -87,7 +87,7 @@ const trekkingHombre: NavLink[] = [
 const trekkingMujer: NavLink[] = [
     {
         title: 'ROPA DE MUJER',
-        href: '/products?category=ropa-de-mujer',
+        href: '/ropa-mujer',
         children: [
             {
                 title: 'Pantalones',
@@ -288,13 +288,13 @@ export function Header() {
                   <div className="grid w-[700px] grid-cols-3 gap-x-8 p-4">
                     {/* Columna HOMBRE */}
                     <div className="flex flex-col">
-                      <h3 className="mb-2 text-sm font-bold text-accent">HOMBRE</h3>
+                      <Link href="/ropa-hombre" className="mb-2 text-sm font-bold text-accent hover:underline">HOMBRE</Link>
                       <p className="text-xs text-muted-foreground mb-3">Equipamiento masculino para montaña</p>
                       <NestedList items={trekkingHombre} />
                     </div>
                     {/* Columna MUJER */}
                      <div className="flex flex-col">
-                      <h3 className="mb-2 text-sm font-bold text-accent">MUJER</h3>
+                      <Link href="/ropa-mujer" className="mb-2 text-sm font-bold text-accent hover:underline">MUJER</Link>
                       <p className="text-xs text-muted-foreground mb-3">Equipamiento femenino para montaña</p>
                        <NestedList items={trekkingMujer} />
                     </div>
