@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getProducts } from '@/lib/data';
@@ -20,6 +21,17 @@ import { AddToCartButton } from '@/app/_components/add-to-cart-button';
 type Props = {
   params: { id: string };
 };
+
+// --- BANCO DE OPINIONES (Se eligen 3 al azar) --- 
+const reviewsPool = [ 
+    { user: "Marc P.", text: "Calidad brutal. Se nota que es material técnico del bueno.", stars: 5 }, 
+    { user: "Elena S.", text: "El envío rapidísimo, en 24h lo tenía en casa para la ruta.", stars: 5 },
+    { user: "Javier R.", text: "Talla perfecta y muy cómodos. Repetiré seguro.", stars: 4 }, 
+    { user: "Ana M.", text: "Muy buena relación calidad-precio. Abrigan mucho.", stars: 5 }, 
+    { user: "Carlos D.", text: "Todo perfecto, tal y como sale en la foto.", stars: 5 }, 
+    { user: "Laura B.", text: "Tuve dudas con la talla y me ayudaron genial por WhatsApp.", stars: 5 }, 
+    { user: "David G.", text: "Resistentes y ligeros. Justo lo que buscaba.", stars: 4 }, 
+];
 
 export async function generateStaticParams() {
   const products = await getProducts();
@@ -61,12 +73,17 @@ export default async function ProductDetailPage({ params }: Props) {
     notFound();
   }
   
-  const allProducts = await getProducts();
-  const relatedProducts = allProducts.filter(p => p.id !== product.id && p.categories[0]?.name === product.categories[0]?.name).slice(0, 4);
+  const allProducts = await getProducts({ per_page: 100 });
+  const relatedProducts = allProducts
+    .filter(p => p.id !== product.id && p.categories[0]?.id === product.categories[0]?.id)
+    .slice(0, 4);
 
   const image = product.images?.[0];
   const placeholderImage = "https://placehold.co/600x600/eee/ccc?text=No+Image";
   const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
+
+  // Seleccionar 3 opiniones aleatorias
+  const randomReviews = [...reviewsPool].sort(() => 0.5 - Math.random()).slice(0, 3);
   
   return (
     <>
@@ -81,7 +98,7 @@ export default async function ProductDetailPage({ params }: Props) {
                 alt={image?.alt || product.name}
                 fill
                 priority
-                className="object-cover rounded-lg shadow-lg"
+                className="object-contain rounded-lg p-6"
                 sizes="(max-width: 768px) 100vw, 50vw"
             />
              {product.on_sale && (
@@ -98,22 +115,14 @@ export default async function ProductDetailPage({ params }: Props) {
             
             <h1 className="text-3xl lg:text-4xl font-extrabold font-headline mb-4 tracking-tight">{product.name}</h1>
             
-             <div className="flex items-baseline gap-2 mt-4">
-              {product.on_sale && product.sale_price ? (
-                <>
-                  <span className="text-gray-500 line-through text-lg">
-                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.regular_price.replace(',', '.')))}
-                  </span>
-                  <span className="text-red-600 font-bold text-2xl">
-                    {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price.replace(',', '.')))}
-                  </span>
-                </>
-              ) : (
-                <span className="text-gray-900 font-bold text-2xl">
-                  {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(parseFloat(product.price.replace(',', '.')))}
-                </span>
-              )}
-            </div>
+            <div
+                className="text-2xl mb-6 flex items-center gap-3 font-bold
+                text-[0px] [&_.screen-reader-text]:hidden
+                [&>del]:text-lg [&>del]:text-gray-400 [&>del]:line-through
+                [&>ins]:text-4xl [&>ins]:text-red-600 [&>ins]:font-black [&>ins]:no-underline
+                [&>.amount]:text-4xl [&>.amount]:font-black [&>.amount]:text-gray-900"
+                dangerouslySetInnerHTML={{ __html: product.price_html }}
+            />
             
             <Separator className="my-6" />
 
@@ -131,9 +140,18 @@ export default async function ProductDetailPage({ params }: Props) {
 
             {/* Botón Añadir al Carrito */}
             <AddToCartButton product={product} />
+
+            <div className="grid grid-cols-2 gap-4 mt-8 pt-8 border-t border-gray-100">
+                <div className="flex items-center gap-3 text-sm font-medium text-gray-700">
+                    <Truck className="text-orange-600" /> Envío Rápido 24/48h
+                </div>
+                <div className="flex items-center gap-3 text-sm font-medium text-gray-700">
+                    <ShieldCheck className="text-orange-600" /> Garantía de Calidad
+                </div>
+            </div>
             
             {/* Acordeones de Información */}
-            <Accordion type="single" collapsible className="w-full" defaultValue="description">
+            <Accordion type="single" collapsible className="w-full mt-8" defaultValue="description">
                 <AccordionItem value="description">
                     <AccordionTrigger className="text-lg font-semibold">
                         <div className="flex items-center gap-2">
@@ -144,73 +162,39 @@ export default async function ProductDetailPage({ params }: Props) {
                         <div dangerouslySetInnerHTML={{ __html: product.description || '' }} />
                     </AccordionContent>
                 </AccordionItem>
-                <AccordionItem value="features">
-                    <AccordionTrigger className="text-lg font-semibold">
-                        <div className="flex items-center gap-2">
-                           <ShieldCheck className="h-5 w-5" /> Características Técnicas
-                        </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="prose prose-sm text-muted-foreground pt-2">
-                        <ul>
-                            <li><strong>Composición:</strong> 90% Nylon Ripstop, 10% Elastano.</li>
-                            <li><strong>Tratamiento:</strong> DWR (Durable Water Repellency) sin PFC.</li>
-                            <li><strong>Peso:</strong> 350g (Talla M).</li>
-                            <li><strong>Bolsillos:</strong> 3 con cremallera YKK sellada (2 de mano, 1 en el muslo).</li>
-                            <li><strong>Ajuste:</strong> Cintura elástica con cinturón integrado y bajos ajustables.</li>
-                            <li><strong>Detalles:</strong> Rodillas preformadas y refuerzos en zonas clave.</li>
-                        </ul>
-                    </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="shipping">
-                    <AccordionTrigger className="text-lg font-semibold">
-                        <div className="flex items-center gap-2">
-                           <Truck className="h-5 w-5" /> Envíos y Devoluciones
-                        </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="prose prose-sm text-muted-foreground pt-2">
-                        <p>Envío 24/48h laborables. Gratis en pedidos superiores a 50€. Devoluciones gratuitas durante 30 días.</p>
-                    </AccordionContent>
-                </AccordionItem>
-                 <AccordionItem value="reviews">
-                    <AccordionTrigger className="text-lg font-semibold">
-                        <div className="flex items-center gap-2">
-                           <Star className="h-5 w-5" /> Opiniones
-                        </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="space-y-4 pt-2 text-muted-foreground">
-                        <div>
-                            <div className="flex gap-0.5 text-orange-400">
-                                <Star className="h-4 w-4 fill-current" />
-                                <Star className="h-4 w-4 fill-current" />
-                                <Star className="h-4 w-4 fill-current" />
-                                <Star className="h-4 w-4 fill-current" />
-                                <Star className="h-4 w-4 fill-current" />
-                            </div>
-                            <p className="mt-2 text-sm italic">&quot;Perfectos para Pirineos. Muy cómodos y secan rápido. La talla M me va clavada.&quot;</p>
-                            <p className="mt-1 text-xs font-bold">- Javi M.</p>
-                        </div>
-                        <Separator />
-                         <div>
-                            <div className="flex gap-0.5 text-orange-400">
-                                <Star className="h-4 w-4 fill-current" />
-                                <Star className="h-4 w-4 fill-current" />
-                                <Star className="h-4 w-4 fill-current" />
-                                <Star className="h-4 w-4 fill-current" />
-                                <Star className="h-4 w-4" />
-                            </div>
-                            <p className="mt-2 text-sm italic">&quot;Buena calidad-precio. Los he usado en tres salidas y aguantan bien los roces con la roca.&quot;</p>
-                            <p className="mt-1 text-xs font-bold">- Ana G.</p>
-                        </div>
-                    </AccordionContent>
-                </AccordionItem>
             </Accordion>
 
         </div>
       </div>
     </div>
     
+    {/* --- NUEVA SECCIÓN: OPINIONES --- */}
+    <div className="bg-gray-50 py-16">
+        <div className="container">
+            <h2 className="text-2xl font-black text-center mb-10 flex items-center justify-center gap-2">
+            <Star className="fill-yellow-400 text-yellow-400" /> OPINIONES DE CLIENTES
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {randomReviews.map((review, i) => (
+                <div key={i} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <div className="flex gap-1 mb-3">
+                    {[...Array(review.stars)].map((_, i) => (
+                    <Star key={i} size={16} className="fill-yellow-400 text-yellow-400" />
+                    ))}
+                    {[...Array(5 - review.stars)].map((_, i) => (
+                    <Star key={i} size={16} className="text-gray-300" />
+                    ))}
+                </div>
+                <p className="text-gray-700 mb-4 italic text-sm">"{review.text}"</p>
+                <p className="text-xs font-bold text-gray-900 uppercase tracking-wide">{review.user}</p>
+                </div>
+            ))}
+            </div>
+        </div>
+    </div>
+
      {relatedProducts.length > 0 && (
-      <section className="py-16 bg-secondary">
+      <section className="py-16 bg-white">
         <div className="container">
           <div className="flex justify-between items-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold font-headline">COMPLETA TU LOOK</h2>
@@ -231,3 +215,5 @@ export default async function ProductDetailPage({ params }: Props) {
     </>
   );
 }
+
+    
