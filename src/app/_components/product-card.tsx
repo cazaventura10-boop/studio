@@ -8,12 +8,18 @@ export default function ProductCard({ product }: { product: any }) {
   const isOnSale = product.on_sale && product.regular_price && product.sale_price;
   let badgeText = "";
   if (isOnSale) {
-      const regularPrice = parseFloat(String(product.regular_price).replace(',', '.'));
-      const salePrice = parseFloat(String(product.sale_price).replace(',', '.'));
-      if (regularPrice > 0 && salePrice < regularPrice) {
-        const discount = Math.round(((regularPrice - salePrice) / regularPrice) * 100);
-        badgeText = `-${discount}%`;
-      } else {
+      try {
+        const regularPrice = parseFloat(String(product.regular_price).replace(',', '.'));
+        const salePrice = parseFloat(String(product.price).replace(',', '.')); // Use product.price which is the sale price
+        
+        if (!isNaN(regularPrice) && !isNaN(salePrice) && regularPrice > 0 && salePrice < regularPrice) {
+            const discount = Math.round(((regularPrice - salePrice) / regularPrice) * 100);
+            badgeText = `-${discount}%`;
+        } else {
+            badgeText = "OFERTA";
+        }
+      } catch (e) {
+        console.error("Could not parse price for discount", e);
         badgeText = "OFERTA";
       }
   }
