@@ -5,8 +5,10 @@ import type { Product, ProductVariation } from '@/lib/types';
 import { AddToCartButton } from '@/app/_components/add-to-cart-button';
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
-import { Star, Truck, ShieldCheck, Minus, Plus } from 'lucide-react';
+import { Star, Truck, ShieldCheck, Minus, Plus, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import ProductCard from '@/app/_components/product-card';
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { Button } from '@/components/ui/button';
 
 const reviewsPool = [
     { user: "Marc P.", text: "Calidad brutal. Se nota que es material técnico del bueno.", stars: 5 },
@@ -31,13 +33,32 @@ export function ProductDetails({ product, variations, relatedProducts }: Product
 
     useEffect(() => {
         setSelectedImage(product.images?.[0] || null);
-    }, [product.images]);
+        setSelectedVariation(null);
+        setQuantity(1);
+    }, [product]);
     
-    const randomReviews = useMemo(() => [...reviewsPool].sort(() => 0.5 - Math.random()).slice(0, 3), []);
+    const randomReviews = useMemo(() => [...reviewsPool].sort(() => 0.5 - Math.random()).slice(0, 3), [product.id]);
 
     const handleSelectVariation = (variation: ProductVariation) => {
         setSelectedVariation(variation);
         setQuantity(1); // Reset quantity when changing variation
+    };
+    
+    const currentImageIndex = useMemo(() => {
+      if (!selectedImage || !product.images) return 0;
+      return product.images.findIndex(img => img.id === selectedImage.id);
+    }, [selectedImage, product.images]);
+
+    const handleNextImage = () => {
+        if (!product.images || product.images.length === 0) return;
+        const nextIndex = (currentImageIndex + 1) % product.images.length;
+        setSelectedImage(product.images[nextIndex]);
+    };
+
+    const handlePrevImage = () => {
+        if (!product.images || product.images.length === 0) return;
+        const prevIndex = (currentImageIndex - 1 + product.images.length) % product.images.length;
+        setSelectedImage(product.images[prevIndex]);
     };
 
     const maxQuantity = selectedVariation?.manage_stock && selectedVariation.stock_quantity !== null ? selectedVariation.stock_quantity : Infinity;
@@ -60,16 +81,50 @@ export function ProductDetails({ product, variations, relatedProducts }: Product
       <div className="grid md:grid-cols-2 gap-8 lg:gap-16">
         {/* Columna Izquierda: Galería de Imágenes */}
         <div className="md:sticky md:top-24 self-start flex flex-col gap-4">
-            <div className="aspect-square relative rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 shadow-sm">
-                <Image
-                    src={selectedImage?.src || "https://placehold.co/600x600/eee/ccc?text=No+Image"}
-                    alt={selectedImage?.alt || product.name}
-                    fill
-                    priority
-                    className="object-contain rounded-lg p-6"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                />
-                {product.on_sale && <Badge className="absolute top-4 left-4 bg-orange-500 text-white border-none text-base px-4 py-2">OFERTA</Badge>}
+            <div className="group aspect-square relative rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 shadow-sm">
+                {selectedImage && (
+                    <Image
+                        src={selectedImage.src}
+                        alt={selectedImage.alt || product.name}
+                        fill
+                        priority
+                        className="object-contain rounded-lg p-6"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                )}
+                 {product.on_sale && <Badge className="absolute top-4 left-4 bg-orange-500 text-white border-none text-base px-4 py-2">OFERTA</Badge>}
+
+                 {/* Controles de Navegación y Zoom */}
+                {product.images && product.images.length > 1 && (
+                    <>
+                        <Button variant="ghost" size="icon" onClick={handlePrevImage} className="absolute left-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/50 text-gray-900 hover:bg-white/80 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <ChevronLeft />
+                        </Button>
+                        <Button variant="ghost" size="icon" onClick={handleNextImage} className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/50 text-gray-900 hover:bg-white/80 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <ChevronRight />
+                        </Button>
+                    </>
+                )}
+                
+                <Dialog>
+                    <DialogTrigger asChild>
+                         <Button variant="ghost" size="icon" className="absolute top-2 right-2 h-10 w-10 rounded-full bg-white/50 text-gray-900 hover:bg-white/80 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <ZoomIn />
+                         </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-4xl h-[90vh] p-2 bg-transparent border-none shadow-none">
+                         {selectedImage && (
+                           <Image
+                             src={selectedImage.src}
+                             alt={selectedImage.alt || product.name}
+                             fill
+                             className="object-contain"
+                             sizes="90vw"
+                           />
+                         )}
+                    </DialogContent>
+                </Dialog>
+
             </div>
              {product.images && product.images.length > 1 && (
                 <div className="grid grid-cols-5 gap-2">
@@ -152,7 +207,7 @@ export function ProductDetails({ product, variations, relatedProducts }: Product
                  </div>
             )}
 
-            <AddToCartButton product={cartProduct} quantity={quantity} disabled={!selectedVariation} />
+            <AddToCartButton product={cartProduct} quantity={quantity} disabled={variations.length > 0 && !selectedVariation} />
             
             <div className="grid grid-cols-2 gap-4 mt-8 pt-8 border-t border-gray-100">
                 <div className="flex items-center gap-3 text-sm font-medium text-gray-700"><Truck className="text-orange-600" /> Envío Rápido 24/72h</div>
