@@ -23,9 +23,10 @@ const reviewsPool = [
 interface ProductDetailsProps {
     product: Product;
     variations: ProductVariation[];
+    relatedProducts: Product[];
 }
 
-export function ProductDetails({ product, variations }: ProductDetailsProps) {
+export function ProductDetails({ product, variations, relatedProducts }: ProductDetailsProps) {
     const [selectedVariation, setSelectedVariation] = useState<ProductVariation | null>(null);
     const [quantity, setQuantity] = useState(1);
     const [selectedImage, setSelectedImage] = useState(product.images?.[0] || null);
@@ -72,6 +73,8 @@ export function ProductDetails({ product, variations }: ProductDetailsProps) {
         price: selectedVariation.price,
         price_html: displayPriceHtml,
         related_ids: product.related_ids,
+        upsell_ids: product.upsell_ids,
+        cross_sell_ids: product.cross_sell_ids,
         name: `${product.name} - ${selectedVariation.attributes.map(a => a.option).join(', ')}`
       } 
     : product;
@@ -222,6 +225,17 @@ export function ProductDetails({ product, variations }: ProductDetailsProps) {
             </div>
         </div>
       </div>
+      
+      {relatedProducts && relatedProducts.length > 0 && (
+        <div className="my-20">
+          <h2 className="text-2xl font-black text-center mb-10">También te podría interesar</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            {relatedProducts.map(relatedProduct => (
+              <ProductCard key={relatedProduct.id} product={relatedProduct} />
+            ))}
+          </div>
+        </div>
+      )}
 
        <div className="bg-gray-50 rounded-3xl p-8 md:p-12 my-20">
         <h2 className="text-2xl font-black text-center mb-10 flex items-center justify-center gap-2">

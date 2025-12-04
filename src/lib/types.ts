@@ -2,6 +2,7 @@
 
 
 
+
 export interface Product {
   id: number;
   name: string;
@@ -20,6 +21,8 @@ export interface Product {
   }[];
   permalink: string;
   related_ids: number[];
+  upsell_ids: number[];
+  cross_sell_ids: number[];
   categories: {
       id: number;
       name: string;
