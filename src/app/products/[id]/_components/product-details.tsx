@@ -1,13 +1,12 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import type { Product, ProductVariation } from '@/lib/types';
 import { AddToCartButton } from '@/app/_components/add-to-cart-button';
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
 import { Star, Truck, ShieldCheck, Minus, Plus } from 'lucide-react';
 import ProductCard from '@/app/_components/product-card';
-import Link from 'next/link';
 
 const reviewsPool = [
     { user: "Marc P.", text: "Calidad brutal. Se nota que es material técnico del bueno.", stars: 5 },
@@ -28,6 +27,11 @@ interface ProductDetailsProps {
 export function ProductDetails({ product, variations, relatedProducts }: ProductDetailsProps) {
     const [selectedVariation, setSelectedVariation] = useState<ProductVariation | null>(null);
     const [quantity, setQuantity] = useState(1);
+    const [selectedImage, setSelectedImage] = useState(product.images?.[0] || null);
+
+    useEffect(() => {
+        setSelectedImage(product.images?.[0] || null);
+    }, [product.images]);
     
     const randomReviews = useMemo(() => [...reviewsPool].sort(() => 0.5 - Math.random()).slice(0, 3), []);
 
@@ -36,7 +40,7 @@ export function ProductDetails({ product, variations, relatedProducts }: Product
         setQuantity(1); // Reset quantity when changing variation
     };
 
-    const maxQuantity = selectedVariation?.manage_stock ? selectedVariation.stock_quantity : Infinity;
+    const maxQuantity = selectedVariation?.manage_stock && selectedVariation.stock_quantity !== null ? selectedVariation.stock_quantity : Infinity;
     const showStockMessage = selectedVariation?.manage_stock && selectedVariation.stock_quantity !== null && selectedVariation.stock_quantity <= 5 && selectedVariation.stock_quantity > 0;
     
     const displayPriceHtml = selectedVariation ? `<span class="amount">${selectedVariation.price}€</span>` : product.price_html;
@@ -55,11 +59,11 @@ export function ProductDetails({ product, variations, relatedProducts }: Product
     <>
       <div className="grid md:grid-cols-2 gap-8 lg:gap-16">
         {/* Columna Izquierda: Galería de Imágenes */}
-        <div className="md:sticky md:top-24 self-start">
+        <div className="md:sticky md:top-24 self-start flex flex-col gap-4">
             <div className="aspect-square relative rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 shadow-sm">
                 <Image
-                    src={product.images?.[0]?.src || "https://placehold.co/600x600/eee/ccc?text=No+Image"}
-                    alt={product.images?.[0]?.alt || product.name}
+                    src={selectedImage?.src || "https://placehold.co/600x600/eee/ccc?text=No+Image"}
+                    alt={selectedImage?.alt || product.name}
                     fill
                     priority
                     className="object-contain rounded-lg p-6"
@@ -67,6 +71,27 @@ export function ProductDetails({ product, variations, relatedProducts }: Product
                 />
                 {product.on_sale && <Badge className="absolute top-4 left-4 bg-orange-500 text-white border-none text-base px-4 py-2">OFERTA</Badge>}
             </div>
+             {product.images && product.images.length > 1 && (
+                <div className="grid grid-cols-5 gap-2">
+                    {product.images.map((image) => (
+                        <button
+                            key={image.id}
+                            onClick={() => setSelectedImage(image)}
+                            className={`aspect-square relative rounded-lg overflow-hidden border-2 transition-all ${
+                                selectedImage?.id === image.id ? 'border-orange-500' : 'border-transparent hover:border-gray-300'
+                            }`}
+                        >
+                            <Image
+                                src={image.src}
+                                alt={image.alt}
+                                fill
+                                className="object-cover"
+                                sizes="20vw"
+                            />
+                        </button>
+                    ))}
+                </div>
+            )}
         </div>
 
         {/* Columna Derecha: Información del Producto */}
@@ -91,7 +116,7 @@ export function ProductDetails({ product, variations, relatedProducts }: Product
                     <p className="text-sm font-bold text-gray-900 mb-3 uppercase tracking-wide">{variations[0].attributes[0].name}:</p>
                     <div className="flex flex-wrap gap-2">
                         {variations.map((variation) => {
-                            const inStock = variation.stock_status === 'instock' && (!variation.manage_stock || (variation.stock_quantity && variation.stock_quantity > 0));
+                            const inStock = variation.stock_status === 'instock' && (!variation.manage_stock || (variation.stock_quantity !== null && variation.stock_quantity > 0));
                             const isSelected = selectedVariation?.id === variation.id;
 
                             return (
@@ -120,7 +145,7 @@ export function ProductDetails({ product, variations, relatedProducts }: Product
                          <div className="flex items-center border border-gray-200 rounded-lg">
                              <button onClick={() => setQuantity(q => Math.max(1, q - 1))} disabled={quantity <= 1} className="p-3 text-gray-500 disabled:opacity-50"><Minus size={16}/></button>
                              <span className="px-4 font-bold">{quantity}</span>
-                             <button onClick={() => setQuantity(q => Math.min(maxQuantity || q + 1, q + 1))} disabled={quantity >= (maxQuantity || Infinity)} className="p-3 text-gray-500 disabled:opacity-50"><Plus size={16}/></button>
+                             <button onClick={() => setQuantity(q => Math.min(maxQuantity, q + 1))} disabled={quantity >= maxQuantity} className="p-3 text-gray-500 disabled:opacity-50"><Plus size={16}/></button>
                          </div>
                      </div>
                      {showStockMessage && <p className="text-orange-600 text-sm mt-2 font-semibold">¡Solo quedan {selectedVariation.stock_quantity} unidades!</p>}
