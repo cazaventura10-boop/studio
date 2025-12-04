@@ -16,7 +16,7 @@ const categories = [
   },
   {
     name: 'Botas y Zapatillas',
-    href: '/products?category=calzado-mujer',
+    href: '/products?category=calzado-de-mujer',
     imageUrl: 'https://www.deporteyaventura.es/wp-content/uploads/2025/11/Captura-de-pantalla-2025-11-24-124444.png',
     imageHint: 'woman hiking boots'
   },
