@@ -25,6 +25,11 @@ export interface Product {
     name: string;
     slug: string;
   }[];
+  attributes?: {
+    id: number;
+    name: string;
+    options: string[];
+  }[];
 }
 
 export interface BlogPost {

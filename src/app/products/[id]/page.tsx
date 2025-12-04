@@ -1,4 +1,5 @@
 
+
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getProducts } from '@/lib/data';
@@ -59,6 +60,7 @@ async function getProduct(id: string): Promise<Product | null> {
             permalink: data.permalink,
             categories: data.categories,
             tags: data.tags,
+            attributes: data.attributes,
         };
     } catch (error) {
         console.error(error);
@@ -80,7 +82,6 @@ export default async function ProductDetailPage({ params }: Props) {
 
   const image = product.images?.[0];
   const placeholderImage = "https://placehold.co/600x600/eee/ccc?text=No+Image";
-  const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
 
   // Seleccionar 3 opiniones aleatorias
   const randomReviews = [...reviewsPool].sort(() => 0.5 - Math.random()).slice(0, 3);
@@ -126,17 +127,26 @@ export default async function ProductDetailPage({ params }: Props) {
             
             <Separator className="my-6" />
 
-            {/* Selector de Tallas */}
-            <div className="mb-6">
-                <p className="text-sm font-medium mb-3">Talla:</p>
-                <div className="flex flex-wrap gap-2">
-                    {sizes.map((size) => (
-                        <Button key={size} variant="outline" className="w-14 h-14 text-base font-bold">
-                            {size}
-                        </Button>
+            {/* SELECTOR DE TALLAS DINÁMICO */}
+            {product.attributes && product.attributes.map((attr: any) => (
+              (attr.name.toLowerCase() === 'talla' || attr.name.toLowerCase() === 'size' || attr.name.toLowerCase() === 'tallas') && (
+                <div key={attr.id} className="mb-6">
+                  <p className="text-sm font-medium text-gray-900 mb-3">
+                    {attr.name}:
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {attr.options.map((option: string) => (
+                      <button 
+                        key={option}
+                        className="px-4 py-2 border border-gray-200 rounded-md text-sm font-medium text-gray-900 hover:bg-gray-50 hover:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+                      >
+                        {option}
+                      </button>
                     ))}
+                  </div>
                 </div>
-            </div>
+              )
+            ))}
 
             {/* Botón Añadir al Carrito */}
             <AddToCartButton product={product} />
