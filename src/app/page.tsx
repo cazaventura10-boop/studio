@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { getProducts } from '@/lib/data';
 import ProductCard from './_components/product-card';
-import { ArrowRight, ChevronRight } from 'lucide-react';
+import { ArrowRight, ChevronRight, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import { placeholderImagesById } from '@/lib/placeholder-images';
@@ -208,6 +208,55 @@ export default async function Home() {
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 md:py-32 bg-gray-50">
+        <div className="container">
+            <h2 className="text-4xl md:text-5xl font-extrabold font-headline text-center mb-12">La experiencia Deporte y Aventura</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                
+                {/* Testimonial Card 1 */}
+                <div className="bg-white p-8 rounded-lg shadow-sm">
+                    <div className="flex justify-center mb-4 text-yellow-400">
+                        <Star className="w-5 h-5 fill-current" />
+                        <Star className="w-5 h-5 fill-current" />
+                        <Star className="w-5 h-5 fill-current" />
+                        <Star className="w-5 h-5 fill-current" />
+                        <Star className="w-5 h-5 fill-current" />
+                    </div>
+                    <p className="text-muted-foreground italic mb-4">&quot;El pedido llegó en 24h y las botas son increíbles. Muy buena atención.&quot;</p>
+                    <p className="font-bold text-sm uppercase tracking-wider">- Carlos M.</p>
+                </div>
+
+                {/* Testimonial Card 2 */}
+                <div className="bg-white p-8 rounded-lg shadow-sm">
+                    <div className="flex justify-center mb-4 text-yellow-400">
+                        <Star className="w-5 h-5 fill-current" />
+                        <Star className="w-5 h-5 fill-current" />
+                        <Star className="w-5 h-5 fill-current" />
+                        <Star className="w-5 h-5 fill-current" />
+                        <Star className="w-5 h-5 fill-current" />
+                    </div>
+                    <p className="text-muted-foreground italic mb-4">&quot;Gran variedad de ropa técnica. Compré unos pantalones Newwood y la talla es perfecta.&quot;</p>
+                    <p className="font-bold text-sm uppercase tracking-wider">- Laura G.</p>
+                </div>
+
+                {/* Testimonial Card 3 */}
+                <div className="bg-white p-8 rounded-lg shadow-sm">
+                    <div className="flex justify-center mb-4 text-yellow-400">
+                        <Star className="w-5 h-5 fill-current" />
+                        <Star className="w-5 h-5 fill-current" />
+                        <Star className="w-5 h-5 fill-current" />
+                        <Star className="w-5 h-5 fill-current" />
+                        <Star className="w-5 h-5 text-gray-300" />
+                    </div>
+                    <p className="text-muted-foreground italic mb-4">&quot;Tuve una duda con la talla y me ayudaron por WhatsApp al momento. Repetiré.&quot;</p>
+                    <p className="font-bold text-sm uppercase tracking-wider">- David R.</p>
+                </div>
+
+            </div>
         </div>
       </section>
 
