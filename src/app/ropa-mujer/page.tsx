@@ -5,7 +5,7 @@ const categories = [
   {
     name: 'Pantalones Trekking',
     href: '/products?category=pantalones-montana',
-    imageUrl: 'https://images.unsplash.com/photo-1596701799732-c36399990267?q=80&w=800',
+    imageUrl: 'https://www.deporteyaventura.es/wp-content/uploads/2025/10/3-1.jpg',
     imageHint: 'woman hiking pants'
   },
   {
