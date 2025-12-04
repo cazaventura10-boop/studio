@@ -4,13 +4,13 @@ import Image from 'next/image';
 
 export default function ProductCard({ product }: { product: any }) {
   const priceHtml = product.price_html || `<span class="amount">${product.price}€</span>`;
-  const isOnSale = product.on_sale && product.regular_price && product.sale_price && parseFloat(String(product.regular_price).replace(',', '.')) > parseFloat(String(product.sale_price).replace(',', '.'));
-
+  
+  const isOnSale = product.on_sale && product.regular_price && product.sale_price;
   let badgeText = "";
   if (isOnSale) {
       const regularPrice = parseFloat(String(product.regular_price).replace(',', '.'));
       const salePrice = parseFloat(String(product.sale_price).replace(',', '.'));
-      if (regularPrice > 0) {
+      if (regularPrice > 0 && salePrice < regularPrice) {
         const discount = Math.round(((regularPrice - salePrice) / regularPrice) * 100);
         badgeText = `-${discount}%`;
       } else {
