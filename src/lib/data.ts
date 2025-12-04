@@ -36,7 +36,7 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             }
         }
         // 2. Si se proporciona un 'tag' slug, buscar por ID de tag.
-        else if (params.tag) {
+        if (params.tag) {
             const { data: tagsData } = await wooApi.get("products/tags", { slug: params.tag });
             if (tagsData && tagsData.length > 0) {
                 apiParams.tag = tagsData[0].id;
@@ -45,7 +45,7 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             }
         }
         // 3. Si no hay ni 'category' ni 'tag', pero sí 'search', usamos la búsqueda de texto.
-        else if (params.search) {
+        if (params.search) {
             apiParams.search = params.search;
         }
         
