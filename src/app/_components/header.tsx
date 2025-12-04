@@ -91,7 +91,7 @@ const trekkingMujer: NavLink[] = [
         children: [
             {
                 title: 'Pantalones',
-                href: '/products?category=pantalones-mujer',
+                href: '/products?category=pantalones-montana',
                 children: [
                     { title: 'Pantalones trekking invierno', href: '/products?category=pantalones-trekking-invierno' },
                     { title: 'Pantalones trekking primavera verano', href: '/products?category=pantalones-trekking-primavera-verano' },
