@@ -120,6 +120,23 @@ export default async function Home() {
 </div>
 </section>
 
+      {/* Promotional Banner */}
+      <section className="bg-orange-500 w-full">
+        <div className="container py-12 md:py-16 text-center text-white flex flex-col items-center justify-center">
+            <h2 className="text-3xl md:text-4xl font-extrabold font-headline tracking-tight">
+                ⚡ OFERTAS FLASH DE SEMANA
+            </h2>
+            <p className="mt-2 text-xl md:text-2xl font-semibold">
+                Hasta -40% en Calzado Técnico
+            </p>
+            <Button asChild variant="secondary" className="mt-6 bg-white text-orange-500 font-bold hover:bg-white/90">
+                <Link href="/products?tag=calzado&on_sale=true">
+                    Ver Ofertas
+                </Link>
+            </Button>
+        </div>
+      </section>
+
       {/* Main Categories */}
       <section className="py-20 md:py-32 bg-background">
         <div className="container">
@@ -182,23 +199,6 @@ export default async function Home() {
         </div>
       </section>
       
-      {/* Promotional Banner */}
-      <section className="bg-orange-500 w-full">
-        <div className="container py-12 md:py-16 text-center text-white flex flex-col items-center justify-center">
-            <h2 className="text-3xl md:text-4xl font-extrabold font-headline tracking-tight">
-                ⚡ OFERTAS FLASH DE SEMANA
-            </h2>
-            <p className="mt-2 text-xl md:text-2xl font-semibold">
-                Hasta -40% en Calzado Técnico
-            </p>
-            <Button asChild variant="secondary" className="mt-6 bg-white text-orange-500 font-bold hover:bg-white/90">
-                <Link href="/products?tag=calzado&on_sale=true">
-                    Ver Ofertas
-                </Link>
-            </Button>
-        </div>
-      </section>
-
       {/* New Arrivals */}
       <section className="py-20 md:py-32 bg-background">
         <div className="container">
