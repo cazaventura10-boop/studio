@@ -21,14 +21,23 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [isLoading, setIsLoading] = useState(false);
 
-  // Estados para el formulario
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [zip, setZip] = useState('');
+  // Estado unificado para el formulario
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    zip: '',
+  });
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+        ...formData,
+        [e.target.id]: e.target.value
+    });
+  };
 
   const shippingCost = cartTotal < 60 ? 2.99 : 0;
   const codSurcharge = paymentMethod === 'cod' ? 3.90 : 0;
@@ -59,6 +68,18 @@ export default function CheckoutPage() {
   };
 
   const handlePayment = async () => {
+    // Validación
+    for (const key in formData) {
+        if (formData[key as keyof typeof formData] === '') {
+            toast({
+                title: "Campos incompletos",
+                description: "Por favor, rellena todos los detalles de facturación y envío.",
+                variant: "destructive"
+            });
+            return;
+        }
+    }
+    
     if (paymentMethod !== 'card') {
       toast({
         title: "Método no implementado",
@@ -74,7 +95,7 @@ export default function CheckoutPage() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                firstName, lastName, email, phone, address, city, zip,
+                ...formData,
                 cartItems,
                 total: finalTotal,
                 shippingCost,
@@ -90,10 +111,6 @@ export default function CheckoutPage() {
 
         // Redirigir a Redsys
         createRedsysForm(data);
-
-        // Opcional: limpiar el carrito después de una redirección exitosa.
-        // La limpieza real debería ocurrir en la página de 'gracias' tras la confirmación.
-        // clearCart();
 
     } catch (error) {
         console.error("Payment failed:", error);
@@ -136,31 +153,31 @@ export default function CheckoutPage() {
             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="md:col-span-1">
                 <Label htmlFor="firstName">Nombre</Label>
-                <Input id="firstName" placeholder="Juan" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                <Input id="firstName" placeholder="Juan" value={formData.firstName} onChange={handleFormChange} required />
               </div>
               <div className="md:col-span-1">
                 <Label htmlFor="lastName">Apellidos</Label>
-                <Input id="lastName" placeholder="Pérez" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                <Input id="lastName" placeholder="Pérez" value={formData.lastName} onChange={handleFormChange} required />
               </div>
               <div className="md:col-span-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="juan.perez@ejemplo.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <Input id="email" type="email" placeholder="juan.perez@ejemplo.com" value={formData.email} onChange={handleFormChange} required />
               </div>
                <div className="md:col-span-2">
                 <Label htmlFor="phone">Teléfono</Label>
-                <Input id="phone" type="tel" placeholder="600 000 000" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                <Input id="phone" type="tel" placeholder="600 000 000" value={formData.phone} onChange={handleFormChange} required />
               </div>
               <div className="md:col-span-2">
                 <Label htmlFor="address">Dirección</Label>
-                <Input id="address" placeholder="Calle Falsa 123" value={address} onChange={(e) => setAddress(e.target.value)} />
+                <Input id="address" placeholder="Calle Falsa 123" value={formData.address} onChange={handleFormChange} required />
               </div>
               <div>
                 <Label htmlFor="city">Ciudad</Label>
-                <Input id="city" placeholder="Madrid" value={city} onChange={(e) => setCity(e.target.value)} />
+                <Input id="city" placeholder="Madrid" value={formData.city} onChange={handleFormChange} required />
               </div>
               <div>
                 <Label htmlFor="zip">Código Postal</Label>
-                <Input id="zip" placeholder="28001" value={zip} onChange={(e) => setZip(e.target.value)} />
+                <Input id="zip" placeholder="28001" value={formData.zip} onChange={handleFormChange} required />
               </div>
             </CardContent>
           </Card>
