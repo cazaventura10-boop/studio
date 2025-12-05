@@ -198,7 +198,7 @@ export default async function Home() {
             {/* Tarjeta Kayak */}
             <Link href="/products?category=Kayaking" className="group relative block h-80 w-full overflow-hidden rounded-lg">
                 <Image
-                    src="https://images.unsplash.com/photo-1543039625-14cbd3802e7d?q=80&w=2074"
+                    src="https://www.deporteyaventura.es/wp-content/uploads/2025/11/unnamed-3-6.jpg"
                     alt="KAYAK"
                     fill
                     className="object-cover transition-transform duration-300 group-hover:scale-110"
