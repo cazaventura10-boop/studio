@@ -29,17 +29,27 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
         }
 
         // Si se pasa category y es string, podría ser una lista de slugs separada por comas
-        if (params.category && typeof params.category === 'string') {
-            const { data: categoriesData } = await wooApi.get("products/categories", { slug: params.category });
+        if (params.category && typeof params.category === 'string' && params.category.includes(',')) {
+            const categorySlugs = params.category.split(',');
+            const { data: categoriesData } = await wooApi.get("products/categories", { slug: categorySlugs.join(',') });
+
             if (categoriesData && categoriesData.length > 0) {
-                 // Mapeamos a IDs y los unimos en un string
                 apiParams.category = categoriesData.map((c: any) => c.id).join(',');
             } else {
                 return [];
             }
-        } else if (params.category) { // si es número, lo usamos directamente
-            apiParams.category = params.category;
+        } else if (params.category) {
+            // Para un solo slug o ID
+             const { data: categoriesData } = await wooApi.get("products/categories", { slug: params.category });
+             if (categoriesData && categoriesData.length > 0) {
+                apiParams.category = categoriesData[0].id;
+             } else if (typeof params.category === 'number' || !isNaN(Number(params.category))) {
+                apiParams.category = params.category;
+             } else {
+                 return []; // Si no se encuentra la categoría
+             }
         }
+
 
         if (params.tag) {
             const { data: tagsData } = await wooApi.get("products/tags", { slug: params.tag });
