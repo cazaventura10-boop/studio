@@ -7,7 +7,7 @@ interface GetProductsParams {
   per_page?: number;
   status?: string;
   search?: string;
-  category?: string | number; // puede ser slug o id
+  category?: string | number; // puede ser slug, id, o una lista de slugs/ids separada por comas
   tag?: string; // slug de la etiqueta
   on_sale?: boolean; // para filtrar por productos en oferta
   include?: number[]; // para buscar por IDs
@@ -28,11 +28,12 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             apiParams.include = params.include.join(',');
         }
 
-        // Si se pasa category y es string, asumimos que es un slug
+        // Si se pasa category y es string, podría ser una lista de slugs separada por comas
         if (params.category && typeof params.category === 'string') {
             const { data: categoriesData } = await wooApi.get("products/categories", { slug: params.category });
             if (categoriesData && categoriesData.length > 0) {
-                apiParams.category = categoriesData[0].id;
+                 // Mapeamos a IDs y los unimos en un string
+                apiParams.category = categoriesData.map((c: any) => c.id).join(',');
             } else {
                 return [];
             }

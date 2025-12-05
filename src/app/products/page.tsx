@@ -16,7 +16,7 @@ export default async function ProductsPage({
   const onSale = searchParams.on_sale === 'true';
 
   // Limpiamos los slugs para mostrarlos en el título si es necesario
-  const displayTerm = category?.replace(/-/g, ' ') || tag?.replace(/-/g, ' ') || search;
+  const displayTerm = category?.split(',').join(', ').replace(/-/g, ' ') || tag?.replace(/-/g, ' ') || search;
 
   let products: Product[] = [];
 
