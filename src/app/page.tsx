@@ -120,6 +120,25 @@ export default async function Home() {
 </div>
 </section>
 
+      {/* New Arrivals */}
+      <section className="py-20 md:py-32 bg-background">
+        <div className="container">
+          <div className="flex justify-between items-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-extrabold font-headline">Novedades de Temporada</h2>
+            <Button variant="link" asChild className="text-orange-500 hover:text-orange-500/80">
+                <Link href="/products">
+                    Ver Todos <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+            </Button>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {newArrivals.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Promotional Banner */}
       <section className="bg-orange-500 w-full">
         <div className="container py-12 md:py-16 text-center text-white flex flex-col items-center justify-center">
@@ -199,25 +218,6 @@ export default async function Home() {
         </div>
       </section>
       
-      {/* New Arrivals */}
-      <section className="py-20 md:py-32 bg-background">
-        <div className="container">
-          <div className="flex justify-between items-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-extrabold font-headline">Novedades de Temporada</h2>
-            <Button variant="link" asChild className="text-orange-500 hover:text-orange-500/80">
-                <Link href="/products">
-                    Ver Todos <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-            </Button>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {newArrivals.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Testimonials Section */}
       <section className="py-20 md:py-32 bg-gray-50">
         <div className="container">
