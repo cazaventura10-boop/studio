@@ -149,7 +149,7 @@ export default async function Home() {
                 Hasta -40% en Calzado Técnico
             </p>
             <Button asChild variant="secondary" className="mt-6 bg-white text-orange-500 font-bold hover:bg-white/90">
-                <Link href="/products?tag=calzado&on_sale=true">
+                <Link href="/products?category=calzado-de-mujer&on_sale=true">
                     Ver Ofertas
                 </Link>
             </Button>
