@@ -28,7 +28,7 @@ export async function POST(request: Request) {
   console.log("1. Recibida nueva petición POST a /api/checkout/redsys");
 
   // 1. Verificación de las claves de Redsys
-  const { REDSYS_SECRET, REDSYS_MERCHANT_CODE, REDSYS_TERMINAL, WOOCOMMERCE_CONSUMER_KEY, WOOCOMMERCE_CONSUMER_SECRET, NEXT_PUBLIC_WORDPRESS_URL } = process.env;
+  const { REDSYS_SECRET, REDSYS_MERCHANT_CODE, REDSYS_TERMINAL, WOOCOMMERCE_CONSUMER_KEY, WOOCOMMERCE_CONSUMER_SECRET, NEXT_PUBLIC_WORDPRESS_URL, WOOCOMMERCE_USER_ID } = process.env;
   if (!REDSYS_SECRET || !REDSYS_MERCHANT_CODE || !REDSYS_TERMINAL) {
     console.error("CRITICAL ERROR: Las variables de entorno de Redsys no están configuradas.");
     return NextResponse.json({ error: 'La configuración del servidor para pagos no está completa.', details: 'Faltan claves de Redsys.' }, { status: 500 });
@@ -68,6 +68,7 @@ export async function POST(request: Request) {
       payment_method: 'redsys',
       payment_method_title: 'Tarjeta de Crédito/Débito',
       set_paid: false,
+      customer_id: WOOCOMMERCE_USER_ID ? parseInt(WOOCOMMERCE_USER_ID) : undefined,
       billing: {
         first_name: firstName,
         last_name: lastName,
