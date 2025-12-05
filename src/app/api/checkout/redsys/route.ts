@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import wooApi from '@/lib/woo';
 import Redsys from 'redsys-easy';
+import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api";
 
 // Función para validar los datos de entrada
 const validateInput = (data: any) => {
@@ -24,12 +24,24 @@ export async function POST(request: Request) {
   console.log("1. Recibida nueva petición POST a /api/checkout/redsys");
 
   // 1. Verificación de las claves de Redsys
-  const { REDSYS_SECRET, REDSYS_MERCHANT_CODE, REDSYS_TERMINAL } = process.env;
+  const { REDSYS_SECRET, REDSYS_MERCHANT_CODE, REDSYS_TERMINAL, WOOCOMMERCE_CONSUMER_KEY, WOOCOMMERCE_CONSUMER_SECRET, NEXT_PUBLIC_WORDPRESS_URL } = process.env;
   if (!REDSYS_SECRET || !REDSYS_MERCHANT_CODE || !REDSYS_TERMINAL) {
     console.error("CRITICAL ERROR: Las variables de entorno de Redsys no están configuradas.");
     return NextResponse.json({ error: 'La configuración del servidor para pagos no está completa.', details: 'Faltan claves de Redsys.' }, { status: 500 });
   }
-  console.log("1.1. Verificación de claves de Redsys: OK");
+   if (!WOOCOMMERCE_CONSUMER_KEY || !WOOCOMMERCE_CONSUMER_SECRET || !NEXT_PUBLIC_WORDPRESS_URL) {
+    console.error("CRITICAL ERROR: Las variables de entorno de WooCommerce no están configuradas.");
+    return NextResponse.json({ error: 'La configuración del servidor para pedidos no está completa.', details: 'Faltan claves de WooCommerce.' }, { status: 500 });
+  }
+  console.log("1.1. Verificación de claves de Redsys y WooCommerce: OK");
+
+  // Inicializar la API de WooCommerce aquí
+  const wooApi = new WooCommerceRestApi({
+      url: NEXT_PUBLIC_WORDPRESS_URL!,
+      consumerKey: WOOCOMMERCE_CONSUMER_KEY!,
+      consumerSecret: WOOCOMMERCE_CONSUMER_SECRET!,
+      version: "wc/v3"
+  });
 
 
   try {
