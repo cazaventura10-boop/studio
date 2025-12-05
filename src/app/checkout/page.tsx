@@ -10,18 +10,105 @@ import { Separator } from '@/components/ui/separator';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import Image from 'next/image';
 import Link from 'next/link';
-import { CreditCard, Banknote, ShoppingCart, Smartphone, Handshake, Truck, Package } from 'lucide-react';
+import { CreditCard, Banknote, ShoppingCart, Smartphone, Handshake, Truck, Package, Loader2 } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 export default function CheckoutPage() {
-  const { cartItems, cartTotal } = useCart();
+  const { cartItems, cartTotal, clearCart } = useCart();
+  const { toast } = useToast();
+  
   const [shippingMethod, setShippingMethod] = useState('domicilio');
   const [paymentMethod, setPaymentMethod] = useState('card');
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Estados para el formulario
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [city, setCity] = useState('');
+  const [zip, setZip] = useState('');
 
   const shippingCost = cartTotal < 60 ? 2.99 : 0;
   const codSurcharge = paymentMethod === 'cod' ? 3.90 : 0;
   const finalTotal = cartTotal + shippingCost + codSurcharge;
+  
+  const createRedsysForm = (data: any) => {
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = data.url;
+    form.style.display = 'none';
 
-  if (cartItems.length === 0) {
+    const params = {
+      Ds_SignatureVersion: data.DS_SIGNATUREVERSION,
+      Ds_MerchantParameters: data.DS_MERCHANT_PARAMETERS,
+      Ds_Signature: data.DS_SIGNATURE,
+    }
+
+    for (const key in params) {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = params[key as keyof typeof params];
+      form.appendChild(input);
+    }
+    
+    document.body.appendChild(form);
+    form.submit();
+  };
+
+  const handlePayment = async () => {
+    if (paymentMethod !== 'card') {
+      toast({
+        title: "Método no implementado",
+        description: "Solo el pago con tarjeta está disponible por ahora.",
+        variant: "destructive"
+      });
+      return;
+    }
+    setIsLoading(true);
+
+    try {
+        const response = await fetch('/api/checkout/redsys', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                firstName, lastName, email, phone, address, city, zip,
+                cartItems,
+                total: finalTotal,
+                shippingCost,
+                codSurcharge,
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.details || 'Error al procesar el pago.');
+        }
+
+        // Redirigir a Redsys
+        createRedsysForm(data);
+
+        // Opcional: limpiar el carrito después de una redirección exitosa.
+        // La limpieza real debería ocurrir en la página de 'gracias' tras la confirmación.
+        // clearCart();
+
+    } catch (error) {
+        console.error("Payment failed:", error);
+        toast({
+            title: "Error en el pago",
+            description: error instanceof Error ? error.message : "No se pudo conectar con la pasarela de pago.",
+            variant: "destructive"
+        });
+    } finally {
+        setIsLoading(false);
+    }
+  };
+
+
+  if (cartItems.length === 0 && !isLoading) {
     return (
       <div className="container mx-auto px-4 py-12 text-center pt-32">
         <ShoppingCart className="mx-auto h-24 w-24 text-muted-foreground" />
@@ -49,31 +136,31 @@ export default function CheckoutPage() {
             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="md:col-span-1">
                 <Label htmlFor="firstName">Nombre</Label>
-                <Input id="firstName" placeholder="Juan" />
+                <Input id="firstName" placeholder="Juan" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
               </div>
               <div className="md:col-span-1">
                 <Label htmlFor="lastName">Apellidos</Label>
-                <Input id="lastName" placeholder="Pérez" />
+                <Input id="lastName" placeholder="Pérez" value={lastName} onChange={(e) => setLastName(e.target.value)} />
               </div>
               <div className="md:col-span-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="juan.perez@ejemplo.com" />
+                <Input id="email" type="email" placeholder="juan.perez@ejemplo.com" value={email} onChange={(e) => setEmail(e.target.value)} />
               </div>
                <div className="md:col-span-2">
                 <Label htmlFor="phone">Teléfono</Label>
-                <Input id="phone" type="tel" placeholder="600 000 000" />
+                <Input id="phone" type="tel" placeholder="600 000 000" value={phone} onChange={(e) => setPhone(e.target.value)} />
               </div>
               <div className="md:col-span-2">
                 <Label htmlFor="address">Dirección</Label>
-                <Input id="address" placeholder="Calle Falsa 123" />
+                <Input id="address" placeholder="Calle Falsa 123" value={address} onChange={(e) => setAddress(e.target.value)} />
               </div>
               <div>
                 <Label htmlFor="city">Ciudad</Label>
-                <Input id="city" placeholder="Madrid" />
+                <Input id="city" placeholder="Madrid" value={city} onChange={(e) => setCity(e.target.value)} />
               </div>
               <div>
                 <Label htmlFor="zip">Código Postal</Label>
-                <Input id="zip" placeholder="28001" />
+                <Input id="zip" placeholder="28001" value={zip} onChange={(e) => setZip(e.target.value)} />
               </div>
             </CardContent>
           </Card>
@@ -136,7 +223,7 @@ export default function CheckoutPage() {
                     </Label>
                     <Label
                         htmlFor="bizum"
-                        className="flex items-start gap-4 rounded-lg border p-4 cursor-pointer hover:bg-accent/50 has-[input:checked]:bg-accent/80 has-[input-checked]:border-primary"
+                        className="flex items-start gap-4 rounded-lg border p-4 cursor-pointer hover:bg-accent/50 has-[input:checked]:bg-accent/80 has-[input:checked]:border-primary"
                     >
                         <RadioGroupItem value="bizum" id="bizum" className="mt-1"/>
                         <div>
@@ -162,7 +249,7 @@ export default function CheckoutPage() {
                     </Label>
                     <Label
                         htmlFor="cod"
-                        className="flex items-start gap-4 rounded-lg border p-4 cursor-pointer hover:bg-accent/50 has-[input:checked]:bg-accent/80 has-[input-checked]:border-primary"
+                        className="flex items-start gap-4 rounded-lg border p-4 cursor-pointer hover:bg-accent/50 has-[input:checked]:bg-accent/80 has-[input:checked]:border-primary"
                     >
                         <RadioGroupItem value="cod" id="cod" className="mt-1"/>
                         <div>
@@ -239,8 +326,11 @@ export default function CheckoutPage() {
                 <Button 
                     size="lg" 
                     className="w-full h-14 text-lg bg-orange-500 hover:bg-orange-600 text-white font-bold"
+                    onClick={handlePayment}
+                    disabled={isLoading}
                 >
-                  PAGAR Y FINALIZAR PEDIDO
+                  {isLoading ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : null}
+                  {isLoading ? 'Procesando...' : 'PAGAR Y FINALIZAR PEDIDO'}
                 </Button>
               </CardContent>
             </Card>
