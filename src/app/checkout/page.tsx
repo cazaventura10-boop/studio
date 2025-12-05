@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import { useCart } from '@/lib/cart-context';
 import { Button } from '@/components/ui/button';
@@ -39,10 +38,6 @@ export default function CheckoutPage() {
     });
   };
 
-  const shippingCost = cartTotal < 60 ? 2.99 : 0;
-  const codSurcharge = paymentMethod === 'cod' ? 3.90 : 0;
-  const finalTotal = cartTotal + shippingCost + codSurcharge;
-  
   const createRedsysForm = (data: any) => {
     const form = document.createElement('form');
     form.method = 'POST';
@@ -90,6 +85,12 @@ export default function CheckoutPage() {
     }
     setIsLoading(true);
 
+    // --- CORRECCIÓN CLAVE ---
+    // Calculamos los costes aquí para asegurar que los valores son correctos y existen
+    const shippingCost = cartTotal < 60 ? 2.99 : 0;
+    const codSurcharge = paymentMethod === 'cod' ? 3.90 : 0;
+    const finalTotal = cartTotal + shippingCost + codSurcharge;
+
     try {
         const response = await fetch('/api/checkout/redsys', {
             method: 'POST',
@@ -98,7 +99,7 @@ export default function CheckoutPage() {
                 ...formData,
                 cartItems,
                 total: finalTotal,
-                shippingCost: shippingCost,
+                shippingCost: shippingCost, // <-- AHORA SE ENVÍA EXPLÍCITAMENTE
                 codSurcharge: codSurcharge,
             })
         });
@@ -139,6 +140,11 @@ export default function CheckoutPage() {
       </div>
     );
   }
+
+  // Calculamos los costes aquí TAMBIÉN para la visualización
+  const shippingCost = cartTotal < 60 ? 2.99 : 0;
+  const codSurcharge = paymentMethod === 'cod' ? 3.90 : 0;
+  const finalTotal = cartTotal + shippingCost + codSurcharge;
 
   return (
     <div className="container mx-auto max-w-7xl px-4 py-12 md:py-24">
@@ -266,7 +272,8 @@ export default function CheckoutPage() {
                     </Label>
                     <Label
                         htmlFor="cod"
-                        className="flex items-start gap-4 rounded-lg border p-4 cursor-pointer hover:bg-accent/50 has-[input:checked]:bg-accent/80 has-[input:checked]:border-primary"
+                        className="flex items-start gap-4 rounded-lg border p-4 cursor-pointer hover:bg-accent/50 has-[input:checked]:bg-accent/80 has-[input
+:checked]:border-primary"
                     >
                         <RadioGroupItem value="cod" id="cod" className="mt-1"/>
                         <div>
