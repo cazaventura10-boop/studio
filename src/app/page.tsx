@@ -83,6 +83,36 @@ export default async function Home() {
         </div>
       </section>
       
+      {/* Featured Collection Section */}
+      <section className="py-20 md:py-32 bg-background">
+        <div className="container">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div className="flex flex-col items-start text-left">
+                    <p className="text-sm font-bold text-muted-foreground tracking-widest uppercase mb-2">
+                        NUEVA COLECCIÓN 2025
+                    </p>
+                    <h2 className="text-5xl md:text-6xl font-extrabold font-headline mb-4">
+                        Fusión de estilo y rendimiento en la montaña
+                    </h2>
+                    <p className="text-muted-foreground text-lg mb-8">
+                        Descubre nuestra línea técnica diseñada para resistir desde las calles de la ciudad hasta las cimas más altas. Transpirabilidad, confort y durabilidad.
+                    </p>
+                    <Button asChild size="lg" className="bg-foreground text-background hover:bg-foreground/80">
+                        <Link href="#">Ver Colección Casual</Link>
+                    </Button>
+                </div>
+                <div className="relative w-full h-[500px] overflow-hidden rounded-lg">
+                    <Image
+                        src="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=2070"
+                        alt="Hombre con ropa técnica en la montaña"
+                        fill
+                        className="object-cover"
+                    />
+                </div>
+            </div>
+        </div>
+      </section>
+
       {/* Main Categories */}
       <section className="py-20 md:py-32 bg-background">
         <div className="container">
@@ -145,36 +175,6 @@ export default async function Home() {
         </div>
       </section>
       
-      {/* Featured Collection Section */}
-      <section className="py-20 md:py-32 bg-background">
-        <div className="container">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div className="flex flex-col items-start text-left">
-                    <p className="text-sm font-bold text-muted-foreground tracking-widest uppercase mb-2">
-                        NUEVA COLECCIÓN 2025
-                    </p>
-                    <h2 className="text-5xl md:text-6xl font-extrabold font-headline mb-4">
-                        Fusión de estilo y rendimiento en la montaña
-                    </h2>
-                    <p className="text-muted-foreground text-lg mb-8">
-                        Descubre nuestra línea técnica diseñada para resistir desde las calles de la ciudad hasta las cimas más altas. Transpirabilidad, confort y durabilidad.
-                    </p>
-                    <Button asChild size="lg" className="bg-foreground text-background hover:bg-foreground/80">
-                        <Link href="#">Ver Colección Casual</Link>
-                    </Button>
-                </div>
-                <div className="relative w-full h-[500px] overflow-hidden rounded-lg">
-                    <Image
-                        src="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=2070"
-                        alt="Hombre con ropa técnica en la montaña"
-                        fill
-                        className="object-cover"
-                    />
-                </div>
-            </div>
-        </div>
-      </section>
-
       {/* Promotional Banner */}
       <section className="bg-orange-500 w-full">
         <div className="container py-12 md:py-16 text-center text-white flex flex-col items-center justify-center">
