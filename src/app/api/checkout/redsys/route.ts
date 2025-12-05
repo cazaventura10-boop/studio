@@ -6,7 +6,8 @@ import Redsys from 'redsys-easy';
 const validateInput = (data: any) => {
     const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'zip', 'cartItems', 'total', 'shippingCost', 'codSurcharge'];
     for (const field of requiredFields) {
-        if (!data[field]) {
+        // Se usa `in` para comprobar si la propiedad existe, incluso si su valor es 0 (como shippingCost)
+        if (!(field in data)) {
             console.error(`Validation Error: Missing required field: ${field}`);
             return `Falta el campo requerido: ${field}`;
         }
