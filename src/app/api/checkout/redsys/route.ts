@@ -44,7 +44,8 @@ export async function POST(request: Request) {
       url: NEXT_PUBLIC_WORDPRESS_URL!,
       consumerKey: WOOCOMMERCE_CONSUMER_KEY!,
       consumerSecret: WOOCOMMERCE_CONSUMER_SECRET!,
-      version: "wc/v3"
+      version: "wc/v3",
+      queryStringAuth: true // Forzar autenticación por query string para evitar problemas de 401
   });
 
 
@@ -145,10 +146,18 @@ export async function POST(request: Request) {
     console.log("5. Enviando payload de Redsys al frontend.");
     return NextResponse.json(responsePayload);
 
-  } catch (error) {
-    console.error("--- ERROR EN EL PROCESO DE PAGO REDSYS ---", error);
-    const errorMessage = error instanceof Error ? error.message : 'Ocurrió un error desconocido.';
+  } catch (error: any) {
+    console.error("--- ERROR EN EL PROCESO DE PAGO REDSYS ---");
+
+    // Mejorar el log de errores de WooCommerce
+    if (error.response && error.response.data) {
+        console.error("Detalles del error de WooCommerce:", JSON.stringify(error.response.data, null, 2));
+    } else {
+        console.error(error);
+    }
+    
+    const errorMessage = error.response?.data?.message || error.message || 'Ocurrió un error desconocido.';
     // Siempre devolver un JSON, incluso en caso de error catastrófico
-    return NextResponse.json({ error: 'No se pudo procesar el pago.', details: errorMessage }, { status: 500 });
+    return NextResponse.json({ error: 'No se pudo procesar el pago.', details: errorMessage }, { status: error.response?.status || 500 });
   }
 }
