@@ -9,7 +9,7 @@ import { Separator } from '@/components/ui/separator';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import Image from 'next/image';
 import Link from 'next/link';
-import { CreditCard, Banknote, ShoppingCart } from 'lucide-react';
+import { CreditCard, Banknote, ShoppingCart, Smartphone, Handshake } from 'lucide-react';
 
 export default function CheckoutPage() {
   const { cartItems, cartTotal } = useCart();
@@ -94,6 +94,19 @@ export default function CheckoutPage() {
                         </div>
                     </Label>
                     <Label
+                        htmlFor="bizum"
+                        className="flex items-start gap-4 rounded-lg border p-4 cursor-pointer hover:bg-accent/50 has-[input:checked]:bg-accent/80 has-[input-checked]:border-primary"
+                    >
+                        <RadioGroupItem value="bizum" id="bizum" className="mt-1"/>
+                        <div>
+                            <p className="font-semibold">Bizum</p>
+                            <p className="text-sm text-muted-foreground">Te enviaremos una solicitud de pago a tu móvil.</p>
+                            <div className="mt-2 flex items-center gap-2">
+                               <Smartphone className="h-5 w-5" />
+                            </div>
+                        </div>
+                    </Label>
+                    <Label
                         htmlFor="transfer"
                         className="flex items-start gap-4 rounded-lg border p-4 cursor-pointer hover:bg-accent/50 has-[input:checked]:bg-accent/80 has-[input:checked]:border-primary"
                     >
@@ -103,6 +116,19 @@ export default function CheckoutPage() {
                             <p className="text-sm text-muted-foreground">Recibirás los detalles por email para completar el pago.</p>
                             <div className="mt-2 flex items-center gap-2">
                                <Banknote className="h-5 w-5" />
+                            </div>
+                        </div>
+                    </Label>
+                    <Label
+                        htmlFor="cod"
+                        className="flex items-start gap-4 rounded-lg border p-4 cursor-pointer hover:bg-accent/50 has-[input:checked]:bg-accent/80 has-[input-checked]:border-primary"
+                    >
+                        <RadioGroupItem value="cod" id="cod" className="mt-1"/>
+                        <div>
+                            <p className="font-semibold">Contrareembolso</p>
+                            <p className="text-sm text-muted-foreground">Paga en efectivo al recibir tu pedido en casa.</p>
+                            <div className="mt-2 flex items-center gap-2">
+                               <Handshake className="h-5 w-5" />
                             </div>
                         </div>
                     </Label>
