@@ -103,8 +103,8 @@ export default async function Home() {
                 </div>
                 <div className="relative w-full h-[500px] overflow-hidden rounded-lg">
                     <Image
-                        src="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=2070"
-                        alt="Hombre con ropa técnica en la montaña"
+                        src="https://www.deporteyaventura.es/wp-content/uploads/2024/01/PANO-AZUL-2.jpg"
+                        alt="Hombre con pantalones técnicos azules en la montaña"
                         fill
                         className="object-cover"
                     />
