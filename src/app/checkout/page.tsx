@@ -98,7 +98,7 @@ export default function CheckoutPage() {
                 ...formData,
                 cartItems,
                 total: finalTotal,
-                shippingCost,
+                shippingCost: shippingCost,
                 codSurcharge,
             })
         });
