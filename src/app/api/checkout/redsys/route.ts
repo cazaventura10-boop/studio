@@ -7,29 +7,45 @@ const validateInput = (data: any) => {
     const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'zip', 'cartItems', 'total', 'shippingCost', 'codSurcharge'];
     for (const field of requiredFields) {
         if (!data[field]) {
-            console.error(`Missing required field: ${field}`);
-            return false;
+            console.error(`Validation Error: Missing required field: ${field}`);
+            return `Falta el campo requerido: ${field}`;
         }
     }
     if (!Array.isArray(data.cartItems) || data.cartItems.length === 0) {
-        console.error('Cart items are empty or not an array');
-        return false;
+        console.error('Validation Error: Cart items are empty or not an array');
+        return 'El carrito está vacío o no es válido.';
     }
-    return true;
+    return null; // No hay errores de validación
 };
 
 export async function POST(request: Request) {
+  console.log("\n--- [REDSYS API] ---");
+  console.log("1. Recibida nueva petición POST a /api/checkout/redsys");
+
+  // 1. Verificación de las claves de Redsys
+  const { REDSYS_SECRET, REDSYS_MERCHANT_CODE, REDSYS_TERMINAL } = process.env;
+  if (!REDSYS_SECRET || !REDSYS_MERCHANT_CODE || !REDSYS_TERMINAL) {
+    console.error("CRITICAL ERROR: Las variables de entorno de Redsys no están configuradas.");
+    return NextResponse.json({ error: 'La configuración del servidor para pagos no está completa.', details: 'Faltan claves de Redsys.' }, { status: 500 });
+  }
+  console.log("1.1. Verificación de claves de Redsys: OK");
+
+
   try {
     const body = await request.json();
-    console.log("Request Body:", body);
+    console.log("2. Cuerpo de la petición (body) recibido:", body);
 
-    if (!validateInput(body)) {
-        return NextResponse.json({ error: 'Invalid input data.' }, { status: 400 });
+    // 2. Validación de los datos de entrada
+    const validationError = validateInput(body);
+    if (validationError) {
+        return NextResponse.json({ error: 'Datos de entrada no válidos.', details: validationError }, { status: 400 });
     }
+    console.log("2.1. Validación de datos de entrada: OK");
 
     const { firstName, lastName, email, phone, address, city, zip, cartItems, total, shippingCost, codSurcharge } = body;
 
-    // 1. Crear el pedido en WooCommerce
+    // 3. Crear el pedido en WooCommerce
+    console.log("3. Intentando crear pedido en WooCommerce...");
     const orderData = {
       payment_method: 'redsys',
       payment_method_title: 'Tarjeta de Crédito/Débito',
@@ -40,7 +56,7 @@ export async function POST(request: Request) {
         address_1: address,
         city: city,
         postcode: zip,
-        country: 'ES', // Asumimos España
+        country: 'ES',
         email: email,
         phone: phone,
       },
@@ -73,25 +89,27 @@ export async function POST(request: Request) {
     };
 
     const { data: wooOrder } = await wooApi.post('orders', orderData);
-
+    
     if (!wooOrder || !wooOrder.id) {
-        console.error("WooCommerce order creation failed", wooOrder);
-        throw new Error('Failed to create order in WooCommerce.');
+        console.error("ERROR: La creación del pedido en WooCommerce falló. Respuesta:", wooOrder);
+        throw new Error('No se pudo crear el pedido en WooCommerce.');
     }
+    console.log(`3.1. Pedido creado en WooCommerce con ID: ${wooOrder.id}`);
 
-    // 2. Generar los parámetros para Redsys
+    // 4. Generar los parámetros para Redsys
+    console.log("4. Generando parámetros de Redsys...");
     const redsys = new Redsys({
-        secret: process.env.REDSYS_SECRET!,
-        merchantCode: process.env.REDSYS_MERCHANT_CODE!,
-        terminal: process.env.REDSYS_TERMINAL!,
-        // sandbox: process.env.NODE_ENV !== 'production' // Opcional: true para entorno de pruebas
+        secret: REDSYS_SECRET,
+        merchantCode: REDSYS_MERCHANT_CODE,
+        terminal: REDSYS_TERMINAL,
+        sandbox: process.env.NODE_ENV !== 'production'
     });
 
     const amountInCents = Math.round(total * 100);
 
     const params = redsys.createRedirectParameters({
         DS_MERCHANT_AMOUNT: amountInCents,
-        DS_MERCHANT_ORDER: String(wooOrder.id).padStart(4, '0'), // El número de pedido, con ceros a la izquierda si es necesario
+        DS_MERCHANT_ORDER: String(wooOrder.id).padStart(4, '0'),
         DS_MERCHANT_CURRENCY: '978', // 978 para EUR
         DS_MERCHANT_TRANSACTIONTYPE: '0',
         DS_MERCHANT_URLOK: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/checkout/order-received/${wooOrder.id}/?key=${wooOrder.order_key}`,
@@ -99,16 +117,21 @@ export async function POST(request: Request) {
     });
 
     const signature = redsys.createSignature(params.DS_MERCHANT_PARAMETERS);
+    console.log("4.1. Firma de Redsys generada correctamente.");
 
-    return NextResponse.json({
+    // 5. Devolver la respuesta JSON
+    const responsePayload = {
       ...params,
       DS_SIGNATURE: signature,
       url: redsys.getRedirectUrl(),
-    });
+    };
+    console.log("5. Enviando payload de Redsys al frontend.");
+    return NextResponse.json(responsePayload);
 
   } catch (error) {
-    console.error("Error processing Redsys payment:", error);
-    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
-    return NextResponse.json({ error: 'Failed to process payment.', details: errorMessage }, { status: 500 });
+    console.error("--- ERROR EN EL PROCESO DE PAGO REDSYS ---", error);
+    const errorMessage = error instanceof Error ? error.message : 'Ocurrió un error desconocido.';
+    // Siempre devolver un JSON, incluso en caso de error catastrófico
+    return NextResponse.json({ error: 'No se pudo procesar el pago.', details: errorMessage }, { status: 500 });
   }
 }
