@@ -83,35 +83,42 @@ export default async function Home() {
         </div>
       </section>
       
-      {/* Featured Collection Section */}
-      <section className="py-20 md:py-32 bg-background">
-        <div className="container">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div className="flex flex-col items-start text-left">
-                    <p className="text-sm font-bold text-muted-foreground tracking-widest uppercase mb-2">
-                        NUEVA COLECCIÓN 2025
-                    </p>
-                    <h2 className="text-5xl md:text-6xl font-extrabold font-headline mb-4">
-                        Fusión de estilo y rendimiento en la montaña
-                    </h2>
-                    <p className="text-muted-foreground text-lg mb-8">
-                        Descubre nuestra línea técnica diseñada para resistir desde las calles de la ciudad hasta las cimas más altas. Transpirabilidad, confort y durabilidad.
-                    </p>
-                    <Button asChild size="lg" className="bg-foreground text-background hover:bg-foreground/80">
-                        <Link href="#">Ver Colección Casual</Link>
-                    </Button>
-                </div>
-                <div className="relative w-full h-[500px] overflow-hidden rounded-lg">
-                    <Image
-                        src="https://www.deporteyaventura.es/wp-content/uploads/2024/01/PANO-AZUL-2.jpg"
-                        alt="Hombre con pantalones técnicos azules en la montaña"
-                        fill
-                        className="object-cover"
-                    />
-                </div>
-            </div>
+      {/* SECCIÓN LIFESTYLE RESTAURADA */}
+<section className="py-16 bg-white my-16">
+  <div className="container mx-auto px-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      {/* TEXTO (Izquierda) */}
+      <div className="space-y-8">
+        <span className="text-orange-600 font-bold tracking-widest uppercase">Estilo de vida</span>
+        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-gray-900 leading-none">
+          Fusión de estilo <br />y rendimiento.
+        </h2>
+        <p className="text-lg text-gray-600 leading-relaxed max-w-md">
+          Descubre nuestra colección más versátil. Prendas diseñadas para acompañarte desde las calles de la ciudad hasta tus escapadas a la naturaleza, sin sacrificar comodidad ni estilo.
+        </p>
+        <div>
+          <Link
+            href="/products"
+            className="group inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white text-lg font-bold px-8 py-4 rounded-xl transition-all active:scale-95"
+          >
+            Ver Colección
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </Link>
         </div>
-      </section>
+      </div>
+  {/* IMAGEN RESTAURADA (Derecha) */}
+  <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-2xl group">
+    <img
+      src="https://images.unsplash.com/photo-1606859191214-25806e8e2423?q=80&w=1200"
+      alt="Estilo de vida outdoor"
+      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+    />
+    {/* Degradado sutil sobre la imagen */}
+    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
+  </div>
+</div>
+</div>
+</section>
 
       {/* Main Categories */}
       <section className="py-20 md:py-32 bg-background">
