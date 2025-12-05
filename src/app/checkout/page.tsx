@@ -99,7 +99,7 @@ export default function CheckoutPage() {
                 cartItems,
                 total: finalTotal,
                 shippingCost: shippingCost,
-                codSurcharge,
+                codSurcharge: codSurcharge,
             })
         });
 
