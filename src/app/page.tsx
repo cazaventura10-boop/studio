@@ -99,7 +99,7 @@ export default async function Home() {
         <div>
           <Link
             href="/products?category=newwood"
-            className="group inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white text-lg font-bold px-8 py-4 rounded-xl transition-all active:scale-95"
+            className="group inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white text-lg font-bold px-8 py-4 rounded-xl transition-all active:scale-95"
           >
             Descubre Newwood Extreme
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
