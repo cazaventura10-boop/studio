@@ -7,7 +7,7 @@ interface GetProductsParams {
   per_page?: number;
   status?: string;
   search?: string;
-  category?: string | number; // puede ser slug, id, o una lista de slugs/ids separada por comas
+  category?: string; // puede ser slug, id, o una lista de slugs/ids separada por comas
   tag?: string; // slug de la etiqueta
   on_sale?: boolean; // para filtrar por productos en oferta
   include?: number[]; // para buscar por IDs
@@ -28,29 +28,10 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             apiParams.include = params.include.join(',');
         }
 
-        // Si se pasa category y es string, podría ser una lista de slugs separada por comas
-        if (params.category && typeof params.category === 'string' && params.category.includes(',')) {
-            const categorySlugs = params.category.split(',');
-            const { data: categoriesData } = await wooApi.get("products/categories", { slug: categorySlugs.join(',') });
-
-            if (categoriesData && categoriesData.length > 0) {
-                apiParams.category = categoriesData.map((c: any) => c.id).join(',');
-            } else {
-                return [];
-            }
-        } else if (params.category) {
-            // Para un solo slug o ID
-             const { data: categoriesData } = await wooApi.get("products/categories", { slug: params.category });
-             if (categoriesData && categoriesData.length > 0) {
-                apiParams.category = categoriesData[0].id;
-             } else if (typeof params.category === 'number' || !isNaN(Number(params.category))) {
-                apiParams.category = params.category;
-             } else {
-                 return []; // Si no se encuentra la categoría
-             }
+        if (params.search) {
+            apiParams.search = params.search;
         }
-
-
+        
         if (params.tag) {
             const { data: tagsData } = await wooApi.get("products/tags", { slug: params.tag });
             if (tagsData && tagsData.length > 0) {
@@ -59,35 +40,43 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
                 return [];
             }
         }
-        
-        if (params.search) {
-            apiParams.search = params.search;
+
+        // --- LÓGICA DE CATEGORÍAS CORREGIDA ---
+        if (params.category) {
+            if (params.category.includes(',')) {
+                // Múltiples categorías: hacer una llamada por cada una
+                const categorySlugs = params.category.split(',');
+                let allProducts: WooProduct[] = [];
+                
+                for (const slug of categorySlugs) {
+                    const { data: categoryData } = await wooApi.get("products/categories", { slug: slug.trim() });
+                    if (categoryData && categoryData.length > 0) {
+                        const categoryId = categoryData[0].id;
+                        const { data: productsData } = await wooApi.get("products", { ...apiParams, category: categoryId });
+                        allProducts = allProducts.concat(productsData);
+                    }
+                }
+                // Eliminar duplicados si un producto está en varias categorías
+                const uniqueProducts = allProducts.filter((product, index, self) =>
+                    index === self.findIndex((p) => p.id === product.id)
+                );
+                return mapWooProducts(uniqueProducts);
+
+            } else {
+                // Una sola categoría
+                const { data: categoryData } = await wooApi.get("products/categories", { slug: params.category });
+                if (categoryData && categoryData.length > 0) {
+                    apiParams.category = categoryData[0].id;
+                } else if (!isNaN(Number(params.category))) {
+                   apiParams.category = params.category;
+                } else {
+                    return []; // Si no se encuentra la categoría
+                }
+            }
         }
         
         const { data } = await wooApi.get("products", apiParams);
-        
-        const products: WooProduct[] = data.map((product: any) => ({
-            id: product.id,
-            name: product.name,
-            description: product.description,
-            short_description: product.short_description,
-            price: product.price,
-            price_html: product.price_html,
-            on_sale: product.on_sale,
-            sale_price: product.sale_price,
-            regular_price: product.regular_price,
-            related_ids: product.related_ids,
-            upsell_ids: product.upsell_ids,
-            cross_sell_ids: product.cross_sell_ids,
-            category: product.categories.length > 0 ? product.categories[0].name : 'Uncategorized',
-            images: product.images,
-            permalink: product.permalink,
-            categories: product.categories,
-            tags: product.tags,
-            attributes: product.attributes,
-        }));
-
-        return products;
+        return mapWooProducts(data);
 
     } catch (error) {
         if (error instanceof Error) {
@@ -97,6 +86,30 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
         }
         return [];
     }
+}
+
+// Helper para mapear los datos de la API
+function mapWooProducts(data: any[]): WooProduct[] {
+    return data.map((product: any) => ({
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        short_description: product.short_description,
+        price: product.price,
+        price_html: product.price_html,
+        on_sale: product.on_sale,
+        sale_price: product.sale_price,
+        regular_price: product.regular_price,
+        related_ids: product.related_ids,
+        upsell_ids: product.upsell_ids,
+        cross_sell_ids: product.cross_sell_ids,
+        category: product.categories.length > 0 ? product.categories[0].name : 'Uncategorized',
+        images: product.images,
+        permalink: product.permalink,
+        categories: product.categories,
+        tags: product.tags,
+        attributes: product.attributes,
+    }));
 }
 
 
@@ -204,3 +217,4 @@ export type BlogPost = {
   category: 'Climbing' | 'Cycling' | 'Hiking';
   image: string; // id from placeholder-images.json
 };
+
