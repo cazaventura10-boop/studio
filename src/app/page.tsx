@@ -94,7 +94,7 @@ export default async function Home() {
           Fusión de estilo <br />y rendimiento.
         </h2>
         <p className="text-lg text-gray-600 leading-relaxed max-w-md">
-          Descubre nuestra colección más versátil. Prendas diseñadas para acompañarte desde las calles de la ciudad hasta tus escapadas a la naturaleza, sin sacrificar comodidad ni estilo.
+          Descubre nuestra colección más versátil. Prendas diseñadas para acompañarte a tus escapadas por la naturaleza, sin sacrificar comodidad ni estilo.
         </p>
         <div>
           <Link
