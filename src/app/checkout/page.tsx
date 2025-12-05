@@ -12,6 +12,12 @@ import Link from 'next/link';
 import { CreditCard, Banknote, ShoppingCart, Smartphone, Handshake, Truck, Package, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
+interface RedsysParams {
+  Ds_SignatureVersion: string;
+  Ds_MerchantParameters: string;
+  Ds_Signature: string;
+}
+
 export default function CheckoutPage() {
   const { cartItems, cartTotal, clearCart } = useCart();
   const { toast } = useToast();
@@ -19,6 +25,7 @@ export default function CheckoutPage() {
   const [shippingMethod, setShippingMethod] = useState('domicilio');
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [isLoading, setIsLoading] = useState(false);
+  const [redsysData, setRedsysData] = useState<RedsysParams | null>(null);
 
   // Estado unificado para el formulario
   const [formData, setFormData] = useState({
@@ -38,23 +45,19 @@ export default function CheckoutPage() {
     });
   };
 
-  const createRedsysForm = (data: any) => {
+  const redirectToRedsys = () => {
+    if (!redsysData) return;
+    
     const form = document.createElement('form');
     form.method = 'POST';
-    form.action = data.url;
+    form.action = process.env.NEXT_PUBLIC_REDSYS_URL || 'https://sis.redsys.es/sis/realizarPago'; // Usar la URL del .env o una de fallback
     form.style.display = 'none';
 
-    const params = {
-      Ds_SignatureVersion: data.DS_SIGNATUREVERSION,
-      Ds_MerchantParameters: data.DS_MERCHANT_PARAMETERS,
-      Ds_Signature: data.DS_SIGNATURE,
-    }
-
-    for (const key in params) {
+    for (const key in redsysData) {
       const input = document.createElement('input');
       input.type = 'hidden';
       input.name = key;
-      input.value = params[key as keyof typeof params];
+      input.value = redsysData[key as keyof RedsysParams];
       form.appendChild(input);
     }
     
@@ -85,8 +88,6 @@ export default function CheckoutPage() {
     }
     setIsLoading(true);
 
-    // --- CORRECCIÓN CLAVE ---
-    // Calculamos los costes aquí para asegurar que los valores son correctos y existen
     const shippingCost = cartTotal < 60 ? 2.99 : 0;
     const codSurcharge = paymentMethod === 'cod' ? 3.90 : 0;
     const finalTotal = cartTotal + shippingCost + codSurcharge;
@@ -99,7 +100,7 @@ export default function CheckoutPage() {
                 ...formData,
                 cartItems,
                 total: finalTotal,
-                shippingCost: shippingCost, // <-- AHORA SE ENVÍA EXPLÍCITAMENTE
+                shippingCost: shippingCost,
                 codSurcharge: codSurcharge,
             })
         });
@@ -107,11 +108,10 @@ export default function CheckoutPage() {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.details || 'Error al procesar el pago.');
+            throw new Error(data.error || 'Error al procesar el pago.');
         }
 
-        // Redirigir a Redsys
-        createRedsysForm(data);
+        setRedsysData(data.redsysParams);
 
     } catch (error) {
         console.error("Payment failed:", error);
@@ -124,7 +124,6 @@ export default function CheckoutPage() {
         setIsLoading(false);
     }
   };
-
 
   if (cartItems.length === 0 && !isLoading) {
     return (
@@ -141,7 +140,6 @@ export default function CheckoutPage() {
     );
   }
 
-  // Calculamos los costes aquí TAMBIÉN para la visualización
   const shippingCost = cartTotal < 60 ? 2.99 : 0;
   const codSurcharge = paymentMethod === 'cod' ? 3.90 : 0;
   const finalTotal = cartTotal + shippingCost + codSurcharge;
@@ -347,15 +345,25 @@ export default function CheckoutPage() {
                   <span>{new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(finalTotal)}</span>
                 </div>
 
-                <Button 
-                    size="lg" 
+                 {redsysData ? (
+                  <Button
+                    size="lg"
+                    className="w-full h-14 text-lg bg-green-600 hover:bg-green-700 text-white font-bold"
+                    onClick={redirectToRedsys}
+                  >
+                    IR A LA PASARELA DE PAGO
+                  </Button>
+                ) : (
+                  <Button
+                    size="lg"
                     className="w-full h-14 text-lg bg-orange-500 hover:bg-orange-600 text-white font-bold"
                     onClick={handlePayment}
                     disabled={isLoading}
-                >
-                  {isLoading ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : null}
-                  {isLoading ? 'Procesando...' : 'PAGAR Y FINALIZAR PEDIDO'}
-                </Button>
+                  >
+                    {isLoading ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : null}
+                    {isLoading ? 'Procesando...' : 'PAGAR Y FINALIZAR PEDIDO'}
+                  </Button>
+                )}
               </CardContent>
             </Card>
           </div>
