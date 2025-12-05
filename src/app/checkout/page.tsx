@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useCart } from '@/lib/cart-context';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,12 +10,16 @@ import { Separator } from '@/components/ui/separator';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import Image from 'next/image';
 import Link from 'next/link';
-import { CreditCard, Banknote, ShoppingCart, Smartphone, Handshake } from 'lucide-react';
+import { CreditCard, Banknote, ShoppingCart, Smartphone, Handshake, Truck, Package } from 'lucide-react';
 
 export default function CheckoutPage() {
   const { cartItems, cartTotal } = useCart();
-  const shippingCost = 0;
-  const finalTotal = cartTotal + shippingCost;
+  const [shippingMethod, setShippingMethod] = useState('domicilio');
+  const [paymentMethod, setPaymentMethod] = useState('card');
+
+  const shippingCost = cartTotal < 60 ? 2.99 : 0;
+  const codSurcharge = paymentMethod === 'cod' ? 3.90 : 0;
+  const finalTotal = cartTotal + shippingCost + codSurcharge;
 
   if (cartItems.length === 0) {
     return (
@@ -39,7 +44,7 @@ export default function CheckoutPage() {
         <div className="space-y-8">
           <Card>
             <CardHeader>
-              <CardTitle className="font-headline text-2xl">Detalles de Facturación</CardTitle>
+              <CardTitle className="font-headline text-2xl">Detalles de Facturación y Envío</CardTitle>
             </CardHeader>
             <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="md:col-span-1">
@@ -72,13 +77,49 @@ export default function CheckoutPage() {
               </div>
             </CardContent>
           </Card>
+
+           <Card>
+            <CardHeader>
+                <CardTitle className="font-headline text-2xl">Método de Envío</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <RadioGroup value={shippingMethod} onValueChange={setShippingMethod} className="space-y-4">
+                    <Label
+                        htmlFor="domicilio"
+                        className="flex items-start gap-4 rounded-lg border p-4 cursor-pointer hover:bg-accent/50 has-[input:checked]:bg-accent/80 has-[input:checked]:border-primary"
+                    >
+                        <RadioGroupItem value="domicilio" id="domicilio" className="mt-1"/>
+                        <div>
+                            <p className="font-semibold">Envío a domicilio (Agencia)</p>
+                            <p className="text-sm text-muted-foreground">Recíbelo cómodamente en casa.</p>
+                            <div className="mt-2 flex items-center gap-2">
+                               <Truck className="h-5 w-5" />
+                            </div>
+                        </div>
+                    </Label>
+                    <Label
+                        htmlFor="locker"
+                        className="flex items-start gap-4 rounded-lg border p-4 cursor-pointer hover:bg-accent/50 has-[input:checked]:bg-accent/80 has-[input:checked]:border-primary"
+                    >
+                        <RadioGroupItem value="locker" id="locker" className="mt-1"/>
+                        <div>
+                            <p className="font-semibold">Recogida en punto pack (Locker)</p>
+                            <p className="text-sm text-muted-foreground">Elige un punto de recogida cercano.</p>
+                             <div className="mt-2 flex items-center gap-2">
+                                <Package className="h-5 w-5" />
+                            </div>
+                        </div>
+                    </Label>
+                </RadioGroup>
+            </CardContent>
+          </Card>
           
           <Card>
             <CardHeader>
                 <CardTitle className="font-headline text-2xl">Método de Pago</CardTitle>
             </CardHeader>
             <CardContent>
-                <RadioGroup defaultValue="card" className="space-y-4">
+                <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod} className="space-y-4">
                     <Label
                         htmlFor="card"
                         className="flex items-start gap-4 rounded-lg border p-4 cursor-pointer hover:bg-accent/50 has-[input:checked]:bg-accent/80 has-[input:checked]:border-primary"
@@ -129,6 +170,7 @@ export default function CheckoutPage() {
                             <p className="text-sm text-muted-foreground">Paga en efectivo al recibir tu pedido en casa.</p>
                             <div className="mt-2 flex items-center gap-2">
                                <Handshake className="h-5 w-5" />
+                               {codSurcharge > 0 && <span className="text-xs font-bold text-red-600">(Recargo: {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(codSurcharge)})</span>}
                             </div>
                         </div>
                     </Label>
@@ -177,10 +219,16 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex justify-between text-muted-foreground">
                     <span>Envío</span>
-                    <span className="font-semibold text-green-600">
+                    <span className={shippingCost === 0 ? 'font-semibold text-green-600' : ''}>
                       {shippingCost === 0 ? 'Gratis' : new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(shippingCost)}
                     </span>
                   </div>
+                   {codSurcharge > 0 && (
+                    <div className="flex justify-between text-muted-foreground">
+                        <span>Recargo Contrareembolso</span>
+                        <span>{new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(codSurcharge)}</span>
+                    </div>
+                   )}
                 </div>
                 <Separator />
                 <div className="flex justify-between text-xl font-bold">
