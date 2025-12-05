@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import Redsys from 'redsys-easy';
 import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api";
+import { config } from 'dotenv';
+
+// Forzar la carga de variables de entorno desde .env
+config();
 
 // Función para validar los datos de entrada
 const validateInput = (data: any) => {
