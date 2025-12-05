@@ -90,7 +90,7 @@ export default async function Home() {
       {/* TEXTO (Izquierda) */}
       <div className="space-y-8">
         <span className="text-orange-600 font-bold tracking-widest uppercase">Estilo de vida</span>
-        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-gray-900 leading-none">
+        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-gray-900 leading-tight">
           Fusión de estilo <br />y rendimiento.
         </h2>
         <p className="text-lg text-gray-600 leading-relaxed max-w-md">
