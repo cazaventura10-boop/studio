@@ -109,7 +109,7 @@ export default async function Home() {
   {/* IMAGEN RESTAURADA (Derecha) */}
   <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-2xl group">
     <img
-      src="https://images.unsplash.com/photo-1606859191214-25806e8e2423?q=80&w=1200"
+      src="https://www.deporteyaventura.es/wp-content/uploads/2024/11/unnamed-2-1.jpg"
       alt="Estilo de vida outdoor"
       className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
     />
