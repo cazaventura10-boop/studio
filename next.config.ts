@@ -30,6 +30,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'deporteyaventura.es',
       },
+      {
+        protocol: 'https',
+        hostname: 'olipe.com',
+      },
     ],
   },
 };

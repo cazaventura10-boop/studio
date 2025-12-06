@@ -44,7 +44,7 @@ export function Footer() {
       <div className="flex gap-3 mb-8">
         <div className="bg-white p-1 rounded flex items-center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/64px-Visa_Inc._logo.svg.png" alt="Visa" className="h-6" /></div>
         <div className="bg-white p-1 rounded flex items-center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/64px-Mastercard-logo.svg.png" alt="Mastercard" className="h-6" /></div>
-        <div className="bg-white p-1 rounded flex items-center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Bizum_logo.svg/320px-Bizum_logo.svg.png" alt="Bizum" className="h-8" /></div>
+        <div className="bg-white p-1 rounded flex items-center"><img src="https://olipe.com/tienda/wp-content/uploads/2021/03/Logo-Bizum.png" alt="Bizum" className="h-8" /></div>
       </div>
       <h4 className="text-white font-bold mb-6 uppercase tracking-wider">Síguenos</h4>
       <div className="flex gap-4">
