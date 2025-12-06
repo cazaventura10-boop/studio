@@ -16,50 +16,54 @@ export default function EnviosPage() {
           <h3>Tipos de Envío:</h3>
           <h4>España Península:</h4>
           <p>deporteyaventura.es garantiza las siguientes formas de entrega:</p>
-          <table>
-            <thead>
-              <tr>
-                <th>TIEMPO DE ENTREGA</th>
-                <th colSpan={2}>COSTE DEL ENVÍO (IVA INCLUIDO)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>ENVÍO ESTANDAR 1-2 días laborables*</td>
-                <td>Pedidos -60 €</td>
-                <td>2,99 €</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>Pedidos +60€</td>
-                <td>GRATIS</td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="overflow-x-auto">
+            <table className="min-w-full">
+              <thead className="bg-secondary">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-secondary-foreground uppercase tracking-wider">TIEMPO DE ENTREGA</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-secondary-foreground uppercase tracking-wider" colSpan={2}>COSTE DEL ENVÍO (IVA INCLUIDO)</th>
+                </tr>
+              </thead>
+              <tbody className="bg-card divide-y divide-border">
+                <tr>
+                  <td className="px-6 py-4 whitespace-nowrap">ENVÍO ESTANDAR 1-2 días laborables*</td>
+                  <td className="px-6 py-4 whitespace-nowrap">Pedidos -60 €</td>
+                  <td className="px-6 py-4 whitespace-nowrap">2,99 €</td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4"></td>
+                  <td className="px-6 py-4 whitespace-nowrap">Pedidos +60€</td>
+                  <td className="px-6 py-4 whitespace-nowrap">GRATIS</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-          <h4>España Baleares:</h4>
+          <h4 className="mt-8">España Baleares:</h4>
           <p>deporteyaventura.es garantiza las siguientes formas de entrega:</p>
-          <table>
-            <thead>
-              <tr>
-                <th>TIEMPO DE ENTREGA</th>
-                <th colSpan={2}>COSTE DEL ENVÍO (IVA INCLUIDO)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>ENTREGA EN DOMICILIO 2-4 días</td>
-                <td>Pedidos -90 €</td>
-                <td>11,90 €</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>Pedidos +90€</td>
-                <td>GRATIS</td>
-              </tr>
-            </tbody>
-          </table>
-          <p><strong>OTROS DESTINOS CONSULTAR.EMAIL:</strong> COMERCIO@DEPORTEYAVENTURA.ES</p>
+          <div className="overflow-x-auto">
+            <table className="min-w-full">
+              <thead className="bg-secondary">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-secondary-foreground uppercase tracking-wider">TIEMPO DE ENTREGA</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-secondary-foreground uppercase tracking-wider" colSpan={2}>COSTE DEL ENVÍO (IVA INCLUIDO)</th>
+                </tr>
+              </thead>
+              <tbody className="bg-card divide-y divide-border">
+                <tr>
+                  <td className="px-6 py-4 whitespace-nowrap">ENTREGA EN DOMICILIO 2-4 días</td>
+                  <td className="px-6 py-4 whitespace-nowrap">Pedidos -90 €</td>
+                  <td className="px-6 py-4 whitespace-nowrap">11,90 €</td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4"></td>
+                  <td className="px-6 py-4 whitespace-nowrap">Pedidos +90€</td>
+                  <td className="px-6 py-4 whitespace-nowrap">GRATIS</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-8"><strong>OTROS DESTINOS CONSULTAR. EMAIL:</strong> mario@deporteyaventura.es</p>
         </div>
       </div>
     </div>
