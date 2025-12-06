@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/accordion"
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { CartSheet } from '@/app/_components/cart-sheet';
+import Image from 'next/image';
 
 type NavLink = {
   title: string;
@@ -155,9 +156,13 @@ const kayakLinks: NavLink[] = [
 
 function Logo() {
   return (
-    <span className="text-2xl font-black uppercase tracking-tighter leading-none">
-      Deporte y <br/><span className="text-orange-500">Aventura</span>
-    </span>
+     <Image 
+      src="https://www.deporteyaventura.es/wp-content/uploads/2025/11/Gemini_Generated_Image_orrzteorrzteorrz__2___1_-removebg-preview.png"
+      alt="Deporte y Aventura Logo"
+      width={180}
+      height={40}
+      className="h-auto"
+    />
   );
 }
 
