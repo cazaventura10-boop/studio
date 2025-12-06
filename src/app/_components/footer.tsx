@@ -37,6 +37,7 @@ export function Footer() {
       <h4 className="text-white font-bold mb-6 uppercase tracking-wider">Legal</h4>
       <ul className="space-y-3 text-sm">
         <li><Link href="/aviso-legal" className="hover:text-orange-500 transition">Aviso Legal</Link></li>
+        <li><Link href="/aviso-legal" className="hover:text-orange-500 transition">Aviso Legal</Link></li>
         <li><Link href="/privacidad" className="hover:text-orange-500 transition">Política de Privacidad</Link></li>
         <li><Link href="/privacidad#cookies" className="hover:text-orange-500 transition">Política de Cookies</Link></li>
         <li><Link href="#" className="hover:text-orange-500 transition">Términos y Condiciones</Link></li>
