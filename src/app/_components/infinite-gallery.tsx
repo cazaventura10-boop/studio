@@ -6,7 +6,7 @@ const images = [
   { src: 'https://www.deporteyaventura.es/wp-content/uploads/2025/10/unnamed-2-2.jpg', alt: 'Pantalones de Trekking', href: '/products?category=pantalones-hombre' },
   { src: 'https://www.deporteyaventura.es/wp-content/uploads/2025/10/unnamed-copia-10.jpg', alt: 'Chaquetas y Cortavientos', href: '/products?category=chaquetas-hombre' },
   { src: 'https://www.deporteyaventura.es/wp-content/uploads/2025/10/IKKI-ATLANTIC-6.webp', alt: 'Botas y Zapatillas', href: '/products?category=calzado-hombre' },
-  { src: 'https://images.unsplash.com/photo-1543039625-14cbd3802e7d?w=600&q=80', alt: 'Kayaking on a calm lake', href: '/products?category=kayak' },
+  { src: 'https://www.deporteyaventura.es/wp-content/uploads/2022/11/imj05218_000577_3.webp', alt: 'Sudaderas y Polares', href: '/products?category=sudaderas-hombre' },
   { src: 'https://images.unsplash.com/photo-1445543949571-ffc3e0e2f55e?w=600&q=80', alt: 'Path through a misty forest', href: '/blog' },
   { src: 'https://images.unsplash.com/photo-1533240332313-0dbdd3199049?w=600&q=80', alt: 'Snowy mountain peak at sunset', href: '/products' },
   { src: 'https://www.deporteyaventura.es/wp-content/uploads/2025/11/76a44fa8-2306-4fc3-88bd-99262c1d4512-1-3-1.png', alt: 'Hunting gear', href: '/products?category=caza'}
