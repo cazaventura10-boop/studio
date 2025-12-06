@@ -28,16 +28,7 @@ return (
         </div>
       </div>
   </section>
-  {/* 3. CATEGORÍAS PRINCIPALES */}
-  <section className="py-20 container mx-auto px-4">
-    <h2 className="text-3xl font-bold text-center mb-12 uppercase tracking-wide">Categorías Principales</h2>
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <Link href="/products?category=trekking" className="group relative h-80 rounded-2xl overflow-hidden shadow-lg"><img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=800" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Trekking" /><div className="absolute inset-0 bg-black/30 flex items-center justify-center"><h3 className="text-white text-4xl font-black uppercase tracking-widest">TREKKING</h3></div></Link>
-      <Link href="/products?category=caza" className="group relative h-80 rounded-2xl overflow-hidden shadow-lg"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Caza" /><div className="absolute inset-0 bg-black/30 flex items-center justify-center"><h3 className="text-white text-4xl font-black uppercase tracking-widest">CAZA</h3></div></Link>
-      <Link href="/products?category=kayak" className="group relative h-80 rounded-2xl overflow-hidden shadow-lg"><img src="https://images.unsplash.com/photo-1543039625-14cbd3802e7d?w=800" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Kayak" /><div className="absolute inset-0 bg-black/30 flex items-center justify-center"><h3 className="text-white text-4xl font-black uppercase tracking-widest">KAYAK</h3></div></Link>
-    </div>
-  </section>
-  {/* 4. LIFESTYLE (FUSIÓN DE ESTILO) */}
+  {/* 3. LIFESTYLE (FUSIÓN DE ESTILO) */}
   <section className="py-16 bg-white my-16">
     <div className="container mx-auto px-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -49,6 +40,15 @@ return (
         </div>
         <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-2xl"><img src="https://images.unsplash.com/photo-1606859191214-25806e8e2423?q=80&w=1200" alt="Lifestyle" className="absolute inset-0 w-full h-full object-cover" /></div>
       </div>
+    </div>
+  </section>
+  {/* 4. CATEGORÍAS PRINCIPALES */}
+  <section className="py-20 container mx-auto px-4">
+    <h2 className="text-3xl font-bold text-center mb-12 uppercase tracking-wide">Categorías Principales</h2>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <Link href="/products?category=trekking" className="group relative h-80 rounded-2xl overflow-hidden shadow-lg"><img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=800" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Trekking" /><div className="absolute inset-0 bg-black/30 flex items-center justify-center"><h3 className="text-white text-4xl font-black uppercase tracking-widest">TREKKING</h3></div></Link>
+      <Link href="/products?category=caza" className="group relative h-80 rounded-2xl overflow-hidden shadow-lg"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Caza" /><div className="absolute inset-0 bg-black/30 flex items-center justify-center"><h3 className="text-white text-4xl font-black uppercase tracking-widest">CAZA</h3></div></Link>
+      <Link href="/products?category=kayak" className="group relative h-80 rounded-2xl overflow-hidden shadow-lg"><img src="https://images.unsplash.com/photo-1543039625-14cbd3802e7d?w=800" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Kayak" /><div className="absolute inset-0 bg-black/30 flex items-center justify-center"><h3 className="text-white text-4xl font-black uppercase tracking-widest">KAYAK</h3></div></Link>
     </div>
   </section>
   {/* 5. BANNER OFERTAS */}
