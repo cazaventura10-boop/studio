@@ -5,7 +5,7 @@ import { Star, Truck, ShieldCheck, RefreshCw } from 'lucide-react';
 export const dynamic = 'force-dynamic';
 
 export default async function Home() { 
-  const newProducts = await getProducts({ per_page: 4, orderby: 'date', order: 'desc' });
+  const newProducts = await getProducts({ per_page: 12, orderby: 'date', order: 'desc' });
 
 return (
 <main>
@@ -49,14 +49,16 @@ return (
     </div>
   </section>
   {/* 4. NOVEDADES (GRID LIMPIO) */}
-  <section className="py-20 container mx-auto px-4">
+  <section className="py-20 container mx-auto px-4 overflow-hidden">
     <div className="flex justify-between items-end mb-12">
       <h2 className="text-4xl font-bold uppercase tracking-wide">Novedades de Temporada</h2>
       <Link href="/products" className="text-orange-600 font-bold hover:underline">Ver Todos →</Link>
     </div>
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 -mx-4 px-4 hide-scrollbar">
       {newProducts.map((product: any) => (
-        <ProductCard key={product.id} product={product} />
+        <div key={product.id} className="snap-start flex-shrink-0 min-w-[280px] md:min-w-[calc(25%-1.5rem)]">
+            <ProductCard product={product} />
+        </div>
       ))}
     </div>
   </section>
