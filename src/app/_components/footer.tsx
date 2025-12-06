@@ -2,41 +2,6 @@ import Link from 'next/link';
 import { Instagram, Facebook, Youtube } from 'lucide-react';
 import Image from 'next/image';
 
-const CustomLogo = ({ className }: { className?: string }) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 220 80"
-      className={className}
-      fill="white"
-    >
-      <text x="75" y="45" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="20" fill="white">
-        DEPORTE
-      </text>
-      <text x="75" y="65" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="20" fill="white">
-        y AVENTURA
-      </text>
-      <path d="M10 40 a 20 20 0 1 0 40 0 a 20 20 0 1 0 -40 0" fill="white" />
-      <path
-        d="M25,30 Q35,20 45,30 T 65,30"
-        fill="none"
-        stroke="orange"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-       <path
-        d="M 15,55 L 30,48 L 45,55 L 40,65 L 20,65 Z"
-        stroke="white"
-        strokeWidth="1.5"
-        fill="none"
-      />
-       <path
-        d="M70 25 l15 -15 l15 15 l-5 -5 l-10 10 l-10 -10 Z M110 25 l15 -15 l15 15 l-5 -5 l-10 10 l-10 -10 Z"
-        fill="white"
-      />
-    </svg>
-  );
-
-
 export function Footer() {
 
   const paymentMethods = [
