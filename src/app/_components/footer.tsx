@@ -56,7 +56,7 @@ export function Footer() {
       <h4 className="text-white font-bold mb-6 uppercase tracking-wider">Síguenos</h4>
       <div className="flex gap-4">
         <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-orange-600 hover:text-white transition"><Facebook size={20} /></a>
-        <a href="https://www.instagram.com/deporteyaventura.es" target="_blank" rel="noopener noreferrer" className="bg-gray-800 p-3 rounded-full hover:bg-orange-600 hover:text-white transition"><Instagram size={20} /></a>
+        <a href="https://www.instagram.com/deporteyaventura" target="_blank" rel="noopener noreferrer" className="bg-gray-800 p-3 rounded-full hover:bg-orange-600 hover:text-white transition"><Instagram size={20} /></a>
         <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-orange-600 hover:text-white transition"><Twitter size={20} /></a>
       </div>
     </div>
