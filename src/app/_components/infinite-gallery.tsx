@@ -5,7 +5,7 @@ import Link from 'next/link';
 const images = [
   { src: 'https://www.deporteyaventura.es/wp-content/uploads/2025/10/unnamed-2-2.jpg', alt: 'Pantalones de Trekking', href: '/products?category=pantalones-hombre' },
   { src: 'https://www.deporteyaventura.es/wp-content/uploads/2025/10/unnamed-copia-10.jpg', alt: 'Chaquetas y Cortavientos', href: '/products?category=chaquetas-hombre' },
-  { src: 'https://images.unsplash.com/photo-1504280509243-48c8b45f8b11?w=600&q=80', alt: 'Woman hiking in the mountains', href: '/ropa-mujer' },
+  { src: 'https://www.deporteyaventura.es/wp-content/uploads/2025/10/IKKI-ATLANTIC-6.webp', alt: 'Botas y Zapatillas', href: '/products?category=calzado-hombre' },
   { src: 'https://images.unsplash.com/photo-1543039625-14cbd3802e7d?w=600&q=80', alt: 'Kayaking on a calm lake', href: '/products?category=kayak' },
   { src: 'https://images.unsplash.com/photo-1445543949571-ffc3e0e2f55e?w=600&q=80', alt: 'Path through a misty forest', href: '/blog' },
   { src: 'https://images.unsplash.com/photo-1533240332313-0dbdd3199049?w=600&q=80', alt: 'Snowy mountain peak at sunset', href: '/products' },
