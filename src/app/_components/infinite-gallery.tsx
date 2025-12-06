@@ -14,10 +14,10 @@ const images = [
 
 export default function InfiniteGallery() {
   return (
-    <section className="py-20 bg-background text-foreground">
+    <section className="py-20 bg-gray-900 text-gray-100">
       <div className="container mx-auto px-4 text-center mb-12">
-        <h2 className="text-3xl font-black uppercase">#TuAventuraEmpiezaAquí</h2>
-        <p className="max-w-2xl mx-auto mt-4 text-lg text-muted-foreground">Inspírate con nuestra comunidad y comparte tus mejores momentos.</p>
+        <h2 className="text-3xl font-black uppercase text-white">#TuAventuraEmpiezaAquí</h2>
+        <p className="max-w-2xl mx-auto mt-4 text-lg text-gray-300">Inspírate con nuestra comunidad y comparte tus mejores momentos.</p>
       </div>
       <div className="relative w-full flex gap-4 overflow-hidden group">
         {/* Bloque 1 de imágenes */}
