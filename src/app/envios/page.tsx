@@ -1,63 +1,57 @@
 export default function EnviosPage() {
   return (
-    <div className="container mx-auto px-4 py-12 max-w-4xl pt-32">
+    <div className="container mx-auto px-4 py-12 max-w-4xl text-gray-800">
       <h1 className="text-4xl font-black mb-8 uppercase text-center">Envíos y Devoluciones</h1>
       
-      <div className="prose prose-lg mx-auto text-gray-700 space-y-8">
+      <div className="space-y-8 bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
         
-        {/* BLOQUE DEVOLUCIONES */}
-        <section className="bg-gray-50 p-8 rounded-2xl border border-gray-100">
-          <h2 className="text-2xl font-bold mb-4 text-gray-900">🔄 Devoluciones y Cambios</h2>
-          <p>Si por cualquier motivo no quedas satisfecho con tu pedido, tienes un plazo de <strong>10 días naturales</strong> a contar desde la fecha de entrega.</p>
-          <p className="text-sm bg-orange-100 text-orange-800 p-3 rounded-lg inline-block font-bold">🎄 En periodo de Navidad o Reyes, el plazo aumenta para facilitar los regalos.</p>
+        {/* DEVOLUCIONES */}
+        <section>
+          <h2 className="text-2xl font-bold mb-4 text-orange-600">🔄 Devoluciones y Cambios</h2>
+          <p className="mb-4">Si por cualquier motivo no quedas satisfecho con tu pedido, tienes un plazo de <strong>10 días naturales</strong> a contar desde la fecha de entrega.</p>
           
-          <ul className="list-disc pl-5 space-y-2 mt-4">
-            <li>El producto debe estar en perfectas condiciones (con garantías, etiquetas e instrucciones).</li>
-            <li>El envío de la devolución corre a cargo del cliente.</li>
-            <li>Si el envío original fue gratis (pagado por nosotros), se descontarán <strong>5€</strong> del importe a devolver.</li>
-            <li>Para cambios (talla/modelo), los gastos de recogida y nuevo envío son <strong>10€</strong> (a cargo del comprador).</li>
-          </ul>
-      <div className="mt-6 p-4 bg-white rounded-xl border border-gray-200">
-        <p className="font-bold">📍 Dirección para envíos:</p>
+          <div className="bg-orange-50 p-4 rounded-lg border-l-4 border-orange-500 mb-6">
+            <p className="font-bold">🎄 Periodo Navideño:</p>
+            <p>En Navidad y Reyes, el plazo aumenta para facilitar los cambios de regalos.</p>
+          </div>
+      <ul className="list-disc pl-5 space-y-2 mb-6">
+        <li>El producto debe estar en <strong>perfectas condiciones</strong>, con etiquetas y embalaje.</li>
+        <li>El envío de la devolución corre a cargo del cliente.</li>
+        <li>Si el envío original fue gratis, se descontarán <strong>5€</strong> del importe a devolver.</li>
+        <li>Para cambios de talla, los gastos de recogida y nuevo envío son <strong>10€</strong>.</li>
+      </ul>
+      <div className="bg-gray-100 p-6 rounded-xl">
+        <h3 className="font-bold mb-2">📍 Dirección de Envío:</h3>
         <p>Mario Ruiz López<br/>C/ Castelar 15, CP 46357<br/>La Portera (Valencia)</p>
-        <p className="mt-2 text-sm text-gray-500">⚠️ Ninguna mercancía será aceptada sin aviso previo por WhatsApp al <strong>661 714 408</strong>.</p>
+        <p className="mt-4 text-sm font-semibold text-red-600">⚠️ IMPORTANTE: Ninguna mercancía será aceptada sin aviso previo por WhatsApp al 661 714 408.</p>
       </div>
     </section>
-    {/* BLOQUE ENVÍOS */}
+    <hr className="border-gray-200" />
+    {/* ENVÍOS */}
     <section>
-      <h2 className="text-2xl font-bold mb-4 text-gray-900">🚚 Formas de Envío y Plazos</h2>
+      <h2 className="text-2xl font-bold mb-4 text-orange-600">🚚 Formas de Envío</h2>
       
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className="border p-6 rounded-xl">
-          <h3 className="font-bold text-lg mb-2">España Península</h3>
-          <p className="text-green-600 font-bold mb-2">GRATIS a partir de 60€</p>
-          <ul className="text-sm space-y-1">
-            <li>Pedidos -60€: <strong>2,99€</strong></li>
-            <li>Entrega: 1-2 días laborables</li>
-          </ul>
+      <div className="grid md:grid-cols-2 gap-6 mb-6">
+        <div className="border p-4 rounded-xl">
+          <h3 className="font-bold text-lg">España Península</h3>
+          <p className="text-green-600 font-bold">GRATIS a partir de 60€</p>
+          <p className="text-sm text-gray-500">Pedidos -60€: Coste 2,99€</p>
+          <p className="text-sm">Entrega: 1-2 días laborables</p>
         </div>
-        <div className="border p-6 rounded-xl">
-          <h3 className="font-bold text-lg mb-2">Baleares</h3>
-          <p className="text-green-600 font-bold mb-2">GRATIS a partir de 90€</p>
-          <ul className="text-sm space-y-1">
-            <li>Pedidos -90€: <strong>11,90€</strong></li>
-            <li>Entrega: 2-4 días</li>
-          </ul>
+        <div className="border p-4 rounded-xl">
+          <h3 className="font-bold text-lg">Baleares</h3>
+          <p className="text-green-600 font-bold">GRATIS a partir de 90€</p>
+          <p className="text-sm text-gray-500">Pedidos -90€: Coste 11,90€</p>
+          <p className="text-sm">Entrega: 2-4 días</p>
         </div>
       </div>
-      <p className="mt-6 text-sm">
-        * Los pedidos realizados antes de las 11:00h (L-V) salen el mismo día. <br/>
-        * No se realizan envíos a apartados postales.
-      </p>
+      <p className="text-sm italic">* No se realizan envíos a apartados postales.</p>
     </section>
-    {/* BOTÓN CONTACTO */}
     <div className="text-center pt-8">
-      <p className="mb-4 font-bold">¿Dudas?</p>
-      <a href="https://wa.me/34661714408" target="_blank" rel="noopener noreferrer" className="bg-green-500 text-white px-8 py-3 rounded-full font-bold hover:bg-green-600 transition inline-flex items-center gap-2">
-        Contactar por WhatsApp
+      <a href="https://wa.me/34661714408" className="inline-block bg-green-500 text-white font-bold py-3 px-8 rounded-full hover:bg-green-600 transition">
+        ¿Dudas? Contactar por WhatsApp
       </a>
     </div>
   </div>
 </div>
-); 
-}
+); }
