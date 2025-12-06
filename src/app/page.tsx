@@ -49,15 +49,14 @@ return (
       <Link href="/products?category=calzado-hombre&on_sale=true" className="bg-white text-orange-600 px-8 py-3 rounded-full font-bold text-lg hover:bg-gray-100 transition inline-block">Ver Ofertas</Link>
     </div>
   </section>
-  {/* 5. EQUÍPATE (4 FOTOS VERTICALES) */}
+  {/* 5. EQUÍPATE (3 FOTOS VERTICALES) */}
   <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12">Equípate para la Aventura</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Link href="/ropa-hombre" className="block"><img src="https://images.unsplash.com/photo-1509281373149-e957c6296406?w=500" alt="Ropa de hombre" className="w-full aspect-[3/4] object-cover rounded-xl mb-2"/><p className="text-center font-bold">HOMBRE</p></Link>
-            <Link href="/ropa-mujer" className="block"><img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=500" alt="Ropa de mujer" className="w-full aspect-[3/4] object-cover rounded-xl mb-2"/><p className="text-center font-bold">MUJER</p></Link>
-            <Link href="/products?category=ninos" className="block"><img src="https://images.unsplash.com/photo-1511556820780-d912e42b4980?w=500" alt="Ropa de niños" className="w-full aspect-[3/4] object-cover rounded-xl mb-2"/><p className="text-center font-bold">NIÑOS</p></Link>
-            <Link href="/products?category=complementos" className="block"><img src="https://images.unsplash.com/photo-1576884639148-3c06a378125a?w=500" alt="Accesorios" className="w-full aspect-[3/4] object-cover rounded-xl mb-2"/><p className="text-center font-bold">ACCESORIOS</p></Link>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Link href="/ropa-hombre" className="block"><img src="https://www.deporteyaventura.es/wp-content/uploads/2025/10/unnamed-3-7.jpg" alt="Ropa de hombre" className="w-full aspect-[3/4] object-cover rounded-xl mb-2"/><p className="text-center font-bold">HOMBRE</p></Link>
+            <Link href="/ropa-mujer" className="block"><img src="https://www.deporteyaventura.es/wp-content/uploads/2025/10/3.jpg" alt="Ropa de mujer" className="w-full aspect-[3/4] object-cover rounded-xl mb-2"/><p className="text-center font-bold">MUJER</p></Link>
+            <Link href="/products?category=complementos-trekking" className="block"><img src="https://www.deporteyaventura.es/wp-content/uploads/2024/01/Travelbag-2-image-4.jpg" alt="Accesorios" className="w-full aspect-[3/4] object-cover rounded-xl mb-2"/><p className="text-center font-bold">COMPLEMENTOS</p></Link>
         </div>
       </div>
   </section>
