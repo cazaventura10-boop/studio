@@ -8,8 +8,7 @@ import Image from 'next/image';
 import { placeholderImagesById } from '@/lib/placeholder-images';
 
 export default async function Home() {
-  const allProducts = await getProducts();
-  const newArrivals = allProducts.slice(0, 5);
+  const newArrivals = await getProducts({ per_page: 12 });
 
   const equipAccesorios = placeholderImagesById['equip-accesorios'];
 
@@ -131,9 +130,11 @@ export default async function Home() {
                 </Link>
             </Button>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <div className="flex overflow-x-auto snap-x gap-6 pb-4 -mx-4 px-4 hide-scrollbar">
             {newArrivals.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <div key={product.id} className="snap-start min-w-[280px]">
+                <ProductCard product={product} />
+              </div>
             ))}
           </div>
         </div>
@@ -270,4 +271,3 @@ export default async function Home() {
     </div>
   );
 }
-    

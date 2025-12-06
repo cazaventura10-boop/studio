@@ -337,15 +337,6 @@ export function Header() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
-              {/* MAPA CATEGORIAS */}
-              <NavigationMenuItem>
-                <Link href="/categorias" passHref legacyBehavior>
-                  <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), navTriggerClasses)}>
-                    Mapa Categorías
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-
             </NavigationMenuList>
           </NavigationMenu>
         </div>
@@ -428,8 +419,6 @@ export function Header() {
                                 ))}
                             </AccordionContent>
                         </AccordionItem>
-
-                        <MobileNavLink href="/categorias" onLinkClick={() => setIsMobileMenuOpen(false)}>Mapa Categorías</MobileNavLink>
 
                     </Accordion>
                   </nav>
