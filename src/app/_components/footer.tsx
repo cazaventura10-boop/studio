@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Facebook, Instagram, Twitter } from 'lucide-react';
+import Image from 'next/image';
 
 export function Footer() { 
   return (
@@ -8,9 +9,15 @@ export function Footer() {
     {/* COLUMNA 1: LOGO Y TEXTO */}
     <div>
       <div className="mb-6">
-        <span className="text-2xl font-black text-white uppercase tracking-tighter leading-none block">
-          DEPORTE Y <br/><span className="text-orange-600">AVENTURA</span>
-        </span>
+        <Link href="/" className="block">
+            <Image 
+                src="https://www.deporteyaventura.es/wp-content/uploads/2025/11/Gemini_Generated_Image_orrzteorrzteorrz__2___1_-removebg-preview.png"
+                alt="Deporte y Aventura Logo"
+                width={180}
+                height={40}
+                className="h-auto"
+            />
+        </Link>
       </div>
       <p className="text-sm leading-relaxed">
         Tu tienda especialista en Trekking, Caza y Kayak. Equipamiento de alto rendimiento para tus aventuras en la naturaleza.
