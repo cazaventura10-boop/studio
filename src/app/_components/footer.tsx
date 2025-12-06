@@ -2,6 +2,41 @@ import Link from 'next/link';
 import { Instagram, Facebook, Youtube } from 'lucide-react';
 import Image from 'next/image';
 
+const CustomLogo = ({ className }: { className?: string }) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 220 80"
+      className={className}
+      fill="white"
+    >
+      <text x="75" y="45" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="20" fill="white">
+        DEPORTE
+      </text>
+      <text x="75" y="65" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="20" fill="white">
+        y AVENTURA
+      </text>
+      <path d="M10 40 a 20 20 0 1 0 40 0 a 20 20 0 1 0 -40 0" fill="white" />
+      <path
+        d="M25,30 Q35,20 45,30 T 65,30"
+        fill="none"
+        stroke="orange"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+       <path
+        d="M 15,55 L 30,48 L 45,55 L 40,65 L 20,65 Z"
+        stroke="white"
+        strokeWidth="1.5"
+        fill="none"
+      />
+       <path
+        d="M70 25 l15 -15 l15 15 l-5 -5 l-10 10 l-10 -10 Z M110 25 l15 -15 l15 15 l-5 -5 l-10 10 l-10 -10 Z"
+        fill="white"
+      />
+    </svg>
+  );
+
+
 export function Footer() {
 
   const paymentMethods = [
@@ -18,12 +53,9 @@ export function Footer() {
           {/* Col 1: Logo y Texto */}
           <div className="flex flex-col gap-4">
             <Link href="/" className="mb-2">
-              <div className="flex items-center gap-2 mb-6">
-                <div className="bg-orange-600 p-2 rounded-lg">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white"><path d="m2 22 1-1h3l9-9"/><path d="M3 21v-3l9-9"/><path d="m15 6 3 4-3 4"/><path d="M9 16 5 20l1 1h3l10-10-4-4-10 10h3l1 1"/></svg>
-                </div>
-                <span className="text-2xl font-black text-white uppercase tracking-tighter">DEPORTE Y AVENTURA</span>
-              </div>
+               <div className="flex items-center gap-2 mb-6">
+                <Image src="https://storage.googleapis.com/deporteyaventura/logo-white-eagle-orange.png" alt="Deporte y Aventura Logo" width={200} height={75} />
+               </div>
             </Link>
             <p className="text-sm text-gray-400">
               Tu tienda especialista en material de Trekking, Caza y Kayak. Equipamiento técnico para tus aventuras en la naturaleza.
