@@ -9,7 +9,8 @@ const images = [
   { src: 'https://www.deporteyaventura.es/wp-content/uploads/2022/11/imj05218_000577_3.webp', alt: 'Sudaderas y Polares', href: '/products?category=sudaderas-hombre' },
   { src: 'https://www.deporteyaventura.es/wp-content/uploads/2025/10/3-1.jpg', alt: 'Pantalones Trekking Mujer', href: '/products?category=pantalones-montana' },
   { src: 'https://www.deporteyaventura.es/wp-content/uploads/2025/11/unnamed-2-1.jpg', alt: 'Chaquetas Mujer', href: '/products?category=chaquetas' },
-  { src: 'https://www.deporteyaventura.es/wp-content/uploads/2025/11/76a44fa8-2306-4fc3-88bd-99262c1d4512-1-3-1.png', alt: 'Hunting gear', href: '/products?category=caza'}
+  { src: 'https://www.deporteyaventura.es/wp-content/uploads/2025/11/Captura-de-pantalla-2025-11-24-124444.png', alt: 'Botas y Zapatillas', href: '/products?category=calzado-de-mujer' },
+  { src: 'https://www.deporteyaventura.es/wp-content/uploads/2025/11/Captura-de-pantalla-2025-11-13-163918.png', alt: 'Sudaderas y Polares', href: '/products?category=sudaderas-mujer' }
 ];
 
 export default function InfiniteGallery() {
