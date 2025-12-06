@@ -30,7 +30,6 @@ export function Footer() {
       <ul className="space-y-3 text-sm">
         <li><Link href="/envios" className="hover:text-orange-500 transition">Envíos y Devoluciones</Link></li>
         <li><Link href="#" className="hover:text-orange-500 transition">Preguntas Frecuentes</Link></li>
-        <li><Link href="#" className="hover:text-orange-500 transition">Guía de Tallas</Link></li>
         <li><Link href="/contacto" className="hover:text-orange-500 transition">Contacto</Link></li>
       </ul>
     </div>
