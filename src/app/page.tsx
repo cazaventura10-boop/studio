@@ -17,7 +17,18 @@ return (
       <Link href="/products" className="bg-orange-600 hover:bg-orange-700 text-white text-lg font-bold py-4 px-10 rounded-full transition-transform hover:scale-105 shadow-xl inline-block">EXPLORAR NOVEDADES</Link>
     </div>
   </section>
-  {/* 2. CATEGORÍAS PRINCIPALES */}
+  {/* 2. EQUÍPATE (3 FOTOS VERTICALES) */}
+  <section className="py-16 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold text-center mb-12">Equípate para la Aventura</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Link href="/ropa-hombre" className="block"><img src="https://www.deporteyaventura.es/wp-content/uploads/2025/10/unnamed-3-7.jpg" alt="Ropa de hombre" className="w-full aspect-[3/4] object-cover rounded-xl mb-2"/><p className="text-center font-bold">HOMBRE</p></Link>
+            <Link href="/ropa-mujer" className="block"><img src="https://www.deporteyaventura.es/wp-content/uploads/2025/10/3.jpg" alt="Ropa de mujer" className="w-full aspect-[3/4] object-cover rounded-xl mb-2"/><p className="text-center font-bold">MUJER</p></Link>
+            <Link href="/products?category=complementos-trekking" className="block"><img src="https://www.deporteyaventura.es/wp-content/uploads/2024/01/Travelbag-2-image-4.jpg" alt="Accesorios" className="w-full aspect-[3/4] object-cover rounded-xl mb-2"/><p className="text-center font-bold">COMPLEMENTOS</p></Link>
+        </div>
+      </div>
+  </section>
+  {/* 3. CATEGORÍAS PRINCIPALES */}
   <section className="py-20 container mx-auto px-4">
     <h2 className="text-3xl font-bold text-center mb-12 uppercase tracking-wide">Categorías Principales</h2>
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -26,7 +37,7 @@ return (
       <Link href="/products?category=kayak" className="group relative h-80 rounded-2xl overflow-hidden shadow-lg"><img src="https://images.unsplash.com/photo-1543039625-14cbd3802e7d?w=800" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Kayak" /><div className="absolute inset-0 bg-black/30 flex items-center justify-center"><h3 className="text-white text-4xl font-black uppercase tracking-widest">KAYAK</h3></div></Link>
     </div>
   </section>
-  {/* 3. LIFESTYLE (FUSIÓN DE ESTILO) */}
+  {/* 4. LIFESTYLE (FUSIÓN DE ESTILO) */}
   <section className="py-16 bg-white my-16">
     <div className="container mx-auto px-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -40,7 +51,7 @@ return (
       </div>
     </div>
   </section>
-  {/* 4. BANNER OFERTAS */}
+  {/* 5. BANNER OFERTAS */}
   <section className="bg-orange-600 py-16 text-center text-white my-16 relative">
     <div className="container mx-auto px-4 relative z-10">
       <div className="inline-block mb-4 text-4xl">⚡</div>
@@ -48,17 +59,6 @@ return (
       <p className="text-xl md:text-2xl mb-8 font-medium opacity-90">Hasta -40% en Calzado Técnico</p>
       <Link href="/products?category=calzado-hombre&on_sale=true" className="bg-white text-orange-600 px-8 py-3 rounded-full font-bold text-lg hover:bg-gray-100 transition inline-block">Ver Ofertas</Link>
     </div>
-  </section>
-  {/* 5. EQUÍPATE (3 FOTOS VERTICALES) */}
-  <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">Equípate para la Aventura</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Link href="/ropa-hombre" className="block"><img src="https://www.deporteyaventura.es/wp-content/uploads/2025/10/unnamed-3-7.jpg" alt="Ropa de hombre" className="w-full aspect-[3/4] object-cover rounded-xl mb-2"/><p className="text-center font-bold">HOMBRE</p></Link>
-            <Link href="/ropa-mujer" className="block"><img src="https://www.deporteyaventura.es/wp-content/uploads/2025/10/3.jpg" alt="Ropa de mujer" className="w-full aspect-[3/4] object-cover rounded-xl mb-2"/><p className="text-center font-bold">MUJER</p></Link>
-            <Link href="/products?category=complementos-trekking" className="block"><img src="https://www.deporteyaventura.es/wp-content/uploads/2024/01/Travelbag-2-image-4.jpg" alt="Accesorios" className="w-full aspect-[3/4] object-cover rounded-xl mb-2"/><p className="text-center font-bold">COMPLEMENTOS</p></Link>
-        </div>
-      </div>
   </section>
   {/* 6. NOVEDADES (GRID LIMPIO) */}
   <section className="py-20 container mx-auto px-4">
