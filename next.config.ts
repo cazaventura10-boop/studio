@@ -30,10 +30,6 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'deporteyaventura.es',
       },
-      {
-        protocol: 'https',
-        hostname: 'storage.googleapis.com',
-      }
     ],
   },
 };
