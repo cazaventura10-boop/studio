@@ -23,8 +23,8 @@ function WhatsAppIcon() {
 
 
 export function WhatsAppButton() {
-  const phoneNumber = "1234567890"; // Reemplaza con tu número
-  const message = "Hola, me gustaría obtener más información."; // Mensaje predefinido
+  const phoneNumber = "34661714408";
+  const message = "Hola, he visitado vuestra web y me gustaría obtener más información.";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
   return (
