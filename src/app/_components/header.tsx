@@ -157,7 +157,7 @@ const kayakLinks: NavLink[] = [
 function Logo() {
   return (
     <Image 
-        src="https://www.deporteyaventura.es/wp-content/uploads/2025/11/Gemini_Generated_Image_orrzteorrzteorrz__2___1_-removebg-preview.png"
+        src="https://www.deporteyaventura.es/wp-content/uploads/2025/11/Gemini_Generated_Image_orrzteorrzteorrz-2-1.png"
         alt="Deporte Y Aventura Logo"
         width={150}
         height={50}
