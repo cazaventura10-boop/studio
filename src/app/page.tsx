@@ -49,9 +49,6 @@ return (
     </div>
   </section>
   
-  {/* 7. INFINITE GALLERY */}
-  <InfiniteGallery />
-
   {/* 5. BANNER OFERTAS */}
   <section className="bg-orange-600 py-16 text-center text-white my-16 relative">
     <div className="container mx-auto px-4 relative z-10">
@@ -87,6 +84,9 @@ return (
         </div>
     </div>
   </section>
+
+  {/* 7. INFINITE GALLERY */}
+  <InfiniteGallery />
   
 </main>
 );
