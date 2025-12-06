@@ -81,9 +81,7 @@ return (
       <Link href="/products?category=kayak" className="group relative h-80 rounded-2xl overflow-hidden shadow-lg"><img src="https://www.deporteyaventura.es/wp-content/uploads/2025/11/unnamed-3-6.jpg" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Kayak" /><div className="absolute inset-0 bg-black/30 flex items-center justify-center"><h3 className="text-white text-4xl font-black uppercase tracking-widest">KAYAK</h3></div></Link>
     </div>
   </section>
-  {/* 7. INFINITE GALLERY */}
-  <InfiniteGallery />
-
+  
   {/* 8. OPINIONES */}
   <section className="py-20 bg-white border-t border-gray-100">
     <div className="container mx-auto px-4 text-center">
@@ -100,6 +98,9 @@ return (
         </div>
     </div>
   </section>
+  
+  {/* 7. INFINITE GALLERY */}
+  <InfiniteGallery />
 </main>
 );
 }
