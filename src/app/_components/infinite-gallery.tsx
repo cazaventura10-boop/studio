@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const images = [
-  { src: 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&q=80', alt: 'Trekking through mountains', href: '/products?category=trekking' },
+  { src: 'https://www.deporteyaventura.es/wp-content/uploads/2025/10/unnamed-3-7.jpg', alt: 'Ropa de hombre', href: '/ropa-hombre' },
   { src: 'https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=600&q=80', alt: 'Camping under the stars', href: '/products?tag=accesorios-y-estancos' },
   { src: 'https://images.unsplash.com/photo-1504280509243-48c8b45f8b11?w=600&q=80', alt: 'Woman hiking in the mountains', href: '/ropa-mujer' },
   { src: 'https://images.unsplash.com/photo-1543039625-14cbd3802e7d?w=600&q=80', alt: 'Kayaking on a calm lake', href: '/products?category=kayak' },
