@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { placeholderImagesById } from '@/lib/placeholder-images';
 
 export default async function Home() {
-  const newArrivals = await getProducts({ per_page: 20, orderby: 'date', order: 'desc' });
+  const newArrivals = await getProducts({ per_page: 12, orderby: 'date', order: 'desc' });
 
   const equipAccesorios = placeholderImagesById['equip-accesorios'];
 

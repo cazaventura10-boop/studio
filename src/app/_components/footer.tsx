@@ -18,9 +18,11 @@ export function Footer() {
           {/* Col 1: Logo y Texto */}
           <div className="flex flex-col gap-4">
             <Link href="/" className="mb-2">
-               <div className="flex items-center gap-2 mb-6">
-                <Image src="https://storage.googleapis.com/deporteyaventura/logo-white-eagle-orange.png" alt="Deporte y Aventura Logo" width={200} height={75} />
-               </div>
+               <div className="mb-6">
+                <span className="text-2xl font-black text-white uppercase tracking-tighter leading-none block">
+                  DEPORTE Y <br/><span className="text-orange-600">AVENTURA</span>
+                </span>
+              </div>
             </Link>
             <p className="text-sm text-gray-400">
               Tu tienda especialista en material de Trekking, Caza y Kayak. Equipamiento técnico para tus aventuras en la naturaleza.
@@ -58,10 +60,11 @@ export function Footer() {
               <Link href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="Youtube"><Youtube /></Link>
             </div>
             <h3 className="font-bold text-white uppercase tracking-wider mb-4">Métodos de Pago</h3>
-            <div className="flex gap-3 mt-4">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/64px-Visa_Inc._logo.svg.png" alt="Visa" className="h-8 bg-white rounded p-1" />
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/64px-Mastercard-logo.svg.png" alt="Mastercard" className="h-8 bg-white rounded p-1" />
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Bizum_logo.svg/1280px-Bizum_logo.svg.png" alt="Bizum" className="h-8 bg-white rounded p-1" />
+            <div className="flex gap-3 mt-4 items-center bg-white/10 p-2 rounded-lg w-fit">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/64px-Visa_Inc._logo.svg.png" alt="Visa" className="h-6 brightness-0 invert" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/64px-Mastercard-logo.svg.png" alt="Mastercard" className="h-6 brightness-0 invert" />
+              {/* Logo Oficial Bizum (Verde) */}
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Bizum_logo.svg/320px-Bizum_logo.svg.png" alt="Bizum" className="h-8 bg-white rounded-sm p-1" />
             </div>
           </div>
 
