@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -156,14 +155,9 @@ const kayakLinks: NavLink[] = [
 
 function Logo() {
   return (
-    <Image 
-        src="https://www.deporteyaventura.es/wp-content/uploads/2025/11/Gemini_Generated_Image_orrzteorrzteorrz-2-1.png"
-        alt="Deporte Y Aventura Logo"
-        width={150}
-        height={50}
-        style={{ height: 'auto' }}
-        priority
-    />
+    <span className="text-2xl font-black uppercase tracking-tighter leading-none">
+      Deporte y <br/><span className="text-orange-500">Aventura</span>
+    </span>
   );
 }
 
