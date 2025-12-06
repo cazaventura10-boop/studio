@@ -22,7 +22,7 @@ export default function InfiniteGallery() {
       </div>
       <div className="relative w-full flex gap-4 overflow-hidden group">
         {/* Bloque 1 de imágenes */}
-        <div className="flex gap-4 animate-infinite-scroll min-w-full justify-around group-hover:[animation-play-state:paused]">
+        <div className="flex-shrink-0 flex gap-4 animate-infinite-scroll min-w-full justify-around group-hover:[animation-play-state:paused]">
           {images.map((image, index) => (
             <Link href={image.href} key={index} className="relative w-64 h-80 rounded-xl overflow-hidden flex-shrink-0 group/item">
               <Image 
@@ -39,7 +39,7 @@ export default function InfiniteGallery() {
           ))}
         </div>
         {/* Bloque 2 (Duplicado para el efecto infinito) */}
-        <div className="flex gap-4 animate-infinite-scroll min-w-full justify-around group-hover:[animation-play-state:paused]" aria-hidden="true">
+        <div className="flex-shrink-0 flex gap-4 animate-infinite-scroll min-w-full justify-around group-hover:[animation-play-state:paused]" aria-hidden="true">
           {images.map((image, index) => (
             <Link href={image.href} key={`dup-${index}`} className="relative w-64 h-80 rounded-xl overflow-hidden flex-shrink-0 group/item">
               <Image 
