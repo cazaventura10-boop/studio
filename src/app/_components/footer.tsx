@@ -64,7 +64,7 @@ export function Footer() {
             <div className="flex gap-3 mt-4">
               <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/64px-Visa_Inc._logo.svg.png" alt="Visa" className="h-8 bg-white rounded p-1" />
               <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/64px-Mastercard-logo.svg.png" alt="Mastercard" className="h-8 bg-white rounded p-1" />
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/64px-PayPal.svg.png" alt="PayPal" className="h-8 bg-white rounded p-1" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Bizum_logo.svg/1280px-Bizum_logo.svg.png" alt="Bizum" className="h-8 bg-white rounded p-1" />
             </div>
           </div>
 
