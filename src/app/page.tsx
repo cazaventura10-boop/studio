@@ -35,10 +35,16 @@ return (
         <div className="space-y-8">
           <span className="text-orange-600 font-bold tracking-widest uppercase">ESTILO DE VIDA</span>
           <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-gray-900 leading-none">FUSIÓN DE ESTILO <br />Y RENDIMIENTO.</h2>
-          <p className="text-lg text-gray-600 leading-relaxed max-w-md">Descubre nuestra colección más versátil.</p>
-          <Link href="/products" className="inline-block bg-black text-white px-8 py-4 rounded-xl font-bold hover:bg-gray-800 transition">Ver Colección Casual</Link>
+          <p className="text-lg text-gray-600 leading-relaxed max-w-md">Descubre nuestra colección más versátil. Prendas diseñadas para acompañarte a tus escapadas por la naturaleza, sin sacrificar comodidad ni estilo.</p>
+          <Link href="/products?category=newwood" className="group inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white text-lg font-bold px-8 py-4 rounded-xl transition-all active:scale-95">
+              Descubre Newwood Extreme
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+              </svg>
+          </Link>
         </div>
-        <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-2xl"><img src="https://images.unsplash.com/photo-1606859191214-25806e8e2423?q=80&w=1200" alt="Lifestyle" className="absolute inset-0 w-full h-full object-cover" /></div>
+        <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-2xl"><img src="https://www.deporteyaventura.es/wp-content/uploads/2024/11/unnamed-2-1.jpg" alt="Estilo de vida outdoor" className="absolute inset-0 w-full h-full object-cover" /></div>
       </div>
     </div>
   </section>
