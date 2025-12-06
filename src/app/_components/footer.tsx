@@ -29,7 +29,8 @@ export function Footer() {
       <h4 className="text-white font-bold mb-6 uppercase tracking-wider">Atención al Cliente</h4>
       <ul className="space-y-3 text-sm">
         <li><a href="https://www.deporteyaventura.es/formas-envio-plazos-entrega/" target="_blank" rel="noopener noreferrer" className="hover:text-orange-500 transition">Formas de envío y plazos de entrega</a></li>
-        <li><Link href="#" className="hover:text-orange-500 transition">Preguntas Frecuentes</Link></li>
+        <li><a href="https://www.deporteyaventura.es/devoluciones-y-cambios-2/" target="_blank" rel="noopener noreferrer" className="hover:text-orange-500 transition">Devoluciones y cambios</a></li>
+        <li><Link href="/faq" className="hover:text-orange-500 transition">Preguntas Frecuentes</Link></li>
         <li><Link href="/contacto" className="hover:text-orange-500 transition">Contacto</Link></li>
       </ul>
     </div>
@@ -38,9 +39,9 @@ export function Footer() {
       <h4 className="text-white font-bold mb-6 uppercase tracking-wider">Legal</h4>
       <ul className="space-y-3 text-sm">
         <li><Link href="/aviso-legal" className="hover:text-orange-500 transition">Aviso Legal</Link></li>
-        <li><Link href="/privacidad" className="hover:text-orange-500 transition">Política de Privacidad</Link></li>
+        <li><Link href="/privacidad" className="hovertext-orange-500 transition">Política de Privacidad</Link></li>
         <li><Link href="/privacidad#cookies" className="hover:text-orange-500 transition">Política de Cookies</Link></li>
-        <li><Link href="#" className="hover:text-orange-500 transition">Términos y Condiciones</Link></li>
+        <li><Link href="/terminos-y-condiciones" className="hover:text-orange-500 transition">Términos y Condiciones</Link></li>
       </ul>
     </div>
     {/* COLUMNA 4: PAGOS Y REDES */}
