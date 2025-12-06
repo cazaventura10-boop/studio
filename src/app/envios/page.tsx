@@ -7,11 +7,12 @@ export default function EnviosPage() {
         <header className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-extrabold font-headline tracking-tight">Envíos y Devoluciones</h1>
           <p className="mt-4 text-lg text-muted-foreground">
-            Toda la información que necesitas sobre cómo recibir y devolver tus pedidos.
+            Información sobre la entrega y cambios de tus pedidos.
           </p>
         </header>
 
-        <div className="space-y-12">
+        <div className="prose prose-lg max-w-none text-muted-foreground mx-auto space-y-12">
+          
           {/* SECCIÓN DE ENVÍOS */}
           <section id="envios">
             <div className="flex items-start gap-6">
@@ -19,16 +20,61 @@ export default function EnviosPage() {
                 <Truck className="h-8 w-8" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold font-headline mb-3">Política de Envíos</h2>
-                <div className="prose prose-lg max-w-none text-muted-foreground">
-                  <p>Queremos que disfrutes de tu equipamiento lo antes posible. Por eso, procesamos todos los pedidos con la máxima velocidad.</p>
-                  <ul>
-                    <li><strong>Península (España y Portugal):</strong> Envío en 24/48 horas laborables.</li>
-                    <li><strong>Coste de envío:</strong> 2,99€ para pedidos inferiores a 60€. <strong>Gratis para pedidos superiores a 60€.</strong></li>
-                    <li><strong>Baleares, Canarias, Ceuta y Melilla:</strong> Consultar condiciones y plazos de entrega al finalizar la compra.</li>
-                  </ul>
-                  <p>Recibirás un correo electrónico con un número de seguimiento tan pronto como tu pedido salga de nuestro almacén para que puedas saber dónde está en todo momento.</p>
+                <h2 className="font-headline">Formas de Envío y Plazos de Entrega</h2>
+                <p>Deporteyaventura garantiza la entrega al transportista, el mismo día de la realización del pedido, de todos aquellos pedidos que se formalicen antes de las <strong>11:00 horas</strong> (hora española) de LUNES a VIERNES, siempre que se encuentren en stock, y salvo que se realicen en sábados, domingos y festivos. En cuyo caso el pedido se tramitará el primer día laborable posterior al día de realización del mismo.</p>
+                <p>Los plazos se computan en días hábiles y pueden verse alterados por fiestas locales o nacionales. Si la forma de pago elegida es transferencia bancaria, no se realizará el envío hasta tener confirmación bancaria.</p>
+                <p><strong>Atención:</strong> En ningún caso se realizarán envíos a apartados postales.</p>
+
+                <h3 className="font-headline text-xl mt-8">España Península</h3>
+                <div className="border rounded-lg overflow-hidden my-4">
+                  <table className="w-full text-left">
+                    <thead className="bg-muted/50">
+                      <tr>
+                        <th className="p-3 font-semibold">Tipo de Envío</th>
+                        <th className="p-3 font-semibold">Tiempo de Entrega</th>
+                        <th className="p-3 font-semibold text-right">Coste (IVA incl.)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-t">
+                        <td className="p-3">Pedidos inferiores a 60€</td>
+                        <td className="p-3">1-3 días laborables*</td>
+                        <td className="p-3 text-right font-bold">2,99 €</td>
+                      </tr>
+                      <tr className="border-t bg-green-50">
+                        <td className="p-3 font-semibold">Pedidos a partir de 60€</td>
+                        <td className="p-3">1-3 días laborables*</td>
+                        <td className="p-3 text-right font-bold text-green-700">GRATIS</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
+
+                <h3 className="font-headline text-xl mt-8">España Baleares</h3>
+                 <div className="border rounded-lg overflow-hidden my-4">
+                  <table className="w-full text-left">
+                    <thead className="bg-muted/50">
+                      <tr>
+                        <th className="p-3 font-semibold">Tipo de Envío</th>
+                        <th className="p-3 font-semibold">Tiempo de Entrega</th>
+                        <th className="p-3 font-semibold text-right">Coste (IVA incl.)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-t">
+                        <td className="p-3">Pedidos inferiores a 90€</td>
+                        <td className="p-3">2-4 días</td>
+                        <td className="p-3 text-right font-bold">11,90 €</td>
+                      </tr>
+                      <tr className="border-t bg-green-50">
+                        <td className="p-3 font-semibold">Pedidos a partir de 90€</td>
+                        <td className="p-3">2-4 días</td>
+                        <td className="p-3 text-right font-bold text-green-700">GRATIS</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p><strong>Otros destinos:</strong> Para consultar otros destinos, por favor contacta a <a href="mailto:comercio@deporteyaventura.es">comercio@deporteyaventura.es</a>.</p>
               </div>
             </div>
           </section>
@@ -40,17 +86,28 @@ export default function EnviosPage() {
                 <RefreshCw className="h-8 w-8" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold font-headline mb-3">Política de Devoluciones</h2>
-                <div className="prose prose-lg max-w-none text-muted-foreground">
-                  <p>Si no estás 100% satisfecho con tu compra, ¡no hay problema! Tienes 30 días naturales desde la recepción del pedido para realizar una devolución.</p>
-                   <p>Condiciones para la devolución:</p>
-                  <ul>
-                    <li>El producto debe estar en perfectas condiciones, sin usar y con su embalaje y etiquetas originales.</li>
-                    <li>Los productos de higiene o seguridad no pueden ser devueltos una vez abiertos.</li>
-                    <li>Para iniciar una devolución, por favor, <a href="/contacto">contacta con nosotros</a> indicando tu número de pedido y el motivo.</li>
-                  </ul>
-                  <p>Una vez que recibamos y verifiquemos el estado del producto, procederemos al reembolso del importe a través del mismo método de pago utilizado en la compra. Los costes de envío de la devolución corren por cuenta del cliente, a menos que el producto sea defectuoso o incorrecto.</p>
-                </div>
+                <h2 className="font-headline">Devoluciones y Cambios</h2>
+                <p>Si por cualquier motivo no quedas satisfecho con tu pedido, tienes un plazo de <strong>10 días naturales</strong> a contar desde la fecha de entrega del pedido. Durante Navidad, el plazo se amplía para poder realizar cambios después de Reyes.</p>
+                
+                <h3 className="font-headline text-xl mt-6">Condiciones de Devolución</h3>
+                <ul>
+                  <li>El producto debe estar en perfectas condiciones, sin usar (más allá de la mera comprobación), con su embalaje original, garantías, etiquetas e instrucciones.</li>
+                  <li>El envío de la devolución hasta nuestro almacén corre a cargo del cliente.</li>
+                  <li>Si los gastos de envío iniciales fueron gratuitos, se descontarán 5€ del importe a devolver.</li>
+                  <li>En caso de cambio por motivos no imputables a deporteyaventura.es, los gastos de recogida y nuevo envío serán de 10€, a cargo del comprador.</li>
+                  <li>No se admiten devoluciones en ropa interior y GPS/Pulsómetros que se hayan puesto en funcionamiento.</li>
+                </ul>
+
+                 <h3 className="font-headline text-xl mt-6">Proceso de Devolución</h3>
+                 <p>Antes de enviar cualquier producto, es imprescindible contactarnos por WhatsApp al <a href="https://wa.me/34661714408">661 714 408</a>.</p>
+                 <p>La dirección para el envío de devoluciones es:</p>
+                 <div className="p-4 border-l-4 border-primary bg-muted/50 my-4">
+                    <strong>Mario Ruiz Lopez</strong><br/>
+                    C/ Castelar 15<br/>
+                    46357, La Portera (Valencia)
+                 </div>
+                 <p>Es muy importante que nos devuelvas los productos perfectamente embalados. Si resultan dañados debido a un embalaje inapropiado, el producto sufrirá una depreciación.</p>
+                 <p>Una vez recibamos la mercancía y comprobemos su estado, procederemos al reintegro del importe o al envío del nuevo producto. Si pagaste por tarjeta, ten en cuenta que tu banco puede tardar hasta el mes siguiente en reflejar la devolución.</p>
               </div>
             </div>
           </section>
