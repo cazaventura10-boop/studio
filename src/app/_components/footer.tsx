@@ -28,7 +28,6 @@ export function Footer() {
     <div>
       <h4 className="text-white font-bold mb-6 uppercase tracking-wider">Atención al Cliente</h4>
       <ul className="space-y-3 text-sm">
-        <li><Link href="/envios" className="hover:text-orange-500 transition">Envíos y Devoluciones</Link></li>
         <li><Link href="#" className="hover:text-orange-500 transition">Preguntas Frecuentes</Link></li>
         <li><Link href="/contacto" className="hover:text-orange-500 transition">Contacto</Link></li>
       </ul>
