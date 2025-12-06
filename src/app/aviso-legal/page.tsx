@@ -11,7 +11,7 @@ export default function AvisoLegalPage() {
 
         <div className="prose prose-lg max-w-none text-muted-foreground mx-auto">
           <h2 className="font-headline">1. DATOS IDENTIFICATIVOS</h2>
-          <p>En cumplimiento con el deber de información recogido en artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y del Comercio Electrónico, a continuación se reflejan los siguientes datos: el titular de deporteyaventura.es (en adelante, el Sitio) es <strong>Mario Ruiz Lopez</strong>, con domicilio a estos efectos en C/ Castelar 15, 46357 La Portera, número de C.I.F.: 45631058R. Correo electrónico de contacto: legal@deporteyaventura.es.</p>
+          <p>En cumplimiento con el deber de información recogido en artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y del Comercio Electrónico, a continuación se reflejan los siguientes datos: el titular de deporteyaventura.es (en adelante, el Sitio) es <strong>Mario Ruiz Lopez</strong>, con domicilio a estos efectos en C/ Castelar 15, 46357 La Portera, número de C.I.F.: 45631058R. Correo electrónico de contacto: mario@deporteyaventura.es.</p>
           
           <h2 className="font-headline">2. USUARIOS</h2>
           <p>El acceso y/o uso de este portal de Mario Ruiz Lopez atribuye la condición de USUARIO, que acepta, desde dicho acceso y/o uso, las Condiciones Generales de Uso aquí reflejadas. Las citadas Condiciones serán de aplicación independientemente de las Condiciones Generales de Contratación que en su caso resulten de obligado cumplimiento.</p>
