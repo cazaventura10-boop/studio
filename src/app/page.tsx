@@ -6,8 +6,7 @@ import InfiniteGallery from './_components/infinite-gallery';
 export const dynamic = 'force-dynamic';
 
 export default async function Home() { 
-  const newProducts = await getProducts({ per_page: 12, orderby: 'date', order: 'desc' });
-
+  
 return (
 <main>
   {/* 1. HERO SECTION (Montaña) */}
@@ -49,20 +48,7 @@ return (
       </div>
     </div>
   </section>
-  {/* 4. NOVEDADES (GRID LIMPIO) */}
-  <section className="py-20 container mx-auto px-4 overflow-hidden">
-    <div className="flex justify-between items-end mb-12">
-      <h2 className="text-4xl font-bold uppercase tracking-wide">Novedades de Temporada</h2>
-      <Link href="/products" className="text-orange-600 font-bold hover:underline">Ver Todos →</Link>
-    </div>
-    <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 -mx-4 px-4 hide-scrollbar">
-      {newProducts.map((product: any) => (
-        <div key={product.id} className="snap-start flex-shrink-0 min-w-[280px] md:min-w-[calc(25%-1.5rem)]">
-            <ProductCard product={product} />
-        </div>
-      ))}
-    </div>
-  </section>
+  
   {/* 5. BANNER OFERTAS */}
   <section className="bg-orange-600 py-16 text-center text-white my-16 relative">
     <div className="container mx-auto px-4 relative z-10">
