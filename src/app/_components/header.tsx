@@ -342,12 +342,12 @@ export function Header() {
         
         <div className="flex items-center gap-2">
            <div className="hidden md:flex items-center gap-2">
-             <CartSheet />
              <Button variant="ghost" size="icon" className={iconButtonClasses}>
                 <Search className="h-6 w-6" />
                 <span className="sr-only">Buscar</span>
              </Button>
           </div>
+          <CartSheet />
           
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
