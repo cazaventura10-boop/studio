@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { placeholderImagesById } from '@/lib/placeholder-images';
 
 export default async function Home() {
-  const newArrivals = await getProducts({ per_page: 12 });
+  const newArrivals = await getProducts({ per_page: 20, orderby: 'date', order: 'desc' });
 
   const equipAccesorios = placeholderImagesById['equip-accesorios'];
 
@@ -124,13 +124,8 @@ export default async function Home() {
         <div className="container">
           <div className="flex justify-between items-center mb-12">
             <h2 className="text-4xl md:text-5xl font-extrabold font-headline">Novedades de Temporada</h2>
-            <Button variant="link" asChild className="text-orange-500 hover:text-orange-500/80">
-                <Link href="/products">
-                    Ver Todos <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-            </Button>
           </div>
-          <div className="flex overflow-x-auto snap-x gap-6 pb-4 -mx-4 px-4 hide-scrollbar">
+          <div className="flex overflow-x-auto snap-x gap-6 pb-8 hide-scrollbar -mx-4 px-4">
             {newArrivals.map((product) => (
               <div key={product.id} className="snap-start min-w-[280px]">
                 <ProductCard product={product} />

@@ -4,23 +4,10 @@ import Image from 'next/image';
 
 export function Footer() {
 
-  function Logo() {
-    return (
-      <Image
-        src="https://www.deporteyaventura.es/wp-content/uploads/2025/11/logo-white-deporte-y-aventura.png"
-        alt="Deporte Y Aventura Logo"
-        width={180}
-        height={60}
-        style={{ height: 'auto', width: '180px' }}
-        priority
-      />
-    );
-  }
-
   const paymentMethods = [
-    { name: 'Visa', url: 'https://www.deporteyaventura.es/wp-content/uploads/2024/07/visa.png' },
-    { name: 'Mastercard', url: 'https://www.deporteyaventura.es/wp-content/uploads/2024/07/mastercard.png' },
-    { name: 'Bizum', url: 'https://www.deporteyaventura.es/wp-content/uploads/2024/07/bizum.png' }
+    { name: 'Visa', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/64px-Visa_Inc._logo.svg.png' },
+    { name: 'Mastercard', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/64px-Mastercard-logo.svg.png' },
+    { name: 'PayPal', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/64px-PayPal.svg.png' }
   ];
 
   return (
@@ -31,7 +18,12 @@ export function Footer() {
           {/* Col 1: Logo y Texto */}
           <div className="flex flex-col gap-4">
             <Link href="/" className="mb-2">
-              <Logo />
+              <div className="flex items-center gap-2 mb-6">
+                <div className="bg-orange-600 p-2 rounded-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white"><path d="m2 22 1-1h3l9-9"/><path d="M3 21v-3l9-9"/><path d="m15 6 3 4-3 4"/><path d="M9 16 5 20l1 1h3l10-10-4-4-10 10h3l1 1"/></svg>
+                </div>
+                <span className="text-2xl font-black text-white uppercase tracking-tighter">DEPORTE Y AVENTURA</span>
+              </div>
             </Link>
             <p className="text-sm text-gray-400">
               Tu tienda especialista en material de Trekking, Caza y Kayak. Equipamiento técnico para tus aventuras en la naturaleza.
@@ -69,12 +61,10 @@ export function Footer() {
               <Link href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="Youtube"><Youtube /></Link>
             </div>
             <h3 className="font-bold text-white uppercase tracking-wider mb-4">Métodos de Pago</h3>
-            <div className="flex items-center space-x-2">
-              {paymentMethods.map(method => (
-                <div key={method.name} className="bg-white rounded-md p-1 h-8 flex items-center">
-                    <Image src={method.url} alt={method.name} width={36} height={24} style={{ objectFit: 'contain', height: '100%', width: 'auto' }} />
-                </div>
-              ))}
+            <div className="flex gap-3 mt-4">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/64px-Visa_Inc._logo.svg.png" alt="Visa" className="h-8 bg-white rounded p-1" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/64px-Mastercard-logo.svg.png" alt="Mastercard" className="h-8 bg-white rounded p-1" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/64px-PayPal.svg.png" alt="PayPal" className="h-8 bg-white rounded p-1" />
             </div>
           </div>
 
