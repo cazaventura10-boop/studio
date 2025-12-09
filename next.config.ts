@@ -1,14 +1,22 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Ignorar errores de TypeScript al construir
   typescript: {
-    // !! ATENCIÓN !!
-    // Ignoramos errores de tipo para poder publicar ya
     ignoreBuildErrors: true,
   },
+  // Ignorar errores de ESLint al construir
   eslint: {
-    // Ignoramos errores de estilo
     ignoreDuringBuilds: true,
+  },
+  // Permitir imágenes de cualquier sitio (para que no fallen las fotos)
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
   },
 };
 
