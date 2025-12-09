@@ -1,40 +1,14 @@
-import type {NextConfig} from 'next';
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   typescript: {
+    // !! ATENCIÓN !!
+    // Ignoramos errores de tipo para poder publicar ya
     ignoreBuildErrors: true,
   },
   eslint: {
+    // Ignoramos errores de estilo
     ignoreDuringBuilds: true,
-  },
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'placehold.co',
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'picsum.photos',
-      },
-      {
-        protocol: 'https',
-        hostname: 'www.deporteyaventura.es',
-      },
-      {
-        protocol: 'https',
-        hostname: 'deporteyaventura.es',
-      },
-      {
-        protocol: 'https',
-        hostname: 'olipe.com',
-      },
-    ],
   },
 };
 
