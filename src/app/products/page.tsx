@@ -35,7 +35,7 @@ export default async function ProductsPage({
         ? `Encuentra el mejor equipamiento relacionado con "${displayTerm}".`
         : "Equipamiento de alta calidad para cada una de tus necesidades.");
         
-  const noProductsFoundTerm = displayTerm || (onSale ? "la oferta actual" : "");
+  const noProductsFoundTerm = displayTerm || (onSale ? "productos en oferta" : "");
 
   return (
     <>
