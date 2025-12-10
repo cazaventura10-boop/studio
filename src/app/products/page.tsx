@@ -34,6 +34,8 @@ export default async function ProductsPage({
     : (displayTerm
         ? `Encuentra el mejor equipamiento relacionado con "${displayTerm}".`
         : "Equipamiento de alta calidad para cada una de tus necesidades.");
+        
+  const noProductsFoundTerm = displayTerm || (onSale ? "la oferta actual" : "");
 
   return (
     <>
@@ -55,7 +57,7 @@ export default async function ProductsPage({
         ) : (
           <div className="text-center py-20 bg-secondary/50 rounded-xl">
               <h2 className="text-2xl font-semibold text-foreground">
-                  No hemos encontrado productos para &quot;{displayTerm || "la oferta actual"}&quot;
+                  No hemos encontrado productos para &quot;{noProductsFoundTerm}&quot;
               </h2>
               <p className="text-muted-foreground mt-2">
                   Intenta buscar algo más general o utiliza el buscador principal.

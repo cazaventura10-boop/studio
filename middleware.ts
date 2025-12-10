@@ -16,10 +16,11 @@ export function middleware(request: NextRequest) {
       // Convierte el slug a minúsculas, que es como lo espera la nueva página
       const lowerCaseSlug = categorySlug.toLowerCase();
       
-      // Reconstruye la URL para que apunte a nuestra página de categoría dinámica
-      // Por ejemplo: /categoria-producto/.../PANTALONES-HOMBRE -> /pantalones-hombre
+      // Reconstruye la URL para que apunte a nuestra página de productos con el parámetro de categoría
+      // Por ejemplo: /categoria-producto/.../PANTALONES-HOMBRE -> /products?category=pantalones-hombre
       const newUrl = request.nextUrl.clone();
-      newUrl.pathname = `/${lowerCaseSlug}`;
+      newUrl.pathname = `/products`;
+      newUrl.search = `?category=${lowerCaseSlug}`;
       
       // Reescribe a la nueva URL internamente. El usuario sigue viendo la URL original.
       return NextResponse.rewrite(newUrl);
