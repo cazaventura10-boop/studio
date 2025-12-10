@@ -31,21 +31,24 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             apiParams.search = params.search;
         }
         
+        // --- LÓGICA DE TAGS ---
         if (params.tag) {
             const { data: tagsData } = await wooApi.get("products/tags", { slug: params.tag });
             if (tagsData && tagsData.length > 0) {
                 apiParams.tag = tagsData[0].id;
             } else {
+                console.warn(`Tag slug "${params.tag}" not found.`);
                 return [];
             }
         }
 
-        // --- LÓGICA DE CATEGORÍAS SIMPLIFICADA ---
+        // --- LÓGICA DE CATEGORÍAS MEJORADA ---
         if (params.category) {
-            // Pasamos el slug directamente a la API de productos. 
-            // La API de WC es capaz de buscar por slug si le pasamos 'category' como un ID que no encuentra,
-            // pero es más robusto obtener el ID primero.
+            // Pasamos el slug de categoría directamente al endpoint de productos.
+            // WooCommerce v3 puede filtrar por `category` usando el ID. Para usar `slug`,
+            // primero necesitamos obtener el ID de la categoría.
             const { data: categoryData } = await wooApi.get("products/categories", { slug: params.category });
+            
             if (categoryData && categoryData.length > 0) {
                 apiParams.category = categoryData[0].id;
             } else {
