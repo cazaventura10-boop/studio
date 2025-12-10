@@ -34,22 +34,39 @@ type NavLink = {
 };
 
 const trekkingHombre: NavLink[] = [
-  {
-    title: 'HOMBRE',
-    href: '#',
-    children: [
-      {
-        title: 'PANTALONES HOMBRE',
-        href: '#',
+    {
+        title: 'ROPA DE HOMBRE',
+        href: '/ropa-hombre',
         children: [
-          {
-            title: 'PANTALONES INVIERNO HOMBRE',
-            href: 'https://studio-4xoq-9d774m57o-mario-s-projects-3f700498.vercel.app/products?category=pantalones-invierno-hombre',
-          },
+            {
+                title: 'Pantalones',
+                href: '/products?category=pantalones-hombre',
+                children: [
+                    { title: 'Pantalones trekking invierno', href: '/products?category=pantalones-invierno-hombre' },
+                    { title: 'Pantalones trekking primavera verano', href: '/products?category=pantalones-verano-hombre' },
+                ]
+            },
+            { 
+                title: 'Chaquetas', 
+                href: '/products?category=chaquetas-hombre',
+                children: [
+                    { title: 'Chaquetas técnicas y softshell', href: '/products?category=softshell-hombre' },
+                    { title: 'Cortavientos', href: '/products?category=cortavientos-hombre' },
+                    { title: 'Plumas y Primaloft', href: '/products?category=plumas-hombre' },
+                ]
+            },
+            { title: 'Sudaderas', href: '/products?category=sudaderas-hombre' },
         ],
-      },
-    ],
-  },
+    },
+    {
+        title: 'CALZADO DE HOMBRE',
+        href: '/products?category=calzado-hombre',
+        children: [
+            { title: 'Botas', href: '/products?category=botas-trekking-y-montana-hombre' },
+            { title: 'Zapatillas', href: '/products?category=zapatillas-trekking-hombre' },
+            { title: 'Sandalias', href: '/products?category=sandalias-trekking-hombre' },
+        ],
+    },
 ];
 
 const trekkingMujer: NavLink[] = [
@@ -255,6 +272,8 @@ export function Header() {
                   <div className="grid w-[700px] grid-cols-3 gap-x-8 p-4">
                     {/* Columna HOMBRE */}
                     <div className="flex flex-col">
+                      <Link href="/ropa-hombre" className="mb-2 text-sm font-bold text-accent hover:underline">HOMBRE</Link>
+                      <p className="text-xs text-muted-foreground mb-3">Equipamiento masculino para montaña</p>
                       <NestedList items={trekkingHombre} />
                     </div>
                     {/* Columna MUJER */}
