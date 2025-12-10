@@ -1,5 +1,3 @@
-
-
 import type { Product as WooProduct } from '@/lib/types';
 import wooApi from '@/lib/woo';
 
@@ -8,10 +6,10 @@ interface GetProductsParams {
   per_page?: number;
   status?: string;
   search?: string;
-  category?: string | number; // puede ser slug, id, o una lista de slugs/ids separada por comas
-  tag?: string; // slug de la etiqueta
-  on_sale?: boolean; // para filtrar por productos en oferta
-  include?: number[]; // para buscar por IDs
+  category?: string; // Ahora solo string para el slug
+  tag?: string; 
+  on_sale?: boolean; 
+  include?: number[]; 
 }
 
 export async function getProducts(params: GetProductsParams = {}): Promise<WooProduct[]> {
@@ -42,23 +40,17 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             }
         }
 
-        // --- LÓGICA DE CATEGORÍAS CORREGIDA ---
+        // --- LÓGICA DE CATEGORÍAS SIMPLIFICADA ---
         if (params.category) {
-             if (typeof params.category === 'string' && isNaN(Number(params.category))) {
-                // Buscamos la categoría por su slug para obtener el ID
-                const { data: categoryData } = await wooApi.get("products/categories", { slug: params.category });
-
-                if (categoryData && categoryData.length > 0) {
-                    // Si encontramos la categoría, usamos su ID para la consulta
-                    apiParams.category = categoryData[0].id;
-                } else {
-                    // Si no se encuentra la categoría por slug, devolvemos un array vacío.
-                    console.warn(`Category slug "${params.category}" not found.`);
-                    return [];
-                }
+            // Pasamos el slug directamente a la API de productos. 
+            // La API de WC es capaz de buscar por slug si le pasamos 'category' como un ID que no encuentra,
+            // pero es más robusto obtener el ID primero.
+            const { data: categoryData } = await wooApi.get("products/categories", { slug: params.category });
+            if (categoryData && categoryData.length > 0) {
+                apiParams.category = categoryData[0].id;
             } else {
-                // Si es un ID numérico o ya está como número, lo usamos directamente
-                apiParams.category = params.category;
+                console.warn(`Category slug "${params.category}" not found.`);
+                return []; // Si el slug de categoría no existe, no hay productos que mostrar.
             }
         }
         
@@ -205,7 +197,3 @@ export type BlogPost = {
   category: 'Climbing' | 'Cycling' | 'Hiking';
   image: string; // id from placeholder-images.json
 };
-
-
-
-    
