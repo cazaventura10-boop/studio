@@ -25,7 +25,7 @@ export default async function ProductsPage({
     console.error("Error buscando productos:", error);
   }
 
-  const pageTitle = onSale ? "Productos en Oferta" : (displayTerm ? `Resultados para: "${displayTerm}"` : "Nuestros Productos");
+  const pageTitle = onSale ? "Productos en Oferta" : (displayTerm ? `${displayTerm}` : "Nuestros Productos");
   const pageDescription = onSale
     ? "Aprovecha nuestros descuentos especiales por tiempo limitado."
     : (displayTerm
@@ -54,7 +54,7 @@ export default async function ProductsPage({
         ) : (
           <div className="text-center py-20 bg-secondary/50 rounded-xl">
               <h2 className="text-2xl font-semibold text-foreground">
-                  No hemos encontrado productos para &quot;{noProductsFoundTerm}&quot;
+                  {noProductsFoundTerm ? `No hemos encontrado productos para "${noProductsFoundTerm}"` : 'No hemos encontrado productos'}
               </h2>
               <p className="text-muted-foreground mt-2">
                   Intenta buscar algo más general o utiliza el buscador principal.
@@ -70,5 +70,3 @@ export default async function ProductsPage({
     </>
   );
 }
-
-    
