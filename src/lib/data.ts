@@ -8,7 +8,7 @@ interface GetProductsParams {
   per_page?: number;
   status?: string;
   search?: string;
-  category?: string; // puede ser slug, id, o una lista de slugs/ids separada por comas
+  category?: string | number; // puede ser slug, id, o una lista de slugs/ids separada por comas
   tag?: string; // slug de la etiqueta
   on_sale?: boolean; // para filtrar por productos en oferta
   include?: number[]; // para buscar por IDs
@@ -44,19 +44,21 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
 
         // --- LÓGICA DE CATEGORÍAS CORREGIDA ---
         if (params.category) {
-            // Buscamos la categoría por su slug para obtener el ID
-            const { data: categoryData } = await wooApi.get("products/categories", { slug: params.category });
+             if (typeof params.category === 'string' && isNaN(Number(params.category))) {
+                // Buscamos la categoría por su slug para obtener el ID
+                const { data: categoryData } = await wooApi.get("products/categories", { slug: params.category });
 
-            if (categoryData && categoryData.length > 0) {
-                // Si encontramos la categoría, usamos su ID para la consulta
-                apiParams.category = categoryData[0].id;
-            } else if (!isNaN(Number(params.category))) {
-                // Si no se encuentra por slug, probamos si es un ID numérico
-                apiParams.category = params.category;
+                if (categoryData && categoryData.length > 0) {
+                    // Si encontramos la categoría, usamos su ID para la consulta
+                    apiParams.category = categoryData[0].id;
+                } else {
+                    // Si no se encuentra la categoría por slug, devolvemos un array vacío.
+                    console.warn(`Category slug "${params.category}" not found.`);
+                    return [];
+                }
             } else {
-                // Si no se encuentra la categoría ni por slug ni por ID, devolvemos un array vacío.
-                console.warn(`Category slug "${params.category}" not found.`);
-                return [];
+                // Si es un ID numérico o ya está como número, lo usamos directamente
+                apiParams.category = params.category;
             }
         }
         
