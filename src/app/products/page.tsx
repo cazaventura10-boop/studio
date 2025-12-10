@@ -15,17 +15,14 @@ export default async function ProductsPage({
   const search = searchParams.q as string | undefined;
   const onSale = searchParams.on_sale === 'true';
 
-  // Limpiamos los slugs para mostrarlos en el título si es necesario
-  const displayTerm = category?.split(',').map(c => c.replace(/-/g, ' ')).join(', ') || tag?.replace(/-/g, ' ') || search;
+  const displayTerm = category?.replace(/-/g, ' ') || tag?.replace(/-/g, ' ') || search;
 
   let products: Product[] = [];
 
   try {
-    // La función getProducts ahora prioriza category, luego tag, y finalmente search.
     products = await getProducts({ category, tag, search, on_sale: onSale });
   } catch (error) {
     console.error("Error buscando productos:", error);
-    // Dejamos el array de productos vacío para que se muestre el mensaje de error.
   }
 
   const pageTitle = onSale ? "Productos en Oferta" : (displayTerm ? `Resultados para: "${displayTerm}"` : "Nuestros Productos");
@@ -73,3 +70,5 @@ export default async function ProductsPage({
     </>
   );
 }
+
+    

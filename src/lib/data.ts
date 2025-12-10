@@ -42,18 +42,18 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
             }
         }
 
-        // --- LÓGICA DE CATEGORÍAS MEJORADA ---
+        // --- LÓGICA DE CATEGORÍAS CORREGIDA ---
         if (params.category) {
-            // Pasamos el slug de categoría directamente al endpoint de productos.
-            // WooCommerce v3 puede filtrar por `category` usando el ID. Para usar `slug`,
-            // primero necesitamos obtener el ID de la categoría.
+            // Primero, obtenemos el objeto de la categoría usando su slug
             const { data: categoryData } = await wooApi.get("products/categories", { slug: params.category });
             
+            // Si encontramos la categoría, usamos su ID para la consulta de productos
             if (categoryData && categoryData.length > 0) {
                 apiParams.category = categoryData[0].id;
             } else {
+                // Si la categoría no se encuentra, devolvemos un array vacío porque no habrá productos.
                 console.warn(`Category slug "${params.category}" not found.`);
-                return []; // Si el slug de categoría no existe, no hay productos que mostrar.
+                return [];
             }
         }
         
@@ -200,3 +200,5 @@ export type BlogPost = {
   category: 'Climbing' | 'Cycling' | 'Hiking';
   image: string; // id from placeholder-images.json
 };
+
+    
