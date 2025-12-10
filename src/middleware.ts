@@ -1,5 +1,4 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import wooApi from '@/lib/woo';
 
 // Forzar el runtime a 'nodejs' para que sea compatible con la librería de WooCommerce
 export const runtime = 'nodejs';
@@ -16,11 +15,13 @@ async function getCategorySlugs() {
   }
 
   try {
-    // Definimos la API aquí porque las variables de entorno solo están disponibles en el server
-    const api = new (require('@woocommerce/woocommerce-rest-api').default)({
-      url: process.env.NEXT_PUBLIC_WORDPRESS_URL,
-      consumerKey: process.env.WOOCOMMERCE_CONSUMER_KEY,
-      consumerSecret: process.env.WOOCOMMERCE_CONSUMER_SECRET,
+    // La librería de WooCommerce requiere 'node-fetch' en este entorno
+    const WooCommerceRestApi = (await import('@woocommerce/woocommerce-rest-api')).default;
+    
+    const api = new WooCommerceRestApi({
+      url: process.env.NEXT_PUBLIC_WORDPRESS_URL!,
+      consumerKey: process.env.WOOCOMMERCE_CONSUMER_KEY!,
+      consumerSecret: process.env.WOOCOMMERCE_CONSUMER_SECRET!,
       version: "wc/v3",
     });
 
@@ -34,7 +35,6 @@ async function getCategorySlugs() {
     return [];
   } catch (error) {
     console.error('Error fetching category slugs in middleware:', error);
-    // En caso de error, devolvemos la caché antigua si existe, si no, un array vacío.
     return categorySlugs || [];
   }
 }
@@ -47,21 +47,28 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Obtenemos los slugs de las categorías (usará la caché si es posible)
   const slugs = await getCategorySlugs();
-
-  // Quitamos la barra inicial del pathname para comparar con los slugs
   const requestedSlug = pathname.substring(1);
 
-  // Si el slug solicitado está en nuestra lista de categorías...
   if (slugs && slugs.includes(requestedSlug)) {
-    // ...reescribimos la URL a la página de productos con el parámetro de categoría.
     const url = request.nextUrl.clone();
     url.pathname = '/products';
     url.searchParams.set('category', requestedSlug);
     return NextResponse.rewrite(url);
   }
 
-  // Para cualquier otra ruta, continuamos sin hacer nada.
   return NextResponse.next();
+}
+
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+  ],
 }
