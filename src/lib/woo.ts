@@ -1,4 +1,8 @@
 import WooCommerceRestApi from "@woocommerce/woocommerce-rest-api";
+import dotenv from 'dotenv';
+
+// Forzar la carga de variables de entorno del archivo .env
+dotenv.config();
 
 // Las claves se definen aquí para que el middleware pueda usarlas.
 const consumerKey = process.env.WOOCOMMERCE_CONSUMER_KEY;
