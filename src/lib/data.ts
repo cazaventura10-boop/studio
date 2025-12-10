@@ -1,4 +1,5 @@
 
+
 import type { Product as WooProduct } from '@/lib/types';
 import wooApi from '@/lib/woo';
 
@@ -43,35 +44,19 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
 
         // --- LÓGICA DE CATEGORÍAS CORREGIDA ---
         if (params.category) {
-            if (params.category.includes(',')) {
-                // Múltiples categorías: hacer una llamada por cada una
-                const categorySlugs = params.category.split(',');
-                let allProducts: WooProduct[] = [];
-                
-                for (const slug of categorySlugs) {
-                    const { data: categoryData } = await wooApi.get("products/categories", { slug: slug.trim() });
-                    if (categoryData && categoryData.length > 0) {
-                        const categoryId = categoryData[0].id;
-                        const { data: productsData } = await wooApi.get("products", { ...apiParams, category: categoryId });
-                        allProducts = allProducts.concat(productsData);
-                    }
-                }
-                // Eliminar duplicados si un producto está en varias categorías
-                const uniqueProducts = allProducts.filter((product, index, self) =>
-                    index === self.findIndex((p) => p.id === product.id)
-                );
-                return mapWooProducts(uniqueProducts);
+            // Buscamos la categoría por su slug para obtener el ID
+            const { data: categoryData } = await wooApi.get("products/categories", { slug: params.category });
 
+            if (categoryData && categoryData.length > 0) {
+                // Si encontramos la categoría, usamos su ID para la consulta
+                apiParams.category = categoryData[0].id;
+            } else if (!isNaN(Number(params.category))) {
+                // Si no se encuentra por slug, probamos si es un ID numérico
+                apiParams.category = params.category;
             } else {
-                // Una sola categoría
-                const { data: categoryData } = await wooApi.get("products/categories", { slug: params.category });
-                if (categoryData && categoryData.length > 0) {
-                    apiParams.category = categoryData[0].id;
-                } else if (!isNaN(Number(params.category))) {
-                   apiParams.category = params.category;
-                } else {
-                    return []; // Si no se encuentra la categoría
-                }
+                // Si no se encuentra la categoría ni por slug ni por ID, devolvemos un array vacío.
+                console.warn(`Category slug "${params.category}" not found.`);
+                return [];
             }
         }
         
@@ -90,6 +75,7 @@ export async function getProducts(params: GetProductsParams = {}): Promise<WooPr
 
 // Helper para mapear los datos de la API
 function mapWooProducts(data: any[]): WooProduct[] {
+    if (!Array.isArray(data)) return [];
     return data.map((product: any) => ({
         id: product.id,
         name: product.name,
@@ -218,3 +204,6 @@ export type BlogPost = {
   image: string; // id from placeholder-images.json
 };
 
+
+
+    
