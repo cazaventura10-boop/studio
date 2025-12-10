@@ -14,6 +14,7 @@ export default async function CategorySlugPage({
   let products: Product[] = [];
   
   try {
+    // Usamos el slug de la URL para obtener los productos de esa categoría
     products = await getProducts({ category });
   } catch (error) {
     console.error("Error buscando productos por slug:", error);

@@ -18,17 +18,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async rewrites() {
-    return [
-      {
-        // Esta regla captura cualquier ruta de un solo nivel que no sea una página existente
-        // y la reescribe a nuestra página comodín de categoría.
-        // Ej: /pantalones-hombre -> /pantalones-hombre (y será manejada por app/[categorySlug]/page.tsx)
-        source: '/:path((?!api/|products/|blog/|aviso-legal|privacidad|contacto|envios|ropa-hombre|ropa-mujer|categorias|_next/static|_next/image|favicon.ico).*)',
-        destination: '/:path',
-      },
-    ];
-  },
 };
 
 export default nextConfig;
