@@ -35,52 +35,19 @@ type NavLink = {
 
 const trekkingHombre: NavLink[] = [
   {
-    title: 'ROPA DE HOMBRE',
-    href: '/ropa-hombre',
+    title: 'HOMBRE',
+    href: '#',
     children: [
       {
-        title: 'Pantalones Hombre',
-        href: '/products?category=pantalones-hombre',
+        title: 'PANTALONES HOMBRE',
+        href: '#',
         children: [
-          { title: 'Pantalones Invierno Hombre', href: '/products?category=pantalones-invierno-hombre' },
-          { 
-            title: 'Pantalones Primavera/Verano Hombre', 
-            href: '/products?category=pantalones-primavera-verano-hombre',
-            children: [
-                { title: 'Cortos y Piratas Hombre', href: '/products?category=cortos-y-piratas-hombre' },
-                { title: 'Largos y Desmontables Hombre', href: '/products?category=largos-y-desmontables-hombre' },
-            ]
+          {
+            title: 'PANTALONES INVIERNO HOMBRE',
+            href: 'https://studio-4xoq-9d774m57o-mario-s-projects-3f700498.vercel.app/products?category=pantalones-invierno-hombre',
           },
         ],
       },
-      {
-        title: 'Chaquetas Hombre',
-        href: '/products?category=chaquetas-hombre',
-        children: [
-          { title: 'Softshell y Térmicas Hombre', href: '/products?category=softshell-y-termicas-hombre' },
-          { title: 'Cortavientos e Impermeables Hombre', href: '/products?category=cortavientos-e-impermeables-hombre' },
-          { title: 'Plumas y Primaloft Hombre', href: '/products?category=plumas-y-primaloft-hombre' },
-        ],
-      },
-      { title: 'Chalecos Hombre', href: '/products?category=chalecos-hombre' },
-      { title: 'Sudaderas Hombre', href: '/products?category=sudaderas-hombre' },
-      { 
-        title: 'Camisetas Hombre', 
-        href: '/products?category=camisetas-hombre',
-        children: [
-            { title: 'Térmicas y Manga Larga Hombre', href: '/products?category=camisetas-termicas-y-manga-larga-hombre' },
-            { title: 'Manga Corta y sin Mangas Hombre', href: '/products?category=camisetas-manga-corta-y-sin-mangas-hombre' },
-        ]
-      },
-    ],
-  },
-  {
-    title: 'CALZADO DE HOMBRE',
-    href: '/products?category=calzado-hombre',
-    children: [
-      { title: 'Botas de Montaña Hombre', href: '/products?category=botas-de-montana-y-trekking-hombre' },
-      { title: 'Zapatillas Trekking Hombre', href: '/products?category=zapatos-y-zapatillas-trekking-hombre' },
-      { title: 'Sandalias Hombre', href: '/products?category=sandalias-de-trekking' },
     ],
   },
 ];
@@ -288,8 +255,6 @@ export function Header() {
                   <div className="grid w-[700px] grid-cols-3 gap-x-8 p-4">
                     {/* Columna HOMBRE */}
                     <div className="flex flex-col">
-                      <Link href="/ropa-hombre" className="mb-2 text-sm font-bold text-accent hover:underline">HOMBRE</Link>
-                      <p className="text-xs text-muted-foreground mb-3">Equipamiento masculino para montaña</p>
                       <NestedList items={trekkingHombre} />
                     </div>
                     {/* Columna MUJER */}
