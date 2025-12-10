@@ -30,8 +30,6 @@ import {
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-// --- ESTRUCTURA DE NAVEGACIÓN DESDE CERO ---
-
 type NavLink = {
   title: string;
   href: string;
@@ -184,13 +182,17 @@ export function Header() {
       : "bg-background/95 text-foreground backdrop-blur-sm supports-[backdrop-filter]:bg-background/60 border-b"
   );
   
-  const navTriggerClasses = (isHomePage && !isScrolled)
-    ? "text-white hover:bg-white/10 hover:text-white focus:bg-white/10 focus:text-white"
-    : "text-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground";
+  const navTriggerClasses = cn("font-bold tracking-wider text-sm uppercase",
+    (isHomePage && !isScrolled)
+      ? "text-white hover:bg-white/10 hover:text-white focus:bg-white/10 focus:text-white"
+      : "text-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+  );
   
-  const iconButtonClasses = (isHomePage && !isScrolled)
-    ? "text-white hover:bg-white/10 hover:text-white"
-    : "text-foreground hover:bg-accent hover:text-accent-foreground";
+  const iconButtonClasses = cn(
+    (isHomePage && !isScrolled)
+      ? "text-white hover:bg-white/10 hover:text-white"
+      : "text-foreground hover:bg-accent hover:text-accent-foreground"
+  );
 
   return (
     <header className={headerClasses}>
@@ -199,12 +201,11 @@ export function Header() {
           <Logo />
         </Link>
         
-        {/* --- Menú de Escritorio --- */}
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList>
             {navLinks.map(link => (
               <NavigationMenuItem key={link.title}>
-                <NavigationMenuTrigger className={cn("font-bold tracking-wider text-sm uppercase", navTriggerClasses)}>
+                <NavigationMenuTrigger className={navTriggerClasses}>
                   {link.title}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -232,7 +233,6 @@ export function Header() {
            </div>
           <CartSheet />
           
-          {/* --- Menú Móvil --- */}
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className={cn("md:hidden", iconButtonClasses)}>
@@ -264,3 +264,5 @@ export function Header() {
     </header>
   );
 }
+
+    
